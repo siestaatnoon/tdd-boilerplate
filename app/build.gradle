@@ -1,0 +1,94 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.oscarrrweb.tddboilerplate"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+        }
+    }
+}
+
+def androidVersion = "28.0.0"
+def daggerVersion = "2.15"
+def retrofitVersion = "2.5.0"
+def rxJavaVersion = "2.0.1"
+def roomVersion = "1.1.1"
+def gsonVersion = "2.8.5"
+def leakcanaryVersion = "1.6.3"
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.android.support:support-v4:${androidVersion}"
+    implementation "com.android.support:design:${androidVersion}"
+    implementation "com.android.support:appcompat-v7:${androidVersion}"
+    implementation "com.android.support:preference-v7:${androidVersion}"
+    implementation "com.android.support:cardview-v7:${androidVersion}"
+    implementation "com.android.support:recyclerview-v7:${androidVersion}"
+
+    // Dagger
+    implementation "com.google.dagger:dagger:${daggerVersion}"
+    implementation "com.google.dagger:dagger-android:${daggerVersion}"
+    implementation "com.google.dagger:dagger-android-support:${daggerVersion}" // if you use the support libraries
+    annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
+    annotationProcessor "com.google.dagger:dagger-android-processor:${daggerVersion}"
+
+    // RxJava
+    implementation "io.reactivex.rxjava2:rxandroid:${rxJavaVersion}"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:converter-scalars:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
+
+    // Google GSON
+    implementation "com.google.code.gson:gson:${gsonVersion}"
+
+    // Room database
+    implementation "android.arch.persistence.room:runtime:${roomVersion}"
+    annotationProcessor "android.arch.persistence.room:compiler:${roomVersion}"
+
+    // Unit Test dependencies
+    testImplementation 'androidx.test:core:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.8.9'
+    testImplementation 'org.robolectric:robolectric:4.1'
+    testImplementation 'org.robolectric:shadows-supportv4:4.1'
+    testImplementation "android.arch.persistence.room:testing:${roomVersion}"
+    testAnnotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
+
+    // Android Unit Test dependencies
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'org.mockito:mockito-android:2.8.9'
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
+
+    // Leak Canary
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:${leakcanaryVersion}"
+    debugImplementation "com.squareup.leakcanary:leakcanary-support-fragment:${leakcanaryVersion}"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanaryVersion}"
+}
