@@ -11,6 +11,9 @@ package com.oscarrrweb.tddboilerplate.domain.settings;
  * <li>get[settingName]() - Returns the setting value</li>
  * <li>set[settingName](value) - Sets the setting value</li>
  * </ul>
+ *
+ * @author Johnny Spence
+ * @version 1.0.0
  */
 public interface GeneralSettings {
 
