@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">TDD Boilerplate</string>
+    <string name="app_name">World of Tights</string>
+    <string name="app_package">com.oscarrrweb.tddboilerplate</string>
+    <string name="app_authority">@string/app_package</string>
+    <string name="app_account_type">@string/app_package</string>
+
+    <!-- Shared Preferences -->
+    <string name="pref_view_title_general">General</string>
+    <string name="pref_username_key">general_username</string>
+    <string name="pref_username_label">Your Public Name</string>
+
 </resources>

@@ -3,8 +3,8 @@ package com.oscarrrweb.tddboilerplate.domain.executor;
 import com.oscarrrweb.tddboilerplate.domain.executor.base.ThreadScheduler;
 
 /**
- * Thread abstraction for an execution thread for dealing with larger processes such as files
- * or network.
+ * Thread abstraction for an execution thread for handling large processes such as files
+ * or network transfers.
  *
  * @author Johnny Spence
  * @version 1.0.0

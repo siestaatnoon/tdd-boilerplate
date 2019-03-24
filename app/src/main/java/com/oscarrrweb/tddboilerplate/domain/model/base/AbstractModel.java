@@ -14,22 +14,22 @@ abstract public class AbstractModel {
     /**
      * The AUTO_INCREMENT id of the model.
      */
-    public int id;
+    private int id;
 
     /**
      * The UUID of the model.
      */
-    public String uuid;
+    private String uuid;
 
     /**
      * The timestamp of model creation
      */
-    public Date createdAt;
+    private Date createdAt;
 
     /**
      * The timestamp of most recent model update
      */
-    public Date updatedAt;
+    private Date updatedAt;
 
 
     /**
@@ -70,7 +70,7 @@ abstract public class AbstractModel {
     }
 
     /**
-     * Returns the model time of creation timestamp.
+     * Returns the model time of creation <code>Date</code> timestamp.
      *
      * @return The created at timestamp
      */
@@ -79,7 +79,7 @@ abstract public class AbstractModel {
     }
 
     /**
-     * Sets the model time of creation timestamp.
+     * Sets the model time of creation <code>Date</code> timestamp.
      *
      * @param createdAt The timestamp
      */
@@ -88,7 +88,7 @@ abstract public class AbstractModel {
     }
 
     /**
-     * Returns the model time of last update timestamp.
+     * Returns the model time of last update <code>Date</code> timestamp.
      *
      * @return The updated at timestamp
      */
@@ -97,7 +97,7 @@ abstract public class AbstractModel {
     }
 
     /**
-     * Sets the model time of last update timestamp.
+     * Sets the model time of last update <code>Date</code> timestamp.
      *
      * @param updatedAt The timestamp
      */

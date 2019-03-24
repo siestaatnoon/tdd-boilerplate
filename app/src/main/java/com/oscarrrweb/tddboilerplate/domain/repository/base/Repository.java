@@ -46,6 +46,14 @@ public interface Repository<M> {
     /**
      * Performs a DELETE query.
      *
+     * @param uuid  The model UUID to delete
+     * @return      The number of rows successfully deleted, may be zero if model does not exist
+     */
+    int delete(String uuid);
+
+    /**
+     * Performs a DELETE query.
+     *
      * @param id    The model ID to delete
      * @return      The number of rows successfully deleted, may be zero if model does not exist
      */

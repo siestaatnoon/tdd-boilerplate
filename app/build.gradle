@@ -39,6 +39,8 @@ def rxJavaVersion = "2.0.1"
 def roomVersion = "1.1.1"
 def gsonVersion = "2.8.5"
 def leakcanaryVersion = "1.6.3"
+def butterknifeVersion = "8.8.1"
+def timberVersion = "4.5.1"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -71,6 +73,13 @@ dependencies {
     // Room database
     implementation "android.arch.persistence.room:runtime:${roomVersion}"
     annotationProcessor "android.arch.persistence.room:compiler:${roomVersion}"
+
+    // Butterknife
+    implementation "com.jakewharton:butterknife:${butterknifeVersion}"
+    annotationProcessor "com.jakewharton:butterknife:${butterknifeVersion}"
+
+    // Timber logging
+    implementation "com.jakewharton.timber:timber:${timberVersion}"
 
     // Unit Test dependencies
     testImplementation 'androidx.test:core:1.1.0'
