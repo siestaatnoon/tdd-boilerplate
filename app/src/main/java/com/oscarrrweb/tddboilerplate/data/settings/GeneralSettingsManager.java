@@ -1,7 +1,7 @@
 package com.oscarrrweb.tddboilerplate.data.settings;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.oscarrrweb.tddboilerplate.R;
 import com.oscarrrweb.tddboilerplate.data.settings.base.SettingsManager;

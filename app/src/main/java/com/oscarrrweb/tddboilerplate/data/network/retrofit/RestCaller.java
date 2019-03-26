@@ -1,6 +1,6 @@
 package com.oscarrrweb.tddboilerplate.data.network.retrofit;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.MalformedJsonException;
 
 import com.google.gson.JsonElement;

@@ -1,6 +1,6 @@
 package com.oscarrrweb.tddboilerplate.data.network.base;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.oscarrrweb.tddboilerplate.data.entity.base.Entity;
 

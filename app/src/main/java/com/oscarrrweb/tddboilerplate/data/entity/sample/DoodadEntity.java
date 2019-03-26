@@ -1,13 +1,13 @@
 package com.oscarrrweb.tddboilerplate.data.entity.sample;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Index;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
 
 import com.google.gson.annotations.SerializedName;
 
-import static com.oscarrrweb.tddboilerplate.data.entity.sample.Doodad.TABLE_NAME;
+import static com.oscarrrweb.tddboilerplate.data.entity.sample.DoodadEntity.TABLE_NAME;
 
 @Entity(tableName = TABLE_NAME,
         indices = {
@@ -15,12 +15,12 @@ import static com.oscarrrweb.tddboilerplate.data.entity.sample.Doodad.TABLE_NAME
                 @Index("widget_uuid")
         },
         foreignKeys = @ForeignKey(
-                entity = Widget.class,
+                entity = WidgetEntity.class,
                 parentColumns = "uuid",
                 childColumns = "widget_uuid"
         )
 )
-public class Doodad extends com.oscarrrweb.tddboilerplate.data.entity.base.Entity {
+public class DoodadEntity extends com.oscarrrweb.tddboilerplate.data.entity.base.Entity {
 
     protected static final String TABLE_NAME = "doodads";
 
@@ -30,7 +30,7 @@ public class Doodad extends com.oscarrrweb.tddboilerplate.data.entity.base.Entit
 
     private String name;
 
-    private String value;
+    private String description;
 
     @Override
     public String getTableName() {
@@ -53,11 +53,11 @@ public class Doodad extends com.oscarrrweb.tddboilerplate.data.entity.base.Entit
         this.name = name;
     }
 
-    public String getValue() {
-        return value;
+    public String getDescription() {
+        return description;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

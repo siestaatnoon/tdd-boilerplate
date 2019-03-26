@@ -1,6 +1,9 @@
 package com.oscarrrweb.tddboilerplate.data.repository.sample;
 
-import com.oscarrrweb.tddboilerplate.data.entity.sample.Gizmo;
+import android.content.Context;
+
+import com.oscarrrweb.tddboilerplate.data.entity.sample.GizmoEntity;
+import com.oscarrrweb.tddboilerplate.data.mappers.sample.WidgetMapper;
 import com.oscarrrweb.tddboilerplate.data.storage.dao.sample.DoodadDao;
 import com.oscarrrweb.tddboilerplate.data.storage.dao.sample.GizmoDao;
 import com.oscarrrweb.tddboilerplate.data.storage.dao.sample.WidgetDao;
@@ -17,11 +20,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.runner.AndroidJUnit4;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(MockitoJUnitRunner.StrictStubs.class)
+@RunWith(AndroidJUnit4.class)
 public class WidgetRepositoryTest {
 
     private AppDatabase mDb;
@@ -35,14 +40,18 @@ public class WidgetRepositoryTest {
 
     @Before
     public void setUp() throws Exception {
+        Context appContext = ApplicationProvider.getApplicationContext();
         TestApplicationComponent applicationComponent = DaggerTestApplicationComponent.builder()
-                .testApplicationModule(new TestApplicationModule())
+                .testApplicationModule(new TestApplicationModule(appContext))
                 .build();
         TestDataComponent dataComponent = DaggerTestDataComponent.builder()
-                .testDataModule(new TestDataModule(applicationComponent.context()))
+                .testApplicationComponent(applicationComponent)
+                .testDataModule(new TestDataModule(appContext))
                 .build();
 
         mDb = dataComponent.appDatabase();
+        WidgetMapper mapper = dataComponent.widgetMapper();
+        dataComponent.inject(mapper);
         mWidgetDao = dataComponent.widgetDao();
         mGizmoDao = dataComponent.gizmoDao();
         mDoodadDao = dataComponent.doodadDao();
@@ -52,30 +61,30 @@ public class WidgetRepositoryTest {
         String gizmoUuid = "be50d7f6-bf8c-4bad-9869-56990737d1a2";
 
         // Adding a gizmo so we don't get a foreign key error in DB
-        Gizmo gizmo = new Gizmo();
+        GizmoEntity gizmo = new GizmoEntity();
         gizmo.setId(1);
         gizmo.setUuid(gizmoUuid);
         gizmo.setName("Gizmo One");
-        gizmo.setValue("One, two, three");
+        gizmo.setDescription("One, two, three");
         mGizmoDao.insert(gizmo);
 
         widget1 = new Widget();
         widget1.setUuid("589a0b6e-5ce8-4759-944f-81f993b7694e");
         widget1.setGizmoUuid(gizmoUuid);
-        widget1.setName("Widget One");
-        widget1.setValue("Whooptee doo");
+        widget1.setName("WidgetEntity One");
+        widget1.setDescription("Whooptee doo");
 
         widget2 = new Widget();
         widget2.setUuid("86261454-f597-4586-8506-192ac6ddd471");
         widget2.setGizmoUuid(gizmoUuid);
-        widget2.setName("Widget Two");
-        widget2.setValue("Whooptee doo too");
+        widget2.setName("WidgetEntity Two");
+        widget2.setDescription("Whooptee doo too");
 
         widget3 = new Widget();
         widget3.setUuid("ac47372a-8589-4139-98ef-1559c28d974a");
         widget3.setGizmoUuid(gizmoUuid);
-        widget3.setName("Widget Three");
-        widget3.setValue("Whooptee doo too three");
+        widget3.setName("WidgetEntity Three");
+        widget3.setDescription("Whooptee doo too three");
     }
 
     @Test

@@ -1,7 +1,7 @@
 package com.oscarrrweb.tddboilerplate.presentation.ui.activities.base;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.oscarrrweb.tddboilerplate.App;
 import com.oscarrrweb.tddboilerplate.presentation.di.components.ApplicationComponent;

@@ -1,16 +1,16 @@
 package com.oscarrrweb.tddboilerplate.data.entity.sample;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.Index;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Ignore;
+import androidx.room.Index;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import static com.oscarrrweb.tddboilerplate.data.entity.sample.Widget.TABLE_NAME;
+import static com.oscarrrweb.tddboilerplate.data.entity.sample.WidgetEntity.TABLE_NAME;
 
 @Entity(tableName = TABLE_NAME,
         indices = {
@@ -19,13 +19,13 @@ import static com.oscarrrweb.tddboilerplate.data.entity.sample.Widget.TABLE_NAME
         },
         foreignKeys = {
                 @ForeignKey(
-                        entity = Gizmo.class,
+                        entity = GizmoEntity.class,
                         parentColumns = "uuid",
                         childColumns = "gizmo_uuid"
                 )
         }
 )
-public class Widget extends com.oscarrrweb.tddboilerplate.data.entity.base.Entity {
+public class WidgetEntity extends com.oscarrrweb.tddboilerplate.data.entity.base.Entity {
 
     protected static final String TABLE_NAME = "widgets";
 
@@ -35,10 +35,10 @@ public class Widget extends com.oscarrrweb.tddboilerplate.data.entity.base.Entit
 
     private String name;
 
-    private String value;
+    private String description;
 
     @Ignore
-    private List<Doodad> doodads;
+    private List<DoodadEntity> doodads;
 
 
     @Override
@@ -62,19 +62,19 @@ public class Widget extends com.oscarrrweb.tddboilerplate.data.entity.base.Entit
         this.name = name;
     }
 
-    public String getValue() {
-        return value;
+    public String getDescription() {
+        return description;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public List<Doodad> getDoodads() {
+    public List<DoodadEntity> getDoodads() {
         return doodads;
     }
 
-    public void setDoodads(List<Doodad> doodads) {
+    public void setDoodads(List<DoodadEntity> doodads) {
         this.doodads = doodads;
     }
 

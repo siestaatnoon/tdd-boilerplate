@@ -1,9 +1,9 @@
 package com.oscarrrweb.tddboilerplate.data.entity.sample;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Index;
+import androidx.room.Entity;
+import androidx.room.Index;
 
-import static com.oscarrrweb.tddboilerplate.data.entity.sample.Gizmo.TABLE_NAME;
+import static com.oscarrrweb.tddboilerplate.data.entity.sample.GizmoEntity.TABLE_NAME;
 
 @Entity(tableName = TABLE_NAME,
         indices = {
@@ -12,13 +12,13 @@ import static com.oscarrrweb.tddboilerplate.data.entity.sample.Gizmo.TABLE_NAME;
                 @Index("updated_at")
         }
 )
-public class Gizmo extends com.oscarrrweb.tddboilerplate.data.entity.base.Entity {
+public class GizmoEntity extends com.oscarrrweb.tddboilerplate.data.entity.base.Entity {
 
     protected static final String TABLE_NAME = "gizmos";
 
     private String name;
 
-    private String value;
+    private String description;
 
     @Override
     public String getTableName() {
@@ -33,11 +33,11 @@ public class Gizmo extends com.oscarrrweb.tddboilerplate.data.entity.base.Entity
         this.name = name;
     }
 
-    public String getValue() {
-        return value;
+    public String getDescription() {
+        return description;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -1,8 +1,8 @@
 package com.oscarrrweb.tddboilerplate.data.entity.base;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.PrimaryKey;
+import androidx.room.ColumnInfo;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 import android.util.Base64;
 
 import com.google.gson.ExclusionStrategy;
@@ -37,7 +37,7 @@ import timber.log.Timber;
 
 /**
  * The basic building block for creating POJO objects that serve as database entities
- * (via {@link android.arch.persistence.room.Room} database) and/or for transfer across network
+ * (via {@link androidx.room.Room} database) and/or for transfer across network
  * API calls (via {@link Gson}).
  * <p>
  * This abstract class contains the Entity common fields with getters and setters. Also, static
@@ -47,12 +47,12 @@ import timber.log.Timber;
  * @author Johnny Spence
  * @version 1.0.0
  */
-@android.arch.persistence.room.Entity
+@androidx.room.Entity
 abstract public class Entity implements Serializable {
 
     /**
      * The entity ID, annotated to designate this as the primary key field in the
-     * {@link android.arch.persistence.room.Room} database.
+     * {@link androidx.room.Room} database.
      */
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -64,7 +64,7 @@ abstract public class Entity implements Serializable {
     private String uuid;
 
     /**
-     * The timestamp of entity creation, {@link android.arch.persistence.room.Room} annotated to
+     * The timestamp of entity creation, {@link androidx.room.Room} annotated to
      * specify the database column name and {@link Gson} annotated to specify key name when
      * serializing Entity as JSON.
      */
@@ -83,21 +83,21 @@ abstract public class Entity implements Serializable {
     /**
      * Flag if the id (primary key) member field should be serialized. Generally, if the UUID
      * is used as the primary key reference, this would be set to false.
-     * {@link android.arch.persistence.room.Room} annotated to specify this is not a database column.
+     * {@link androidx.room.Room} annotated to specify this is not a database column.
      */
     @Ignore
     private transient boolean mHasSerializedId = false;
 
     /**
      * Flag to format output JSON in readable format. Useful for debugging but not for data
-     * transfer. {@link android.arch.persistence.room.Room} annotated to specify this is not a
+     * transfer. {@link androidx.room.Room} annotated to specify this is not a
      * database column.
      */
     @Ignore
     private transient boolean mUsePrettyPrint = false;
 
     /**
-     * Flag to include null values in serialized JSON. {@link android.arch.persistence.room.Room}
+     * Flag to include null values in serialized JSON. {@link androidx.room.Room}
      * annotated to specify this is not a database column.
      */
     @Ignore
@@ -107,7 +107,7 @@ abstract public class Entity implements Serializable {
      * The {@link #touch()} method should generally be called on the Entity to add or update the
      * timestamp fields. In certain cases, however, this may not be desired. If this set to false,
      * then subsequent calls to <code>touch()</code> will not update the timestamps.
-     * {@link android.arch.persistence.room.Room} annotated to specify this is not a database column.
+     * {@link androidx.room.Room} annotated to specify this is not a database column.
      */
     @Ignore
     private transient boolean mDoUpdateTimestamps = true;
@@ -331,11 +331,14 @@ abstract public class Entity implements Serializable {
     }
 
     /**
-     * An empty "setter" that will generate the entity UUID with a proper random value.
+     * An empty "setter" that will generate the entity UUID with a proper random value. If a
+     * UUID has already been set for this Entity then the call will be ignored.
      *
      */
     public void setUuid() {
-        uuid = UUID.randomUUID().toString();
+        if (uuid == null) {
+            uuid = UUID.randomUUID().toString();
+        }
     }
 
     /**

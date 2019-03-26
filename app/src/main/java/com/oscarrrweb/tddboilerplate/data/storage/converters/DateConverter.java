@@ -1,6 +1,6 @@
 package com.oscarrrweb.tddboilerplate.data.storage.converters;
 
-import android.arch.persistence.room.TypeConverter;
+import androidx.room.TypeConverter;
 import android.util.Log;
 
 import com.oscarrrweb.tddboilerplate.data.utils.DateUtils;

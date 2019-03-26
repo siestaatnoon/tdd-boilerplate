@@ -1,7 +1,6 @@
 package com.oscarrrweb.tddboilerplate.data.repository.base;
 
 import android.database.sqlite.SQLiteException;
-import android.support.annotation.NonNull;
 
 import com.oscarrrweb.tddboilerplate.data.entity.base.Entity;
 import com.oscarrrweb.tddboilerplate.data.mappers.base.Mapper;

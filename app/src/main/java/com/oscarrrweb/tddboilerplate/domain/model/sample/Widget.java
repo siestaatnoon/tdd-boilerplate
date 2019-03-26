@@ -10,7 +10,7 @@ public class Widget extends AbstractModel {
 
     public String name;
 
-    public String value;
+    public String description;
 
     public Gizmo gizmo;
 
@@ -33,12 +33,12 @@ public class Widget extends AbstractModel {
         this.name = name;
     }
 
-    public String getValue() {
-        return value;
+    public String getDescription() {
+        return description;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Gizmo getGizmo() {

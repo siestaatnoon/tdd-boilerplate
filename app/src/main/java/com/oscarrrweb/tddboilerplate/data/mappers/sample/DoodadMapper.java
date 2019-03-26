@@ -1,69 +1,68 @@
 package com.oscarrrweb.tddboilerplate.data.mappers.sample;
 
-import com.oscarrrweb.tddboilerplate.data.entity.sample.Doodad;
+import com.oscarrrweb.tddboilerplate.data.entity.sample.DoodadEntity;
 import com.oscarrrweb.tddboilerplate.data.mappers.base.EntityMapper;
+import com.oscarrrweb.tddboilerplate.domain.model.sample.Doodad;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class DoodadMapper extends
-        EntityMapper<Doodad, com.oscarrrweb.tddboilerplate.domain.model.sample.Doodad> {
+public class DoodadMapper extends EntityMapper<DoodadEntity, Doodad> {
 
     @Inject
     public DoodadMapper() {}
 
     @Override
-    public Doodad fromDomainModel(com.oscarrrweb.tddboilerplate.domain.model.sample.Doodad domainModel) {
+    public DoodadEntity fromDomainModel(Doodad domainModel) {
         if (domainModel == null) {
             return null;
         }
 
-        Doodad entity = new Doodad();
-        entity = (Doodad) EntityMapper.setEntityFields(entity, domainModel);
+        DoodadEntity entity = new DoodadEntity();
+        entity = (DoodadEntity) EntityMapper.setEntityFields(entity, domainModel);
         entity.setName(domainModel.getName());
-        entity.setValue(domainModel.getValue());
+        entity.setDescription(domainModel.getDescription());
         entity.setWidgetUuid(domainModel.getWidgetUuid());
         return entity;
     }
 
     @Override
-    public List<Doodad> fromDomainModel(List<com.oscarrrweb.tddboilerplate.domain.model.sample.Doodad> domainModels) {
+    public List<DoodadEntity> fromDomainModel(List<Doodad> domainModels) {
         if (domainModels == null) {
             return null;
         }
 
-        List<Doodad> entityList = new ArrayList<>();
-        for (com.oscarrrweb.tddboilerplate.domain.model.sample.Doodad model : domainModels) {
+        List<DoodadEntity> entityList = new ArrayList<>();
+        for (Doodad model : domainModels) {
             entityList.add(fromDomainModel(model));
         }
         return entityList;
     }
 
     @Override
-    public com.oscarrrweb.tddboilerplate.domain.model.sample.Doodad toDomainModel(Doodad entity) {
+    public Doodad toDomainModel(DoodadEntity entity) {
         if (entity == null) {
             return null;
         }
 
-        com.oscarrrweb.tddboilerplate.domain.model.sample.Doodad model =
-                new com.oscarrrweb.tddboilerplate.domain.model.sample.Doodad();
-        model = (com.oscarrrweb.tddboilerplate.domain.model.sample.Doodad) EntityMapper.setDomainModelFields(model, entity);
+        Doodad model = new Doodad();
+        model = (Doodad) EntityMapper.setDomainModelFields(model, entity);
         model.setName(entity.getName());
-        model.setValue(entity.getValue());
+        model.setDescription(entity.getDescription());
         model.setWidgetUuid(entity.getWidgetUuid());
         return model;
     }
 
     @Override
-    public List<com.oscarrrweb.tddboilerplate.domain.model.sample.Doodad> toDomainModel(List<Doodad> entities) {
+    public List<Doodad> toDomainModel(List<DoodadEntity> entities) {
         if (entities == null) {
             return null;
         }
 
-        List<com.oscarrrweb.tddboilerplate.domain.model.sample.Doodad> modelList = new ArrayList<>();
-        for (Doodad entity : entities) {
+        List<Doodad> modelList = new ArrayList<>();
+        for (DoodadEntity entity : entities) {
             modelList.add(toDomainModel(entity));
         }
         return modelList;

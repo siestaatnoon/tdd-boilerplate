@@ -1,7 +1,8 @@
 package com.oscarrrweb.tddboilerplate.data.mappers.sample;
 
-import com.oscarrrweb.tddboilerplate.data.entity.sample.Gizmo;
+import com.oscarrrweb.tddboilerplate.data.entity.sample.GizmoEntity;
 import com.oscarrrweb.tddboilerplate.data.mappers.base.EntityMapper;
+import com.oscarrrweb.tddboilerplate.domain.model.sample.Gizmo;
 
 
 import java.util.ArrayList;
@@ -9,60 +10,58 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class GizmoMapper extends
-        EntityMapper<Gizmo, com.oscarrrweb.tddboilerplate.domain.model.sample.Gizmo> {
+public class GizmoMapper extends EntityMapper<GizmoEntity, Gizmo> {
 
     @Inject
     public GizmoMapper() {}
 
     @Override
-    public Gizmo fromDomainModel(com.oscarrrweb.tddboilerplate.domain.model.sample.Gizmo domainModel) {
+    public GizmoEntity fromDomainModel(Gizmo domainModel) {
         if (domainModel == null) {
             return null;
         }
 
-        Gizmo entity = new Gizmo();
-        entity = (Gizmo) EntityMapper.setEntityFields(entity, domainModel);
+        GizmoEntity entity = new GizmoEntity();
+        entity = (GizmoEntity) EntityMapper.setEntityFields(entity, domainModel);
         entity.setName(domainModel.getName());
-        entity.setValue(domainModel.getValue());
+        entity.setDescription(domainModel.getDescription());
         return entity;
     }
 
     @Override
-    public List<Gizmo> fromDomainModel(List<com.oscarrrweb.tddboilerplate.domain.model.sample.Gizmo> domainModels) {
+    public List<GizmoEntity> fromDomainModel(List<Gizmo> domainModels) {
         if (domainModels == null) {
             return null;
         }
 
-        List<Gizmo> entityList = new ArrayList<>();
-        for (com.oscarrrweb.tddboilerplate.domain.model.sample.Gizmo model : domainModels) {
+        List<GizmoEntity> entityList = new ArrayList<>();
+        for (Gizmo model : domainModels) {
             entityList.add(fromDomainModel(model));
         }
         return entityList;
     }
 
     @Override
-    public com.oscarrrweb.tddboilerplate.domain.model.sample.Gizmo toDomainModel(Gizmo entity) {
+    public Gizmo toDomainModel(GizmoEntity entity) {
         if (entity == null) {
             return null;
         }
 
-        com.oscarrrweb.tddboilerplate.domain.model.sample.Gizmo model =
-                new com.oscarrrweb.tddboilerplate.domain.model.sample.Gizmo();
-        model = (com.oscarrrweb.tddboilerplate.domain.model.sample.Gizmo) EntityMapper.setDomainModelFields(model, entity);
+        Gizmo model = new Gizmo();
+        model = (Gizmo) EntityMapper.setDomainModelFields(model, entity);
         model.setName(entity.getName());
-        model.setValue(entity.getValue());
+        model.setDescription(entity.getDescription());
         return model;
     }
 
     @Override
-    public List<com.oscarrrweb.tddboilerplate.domain.model.sample.Gizmo> toDomainModel(List<Gizmo> entities) {
+    public List<Gizmo> toDomainModel(List<GizmoEntity> entities) {
         if (entities == null) {
             return null;
         }
 
-        List<com.oscarrrweb.tddboilerplate.domain.model.sample.Gizmo> modelList = new ArrayList<>();
-        for (Gizmo entity : entities) {
+        List<Gizmo> modelList = new ArrayList<>();
+        for (GizmoEntity entity : entities) {
             modelList.add(toDomainModel(entity));
         }
         return modelList;

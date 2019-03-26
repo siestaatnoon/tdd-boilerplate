@@ -8,7 +8,7 @@ public class Doodad extends AbstractModel {
 
     private String name;
 
-    private String value;
+    private String description;
 
 
     public String getWidgetUuid() {
@@ -27,11 +27,11 @@ public class Doodad extends AbstractModel {
         this.name = name;
     }
 
-    public String getValue() {
-        return value;
+    public String getDescription() {
+        return description;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

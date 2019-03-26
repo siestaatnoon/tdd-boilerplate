@@ -9,7 +9,9 @@ android {
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
@@ -38,7 +40,7 @@ repositories {
     }
 }
 
-def androidVersion = "28.0.0"
+def androidVersion = '1.0.0-beta01'
 def butterknifeVersion = "8.8.1"
 def daggerVersion = "2.21"
 def gsonVersion = "2.8.5"
@@ -46,18 +48,18 @@ def leakcanaryVersion = "1.6.3"
 def mockitoVersion = "2.8.9"
 def retrofitVersion = "2.5.0"
 def robolectricVersion = "4.1"
-def roomVersion = "1.1.1"
+def roomVersion = '2.0.0-beta01'
 def rxJavaVersion = "2.0.1"
 def timberVersion = "4.5.1"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "com.android.support:support-v4:${androidVersion}"
-    implementation "com.android.support:design:${androidVersion}"
-    implementation "com.android.support:appcompat-v7:${androidVersion}"
-    implementation "com.android.support:preference-v7:${androidVersion}"
-    implementation "com.android.support:cardview-v7:${androidVersion}"
-    implementation "com.android.support:recyclerview-v7:${androidVersion}"
+    implementation "androidx.legacy:legacy-support-v4:${androidVersion}"
+    implementation "com.google.android.material:material:${androidVersion}"
+    implementation "androidx.appcompat:appcompat:${androidVersion}"
+    implementation "androidx.preference:preference:${androidVersion}"
+    implementation "androidx.cardview:cardview:${androidVersion}"
+    implementation "androidx.recyclerview:recyclerview:${androidVersion}"
 
     // Dagger
     implementation "com.google.dagger:dagger:${daggerVersion}"
@@ -79,8 +81,8 @@ dependencies {
     implementation "com.google.code.gson:gson:${gsonVersion}"
 
     // Room database
-    implementation "android.arch.persistence.room:runtime:${roomVersion}"
-    annotationProcessor "android.arch.persistence.room:compiler:${roomVersion}"
+    implementation "androidx.room:room-runtime:${roomVersion}"
+    annotationProcessor "androidx.room:room-compiler:${roomVersion}"
 
     // Butterknife
     implementation "com.jakewharton:butterknife:${butterknifeVersion}"
@@ -92,16 +94,16 @@ dependencies {
     // Unit Test dependencies
     testImplementation 'junit:junit:4.12'
     testImplementation 'androidx.test:core:1.1.0'
-    testImplementation 'com.android.support.test:runner:1.0.2'
+    testImplementation 'androidx.test:runner:1.1.0-alpha4'
     testImplementation "org.mockito:mockito-core:${mockitoVersion}"
     testImplementation "org.robolectric:robolectric:${robolectricVersion}"
     // testImplementation "org.robolectric:shadows-supportv4:${robolectricVersion}" //CURRENTLY NOT SUPPORTED WITH Androidx
-    testImplementation "android.arch.persistence.room:testing:${roomVersion}"
+    testImplementation "androidx.room:room-testing:${roomVersion}"
     testAnnotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
 
     // Android Instrumented Test dependencies
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
     androidTestImplementation 'org.mockito:mockito-android:2.8.9'
     androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
 

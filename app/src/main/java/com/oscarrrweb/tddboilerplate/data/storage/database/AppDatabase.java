@@ -1,14 +1,14 @@
 package com.oscarrrweb.tddboilerplate.data.storage.database;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.Room;
-import android.arch.persistence.room.RoomDatabase;
-import android.arch.persistence.room.TypeConverters;
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import android.content.Context;
 
-import com.oscarrrweb.tddboilerplate.data.entity.sample.Gizmo;
-import com.oscarrrweb.tddboilerplate.data.entity.sample.Doodad;
-import com.oscarrrweb.tddboilerplate.data.entity.sample.Widget;
+import com.oscarrrweb.tddboilerplate.data.entity.sample.DoodadEntity;
+import com.oscarrrweb.tddboilerplate.data.entity.sample.GizmoEntity;
+import com.oscarrrweb.tddboilerplate.data.entity.sample.WidgetEntity;
 import com.oscarrrweb.tddboilerplate.data.storage.converters.ByteArrayConverter;
 import com.oscarrrweb.tddboilerplate.data.storage.converters.DateConverter;
 import com.oscarrrweb.tddboilerplate.data.storage.dao.sample.GizmoDao;
@@ -18,9 +18,9 @@ import com.oscarrrweb.tddboilerplate.data.storage.utils.DatabaseUtils;
 
 @Database(
         entities = {
-                Gizmo.class,
-                Widget.class,
-                Doodad.class
+                GizmoEntity.class,
+                WidgetEntity.class,
+                DoodadEntity.class
         },
         version = 1
 )
