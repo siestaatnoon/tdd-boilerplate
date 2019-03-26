@@ -21,7 +21,6 @@ abstract public class AbstractRepository<E extends Entity, T extends AbstractMod
     @Inject D mDao;
     @Inject M mMapper;
 
-    @Inject
     protected AbstractRepository() {}
 
     @Override
@@ -47,8 +46,7 @@ abstract public class AbstractRepository<E extends Entity, T extends AbstractMod
             // This is most likely due to entity having a foreign
             // key to a row that no longer exists so log it
             StringBuffer buffer = new StringBuffer();
-            buffer.append(e.getMessage()).append("\n");
-            buffer.append(entity.toString());
+            buffer.append(e.getMessage()).append("\n").append(entity.toString());
             Timber.e(buffer.toString());
             return id;
         }
@@ -84,8 +82,7 @@ abstract public class AbstractRepository<E extends Entity, T extends AbstractMod
             // This is most likely due to entity having a foreign
             // key to a row that no longer exists so log it
             StringBuffer buffer = new StringBuffer();
-            buffer.append(e.getMessage()).append("\n");
-            buffer.append(updated.toString());
+            buffer.append(e.getMessage()).append("\n").append(updated.toString());
             Timber.e(buffer.toString());
             return affectedRows;
         }

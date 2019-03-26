@@ -12,8 +12,7 @@ import static com.oscarrrweb.tddboilerplate.data.entity.sample.Doodad.TABLE_NAME
 @Entity(tableName = TABLE_NAME,
         indices = {
                 @Index(value = "uuid", unique = true),
-                @Index("widget_uuid"),
-                @Index("date")
+                @Index("widget_uuid")
         },
         foreignKeys = @ForeignKey(
                 entity = Widget.class,

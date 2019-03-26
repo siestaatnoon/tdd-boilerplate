@@ -1,7 +1,5 @@
 package com.oscarrrweb.tddboilerplate.data.repository.sample;
 
-import android.content.Context;
-
 import com.oscarrrweb.tddboilerplate.data.entity.sample.Doodad;
 import com.oscarrrweb.tddboilerplate.data.entity.sample.Gizmo;
 import com.oscarrrweb.tddboilerplate.data.entity.sample.Widget;
@@ -12,7 +10,6 @@ import com.oscarrrweb.tddboilerplate.data.repository.base.AbstractRepository;
 import com.oscarrrweb.tddboilerplate.data.storage.dao.sample.DoodadDao;
 import com.oscarrrweb.tddboilerplate.data.storage.dao.sample.GizmoDao;
 import com.oscarrrweb.tddboilerplate.data.storage.dao.sample.WidgetDao;
-import com.oscarrrweb.tddboilerplate.data.storage.database.AppDatabase;
 import com.oscarrrweb.tddboilerplate.domain.repository.sample.WidgetRepo;
 
 import java.util.ArrayList;

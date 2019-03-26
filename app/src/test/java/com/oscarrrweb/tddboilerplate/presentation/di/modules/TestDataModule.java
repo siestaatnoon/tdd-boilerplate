@@ -15,12 +15,12 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class DataModule {
+public class TestDataModule {
 
     private final AppDatabase database;
 
-    public DataModule(Context context) {
-        database = AppDatabase.getInstance(context);
+    public TestDataModule(Context context) {
+        database = AppDatabase.getInstance(context, true);
     }
 
     @Provides @Repository AppDatabase provideAppDatabase() {

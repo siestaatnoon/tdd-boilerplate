@@ -11,8 +11,7 @@ import javax.inject.Inject;
 public class WidgetMapper extends
         EntityMapper<Widget, com.oscarrrweb.tddboilerplate.domain.model.sample.Widget> {
 
-    @Inject
-    private DoodadMapper mDoodadMapper;
+    @Inject DoodadMapper mDoodadMapper;
 
     @Inject
     public WidgetMapper() {}

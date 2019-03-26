@@ -3,6 +3,7 @@ package com.oscarrrweb.tddboilerplate;
 import android.app.Application;
 
 import com.oscarrrweb.tddboilerplate.presentation.di.components.ApplicationComponent;
+import com.oscarrrweb.tddboilerplate.presentation.di.components.DaggerApplicationComponent;
 import com.oscarrrweb.tddboilerplate.presentation.di.modules.ApplicationModule;
 import com.squareup.leakcanary.LeakCanary;
 
