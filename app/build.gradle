@@ -39,15 +39,15 @@ repositories {
 }
 
 def androidVersion = "28.0.0"
-def daggerVersion = "2.15"
-def retrofitVersion = "2.5.0"
-def rxJavaVersion = "2.0.1"
-def roomVersion = "1.1.1"
+def butterknifeVersion = "8.8.1"
+def daggerVersion = "2.21"
 def gsonVersion = "2.8.5"
 def leakcanaryVersion = "1.6.3"
-def butterknifeVersion = "8.8.1"
-def robolectricVersion = "4.1"
 def mockitoVersion = "2.8.9"
+def retrofitVersion = "2.5.0"
+def robolectricVersion = "4.1"
+def roomVersion = "1.1.1"
+def rxJavaVersion = "2.0.1"
 def timberVersion = "4.5.1"
 
 dependencies {
@@ -90,11 +90,12 @@ dependencies {
     implementation "com.jakewharton.timber:timber:${timberVersion}"
 
     // Unit Test dependencies
-    testImplementation 'androidx.test:core:1.1.0'
     testImplementation 'junit:junit:4.12'
+    testImplementation 'androidx.test:core:1.1.0'
+    testImplementation 'com.android.support.test:runner:1.0.2'
     testImplementation "org.mockito:mockito-core:${mockitoVersion}"
     testImplementation "org.robolectric:robolectric:${robolectricVersion}"
-    testImplementation "org.robolectric:shadows-supportv4:${robolectricVersion}"
+    // testImplementation "org.robolectric:shadows-supportv4:${robolectricVersion}" //CURRENTLY NOT SUPPORTED WITH Androidx
     testImplementation "android.arch.persistence.room:testing:${roomVersion}"
     testAnnotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
 

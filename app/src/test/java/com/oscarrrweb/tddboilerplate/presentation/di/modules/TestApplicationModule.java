@@ -18,10 +18,14 @@ import dagger.Provides;
 @Module
 public class TestApplicationModule {
 
-    public TestApplicationModule() {}
+    private final Context context;
+
+    public TestApplicationModule(Context context) {
+        this.context = context;
+    }
 
     @Provides @Singleton Context provideApplicationContext() {
-        return ApplicationProvider.getApplicationContext();
+        return context;
     }
 
     @Provides @Singleton

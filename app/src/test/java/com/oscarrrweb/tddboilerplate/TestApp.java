@@ -16,7 +16,7 @@ public class TestApp extends App implements TestLifecycleApplication {
     public void onCreate() {
         //super.onCreate();
         applicationComponent = DaggerTestApplicationComponent.builder()
-                .testApplicationModule(new TestApplicationModule())
+                .testApplicationModule(new TestApplicationModule(this))
                 .build();
     }
 
