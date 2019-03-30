@@ -82,7 +82,7 @@ public class WidgetRepository extends AbstractRepository<WidgetEntity, Widget, W
         // model, we need to convert the domain model to an entity
         WidgetEntity entity = mWidgetMapper.fromDomainModel(model);
 
-        GizmoEntity gizmo = mGizmoDao.fromUuid(entity.getUuid());
+        GizmoEntity gizmo = mGizmoDao.fromUuid(entity.getGizmoUuid());
         model.setGizmo(mGizmoMapper.toDomainModel(gizmo));
         return model;
     }

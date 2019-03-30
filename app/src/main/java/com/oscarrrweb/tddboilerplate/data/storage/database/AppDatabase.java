@@ -55,12 +55,16 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     public static AppDatabase getInstance(Context context, boolean isTest) {
+        return getInstance(context, isTest, false);
+    }
+
+    public static AppDatabase getInstance(Context context, boolean isTest, boolean refreshInstance) {
         if (! isTest) {
             return getInstance(context);
         }
 
         synchronized (TEST_LOCK) {
-            if (sTestInstance == null) {
+            if (sTestInstance == null || refreshInstance) {
                 sTestInstance = Room.inMemoryDatabaseBuilder(
                         context.getApplicationContext(),
                         AppDatabase.class

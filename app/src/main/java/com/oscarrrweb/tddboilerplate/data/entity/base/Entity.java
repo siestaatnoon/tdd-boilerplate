@@ -606,7 +606,7 @@ abstract public class Entity implements Serializable {
         }
 
         Date now = DateUtils.currentTimestamp();
-        if (getId() == 0) {
+        if (getId() == 0 || createdAt == null) {
             setCreatedAt(now);
         }
         setUpdatedAt(now);

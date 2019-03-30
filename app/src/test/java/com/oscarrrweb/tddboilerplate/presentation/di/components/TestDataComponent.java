@@ -6,5 +6,5 @@ import com.oscarrrweb.tddboilerplate.presentation.di.modules.TestDataModule;
 import dagger.Component;
 
 @Repository
-@Component(dependencies = TestApplicationComponent.class, modules = TestDataModule.class)
+@Component(modules = TestDataModule.class)
 public interface TestDataComponent extends DataComponent {}

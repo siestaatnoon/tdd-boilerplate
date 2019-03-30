@@ -95,6 +95,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testImplementation 'androidx.test:core:1.1.0'
     testImplementation 'androidx.test:runner:1.1.0-alpha4'
+    testImplementation 'androidx.test.ext:junit:1.1.0'
     testImplementation "org.mockito:mockito-core:${mockitoVersion}"
     testImplementation "org.robolectric:robolectric:${robolectricVersion}"
     // testImplementation "org.robolectric:shadows-supportv4:${robolectricVersion}" //CURRENTLY NOT SUPPORTED WITH Androidx

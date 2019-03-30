@@ -22,9 +22,9 @@ public class DoodadMapper extends EntityMapper<DoodadEntity, Doodad> {
 
         DoodadEntity entity = new DoodadEntity();
         entity = (DoodadEntity) EntityMapper.setEntityFields(entity, domainModel);
+        entity.setWidgetUuid(domainModel.getWidgetUuid());
         entity.setName(domainModel.getName());
         entity.setDescription(domainModel.getDescription());
-        entity.setWidgetUuid(domainModel.getWidgetUuid());
         return entity;
     }
 
@@ -49,9 +49,9 @@ public class DoodadMapper extends EntityMapper<DoodadEntity, Doodad> {
 
         Doodad model = new Doodad();
         model = (Doodad) EntityMapper.setDomainModelFields(model, entity);
+        model.setWidgetUuid(entity.getWidgetUuid());
         model.setName(entity.getName());
         model.setDescription(entity.getDescription());
-        model.setWidgetUuid(entity.getWidgetUuid());
         return model;
     }
 

@@ -20,7 +20,7 @@ public class TestDataModule {
     private final AppDatabase database;
 
     public TestDataModule(Context context) {
-        database = AppDatabase.getInstance(context, true);
+        database = AppDatabase.getInstance(context, true, true);
     }
 
     @Provides @Repository AppDatabase provideAppDatabase() {

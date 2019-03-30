@@ -24,6 +24,7 @@ public class WidgetMapper extends EntityMapper<WidgetEntity, Widget> {
 
         WidgetEntity entity = new WidgetEntity();
         entity = (WidgetEntity) EntityMapper.setEntityFields(entity, domainModel);
+        entity.setGizmoUuid(domainModel.getGizmoUuid());
         entity.setName(domainModel.getName());
         entity.setDescription(domainModel.getDescription());
         entity.setDoodads(mDoodadMapper.fromDomainModel(domainModel.getDoodads()));
@@ -51,6 +52,7 @@ public class WidgetMapper extends EntityMapper<WidgetEntity, Widget> {
 
         Widget model = new Widget();
         model = (Widget) EntityMapper.setDomainModelFields(model, entity);
+        model.setGizmoUuid(entity.getGizmoUuid());
         model.setName(entity.getName());
         model.setDescription(entity.getDescription());
         model.setDoodads(mDoodadMapper.toDomainModel(entity.getDoodads()));

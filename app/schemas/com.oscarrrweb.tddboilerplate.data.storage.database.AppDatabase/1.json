@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "bc9192ea82c8de53c2d02b83a51c250a",
+    "identityHash": "081109a7cadfcd3fa001d1d4d634f44e",
     "entities": [
       {
         "tableName": "gizmos",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT, `value` TEXT, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `uuid` TEXT, `created_at` TEXT, `updated_at` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT, `description` TEXT, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `uuid` TEXT, `created_at` TEXT, `updated_at` TEXT)",
         "fields": [
           {
             "fieldPath": "name",
@@ -15,8 +15,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "value",
-            "columnName": "value",
+            "fieldPath": "description",
+            "columnName": "description",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -81,7 +81,7 @@
       },
       {
         "tableName": "widgets",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`gizmo_uuid` TEXT, `name` TEXT, `value` TEXT, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `uuid` TEXT, `created_at` TEXT, `updated_at` TEXT, FOREIGN KEY(`gizmo_uuid`) REFERENCES `gizmos`(`uuid`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`gizmo_uuid` TEXT, `name` TEXT, `description` TEXT, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `uuid` TEXT, `created_at` TEXT, `updated_at` TEXT, FOREIGN KEY(`gizmo_uuid`) REFERENCES `gizmos`(`uuid`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "gizmoUuid",
@@ -96,8 +96,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "value",
-            "columnName": "value",
+            "fieldPath": "description",
+            "columnName": "description",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -166,7 +166,7 @@
       },
       {
         "tableName": "doodads",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`widget_uuid` TEXT, `name` TEXT, `value` TEXT, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `uuid` TEXT, `created_at` TEXT, `updated_at` TEXT, FOREIGN KEY(`widget_uuid`) REFERENCES `widgets`(`uuid`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`widget_uuid` TEXT, `name` TEXT, `description` TEXT, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `uuid` TEXT, `created_at` TEXT, `updated_at` TEXT, FOREIGN KEY(`widget_uuid`) REFERENCES `widgets`(`uuid`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "widgetUuid",
@@ -181,8 +181,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "value",
-            "columnName": "value",
+            "fieldPath": "description",
+            "columnName": "description",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -252,7 +252,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"bc9192ea82c8de53c2d02b83a51c250a\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"081109a7cadfcd3fa001d1d4d634f44e\")"
     ]
   }
 }
