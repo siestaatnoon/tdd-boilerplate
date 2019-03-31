@@ -1,8 +1,10 @@
 package com.oscarrrweb.tddboilerplate.presentation.model.sample;
 
+import com.oscarrrweb.tddboilerplate.presentation.model.base.UiModel;
+
 import java.util.List;
 
-public class GizmoUiModel {
+public class GizmoUiModel extends UiModel {
 
     private String name;
 

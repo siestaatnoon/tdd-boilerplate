@@ -1,6 +1,8 @@
 package com.oscarrrweb.tddboilerplate.presentation.model.sample;
 
-public class DoodadUiModel {
+import com.oscarrrweb.tddboilerplate.presentation.model.base.UiModel;
+
+public class DoodadUiModel extends UiModel {
 
     private String widgetUuid;
 
