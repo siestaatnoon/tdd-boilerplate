@@ -9,7 +9,7 @@ import java.util.Date;
  * @author Johnny Spence
  * @version 1.0.0
  */
-abstract public class AbstractModel {
+abstract public class Model {
 
     /**
      * The AUTO_INCREMENT id of the model.

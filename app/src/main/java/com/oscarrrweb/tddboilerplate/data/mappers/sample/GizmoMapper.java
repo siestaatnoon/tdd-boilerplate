@@ -12,6 +12,8 @@ import javax.inject.Inject;
 
 public class GizmoMapper extends EntityMapper<GizmoEntity, Gizmo> {
 
+    @Inject WidgetMapper mWidgetMapper;
+
     @Inject
     public GizmoMapper() {}
 
@@ -25,6 +27,7 @@ public class GizmoMapper extends EntityMapper<GizmoEntity, Gizmo> {
         entity = (GizmoEntity) EntityMapper.setEntityFields(entity, domainModel);
         entity.setName(domainModel.getName());
         entity.setDescription(domainModel.getDescription());
+        entity.setWidgets(mWidgetMapper.fromDomainModel(domainModel.getWidgets()));
         return entity;
     }
 
@@ -51,6 +54,7 @@ public class GizmoMapper extends EntityMapper<GizmoEntity, Gizmo> {
         model = (Gizmo) EntityMapper.setDomainModelFields(model, entity);
         model.setName(entity.getName());
         model.setDescription(entity.getDescription());
+        model.setWidgets(mWidgetMapper.toDomainModel(entity.getWidgets()));
         return model;
     }
 

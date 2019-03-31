@@ -1,13 +1,13 @@
 package com.oscarrrweb.tddboilerplate.data.mappers.base;
 
 import com.oscarrrweb.tddboilerplate.data.entity.base.Entity;
-import com.oscarrrweb.tddboilerplate.domain.model.base.AbstractModel;
+import com.oscarrrweb.tddboilerplate.domain.model.base.Model;
 
 import java.util.List;
 
 /**
  * Abstraction to map an {@link Entity} subclass in the <code>data</code> package with an
- * {@link AbstractModel} subclass in the <code>domain</code> package. Converts single objects or
+ * {@link Model} subclass in the <code>domain</code> package. Converts single objects or
  * {@link List} of objects to and from the model objects of each package. Although the getter and
  * setter methods between the two packages may have similar names, keeping the models in their
  * respective packages eliminates coupling between them.
@@ -15,10 +15,10 @@ import java.util.List;
  * @author Johnny Spence
  * @version 1.0.0
  */
-public interface Mapper<E extends Entity, M extends AbstractModel> {
+public interface Mapper<E extends Entity, M extends Model> {
 
     /**
-     * Converts an {@link AbstractModel} subclass to an {@link Entity} subclass.
+     * Converts an {@link Model} subclass to an {@link Entity} subclass.
      *
      * @param domainModel   The <code>domain</code> package model
      * @return              The converted <code>data</code> package Entity model
@@ -26,7 +26,7 @@ public interface Mapper<E extends Entity, M extends AbstractModel> {
     E fromDomainModel(M domainModel);
 
     /**
-     * Converts a {@link List} of subclassed {@link AbstractModel} to a List of subclassed
+     * Converts a {@link List} of subclassed {@link Model} to a List of subclassed
      * {@link Entity}.
      *
      * @param domainModels  The List of <code>domain</code> package models
@@ -35,7 +35,7 @@ public interface Mapper<E extends Entity, M extends AbstractModel> {
     List<E> fromDomainModel(List<M> domainModels);
 
     /**
-     * Converts an {@link Entity} subclass to an {@link AbstractModel} subclass.
+     * Converts an {@link Entity} subclass to an {@link Model} subclass.
      *
      * @param entity   The <code>data</code> package Entity model
      * @return         The converted <code>domain</code> package model
@@ -44,7 +44,7 @@ public interface Mapper<E extends Entity, M extends AbstractModel> {
 
     /**
      * Converts a {@link List} of subclassed {@link Entity} to a List of subclassed
-     * {@link AbstractModel}.
+     * {@link Model}.
      *
      * @param entities  The List of <code>data</code> package Entity models
      * @return          The converted List of <code>domain</code> package models

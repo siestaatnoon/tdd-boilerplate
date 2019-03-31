@@ -23,9 +23,9 @@ abstract public class AbstractUseCase<P, R> implements UseCase<P, R> {
      * the returned instance.
      *
      * @param parameter The generic type parameter passed to the UseCase to process
-     * @return          An RxJava Single object
+     * @return          <code><R></code> return type
      */
-    abstract public Single<R> run(final P parameter);
+    abstract public R run(final P parameter);
 
     /**
      * Provides the default implementation which executes the implemented <code>run(P)</code>
@@ -37,6 +37,6 @@ abstract public class AbstractUseCase<P, R> implements UseCase<P, R> {
      */
     @Override
     public Single<R> execute(final P parameter) {
-        return AbstractUseCase.this.run(parameter);
+        return Single.just(AbstractUseCase.this.run(parameter));
     }
 }

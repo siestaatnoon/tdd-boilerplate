@@ -1,13 +1,13 @@
 package com.oscarrrweb.tddboilerplate.data.mappers.base;
 
 import com.oscarrrweb.tddboilerplate.data.entity.base.Entity;
-import com.oscarrrweb.tddboilerplate.domain.model.base.AbstractModel;
+import com.oscarrrweb.tddboilerplate.domain.model.base.Model;
 
 import java.util.List;
 
 /**
  * Abstraction to map an {@link Entity} subclass in the <code>data</code> package with an
- * {@link AbstractModel} subclass in the <code>domain</code> package. Converts single objects or
+ * {@link Model} subclass in the <code>domain</code> package. Converts single objects or
  * {@link List} of objects to and from the model objects of each package. Although the getter and
  * setter methods between the two packages may have similar names, keeping the models in their
  * respective packages eliminates coupling between them.
@@ -15,11 +15,11 @@ import java.util.List;
  * @author Johnny Spence
  * @version 1.0.0
  */
-abstract public class EntityMapper<E extends Entity, M extends AbstractModel>
+abstract public class EntityMapper<E extends Entity, M extends Model>
         implements Mapper<E, M> {
 
     /**
-     * Converts an {@link AbstractModel} subclass to an {@link Entity} subclass. To be defined.
+     * Converts an {@link Model} subclass to an {@link Entity} subclass. To be defined.
      *
      * @param domainModel   The <code>domain</code> package model
      * @return              The converted <code>data</code> package Entity model
@@ -27,7 +27,7 @@ abstract public class EntityMapper<E extends Entity, M extends AbstractModel>
     abstract public E fromDomainModel(M domainModel);
 
     /**
-     * Converts a {@link List} of subclassed {@link AbstractModel} to a List of subclassed
+     * Converts a {@link List} of subclassed {@link Model} to a List of subclassed
      * {@link Entity}. To be defined.
      *
      * @param domainModels  The List of <code>domain</code> package models
@@ -36,7 +36,7 @@ abstract public class EntityMapper<E extends Entity, M extends AbstractModel>
     abstract public List<E> fromDomainModel(List<M> domainModels);
 
     /**
-     * Converts an {@link Entity} subclass to an {@link AbstractModel} subclass. To be defined.
+     * Converts an {@link Entity} subclass to an {@link Model} subclass. To be defined.
      *
      * @param entity   The <code>data</code> package Entity model
      * @return         The converted <code>domain</code> package model
@@ -45,7 +45,7 @@ abstract public class EntityMapper<E extends Entity, M extends AbstractModel>
 
     /**
      * Converts a {@link List} of subclassed {@link Entity} to a List of subclassed
-     * {@link AbstractModel}. To be defined.
+     * {@link Model}. To be defined.
      *
      * @param entities  The List of <code>data</code> package Entity models
      * @return          The converted List of <code>domain</code> package models
@@ -53,14 +53,14 @@ abstract public class EntityMapper<E extends Entity, M extends AbstractModel>
     abstract public List<M> toDomainModel(List<E> entities);
 
     /**
-     * Converts the base fields of a given {@link AbstractModel} subclass to the base fields
+     * Converts the base fields of a given {@link Model} subclass to the base fields
      * of a given {@link Entity} subclass. A convenience method that can be used by subclasses.
      *
      * @param entity        The <code>data</code> model to convert to
      * @param domainModel   The <code>domain</code> package model to convert
      * @return              The converted Entity
      */
-    public static Entity setEntityFields(Entity entity, AbstractModel domainModel) {
+    public static Entity setEntityFields(Entity entity, Model domainModel) {
         if (entity == null || domainModel == null) {
             return entity;
         }
@@ -74,13 +74,13 @@ abstract public class EntityMapper<E extends Entity, M extends AbstractModel>
 
     /**
      * Converts the base fields of a given {@link Entity} subclass to the base fields of a given
-     * {@link AbstractModel} subclass. A convenience method that can be used by subclass.
+     * {@link Model} subclass. A convenience method that can be used by subclass.
      *
      * @param domainModel   The <code>domain</code> model to convert to
      * @param entity        The <code>data</code> model to convert
      * @return              The converted AbstractModel
      */
-    public static AbstractModel setDomainModelFields(AbstractModel domainModel, Entity entity) {
+    public static Model setDomainModelFields(Model domainModel, Entity entity) {
         if (domainModel == null || entity == null) {
             return domainModel;
         }

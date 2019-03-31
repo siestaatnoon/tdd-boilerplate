@@ -98,7 +98,7 @@ dependencies {
     testImplementation 'androidx.test.ext:junit:1.1.0'
     testImplementation "org.mockito:mockito-core:${mockitoVersion}"
     testImplementation "org.robolectric:robolectric:${robolectricVersion}"
-    // testImplementation "org.robolectric:shadows-supportv4:${robolectricVersion}" //CURRENTLY NOT SUPPORTED WITH Androidx
+    // testImplementation "org.robolectric:shadows-supportv4:${robolectricVersion}" //CURRENTLY NOT SUPPORTED WITH AndroidX
     testImplementation "androidx.room:room-testing:${roomVersion}"
     testAnnotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
 

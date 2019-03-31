@@ -26,7 +26,7 @@ abstract public class DoodadDao implements EntityDao<DoodadEntity> {
     @Query("SELECT * FROM doodads WHERE widget_uuid=:widgetUuid ORDER BY name ASC")
     abstract public List<DoodadEntity> getByWidget(String widgetUuid);
 
-    @Query("SELECT * FROM doodads WHERE widget_uuid IN (:widgetUuids) ORDER BY name ASC")
+    @Query("SELECT * FROM doodads WHERE widget_uuid IN (:widgetUuids) ORDER BY widget_uuid ASC, name ASC")
     abstract public List<DoodadEntity> getByWidgets(List<String> widgetUuids);
 
     @Query("UPDATE doodads SET updated_at=:dateTime WHERE uuid=:uuid")

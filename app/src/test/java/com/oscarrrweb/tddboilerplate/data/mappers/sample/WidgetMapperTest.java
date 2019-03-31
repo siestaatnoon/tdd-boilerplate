@@ -38,7 +38,7 @@ public class WidgetMapperTest {
         mMapper = dataComponent.widgetMapper();
         dataComponent.inject(mMapper);
 
-        List<DoodadEntity> doodads1 = new ArrayList<>(2);
+        List<DoodadEntity> doodads = new ArrayList<>(2);
         DoodadEntity doodad;
 
         doodad = new DoodadEntity();
@@ -48,7 +48,7 @@ public class WidgetMapperTest {
         doodad.setName("Doodad One");
         doodad.setDescription("Not much to say here");
         doodad.touch();
-        doodads1.add(doodad);
+        doodads.add(doodad);
 
         doodad = new DoodadEntity();
         doodad.setId(2);
@@ -57,7 +57,7 @@ public class WidgetMapperTest {
         doodad.setName("Doodad Two");
         doodad.setDescription("Even less to say here");
         doodad.touch();
-        doodads1.add(doodad);
+        doodads.add(doodad);
 
         entity1 = new WidgetEntity();
         entity1.setId(1);
@@ -65,10 +65,10 @@ public class WidgetMapperTest {
         entity1.setGizmoUuid(GIZMO_UUID);
         entity1.setName("WidgetEntity One");
         entity1.setDescription("Whooptee doo");
-        entity1.setDoodads(doodads1);
+        entity1.setDoodads(doodads);
         entity1.touch();
 
-        List<DoodadEntity> doodads2 = new ArrayList<>(2);
+        doodads = new ArrayList<>(2);
 
         doodad = new DoodadEntity();
         doodad.setId(3);
@@ -77,7 +77,7 @@ public class WidgetMapperTest {
         doodad.setName("Doodad One and a half");
         doodad.setDescription("Lots going on");
         doodad.touch();
-        doodads2.add(doodad);
+        doodads.add(doodad);
 
         doodad = new DoodadEntity();
         doodad.setId(4);
@@ -86,7 +86,7 @@ public class WidgetMapperTest {
         doodad.setName("Doodad Two and a half");
         doodad.setDescription("A real party over here");
         doodad.touch();
-        doodads2.add(doodad);
+        doodads.add(doodad);
 
         entity2 = new WidgetEntity();
         entity2.setId(2);
@@ -94,7 +94,7 @@ public class WidgetMapperTest {
         entity2.setGizmoUuid(GIZMO_UUID);
         entity2.setName("WidgetEntity Two");
         entity2.setDescription("Whooptee doo too");
-        entity2.setDoodads(doodads2);
+        entity2.setDoodads(doodads);
         entity2.touch();
     }
 

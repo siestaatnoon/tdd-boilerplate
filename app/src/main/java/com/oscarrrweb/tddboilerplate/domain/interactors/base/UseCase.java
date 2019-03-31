@@ -18,9 +18,9 @@ public interface UseCase<P, R> {
      * returned instance.
      *
      * @param parameter The generic type parameter passed to the UseCase to process
-     * @return          An RxJava Single object
+     * @return          <code><R></code> return type
      */
-    Single<R> run(P parameter);
+    R run(P parameter);
 
     /**
      * While the <code>run(P)</code> method defines the UseCase processing, this method is called

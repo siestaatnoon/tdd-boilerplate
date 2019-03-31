@@ -3,8 +3,10 @@ package com.oscarrrweb.tddboilerplate.data.repository.sample;
 import android.content.Context;
 
 import com.oscarrrweb.tddboilerplate.TestApp;
+import com.oscarrrweb.tddboilerplate.data.entity.sample.WidgetEntity;
 import com.oscarrrweb.tddboilerplate.data.storage.database.AppDatabase;
 import com.oscarrrweb.tddboilerplate.domain.model.sample.Gizmo;
+import com.oscarrrweb.tddboilerplate.domain.model.sample.Widget;
 import com.oscarrrweb.tddboilerplate.presentation.di.components.DaggerTestDataComponent;
 import com.oscarrrweb.tddboilerplate.presentation.di.components.TestDataComponent;
 import com.oscarrrweb.tddboilerplate.presentation.di.modules.TestDataModule;
@@ -16,6 +18,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -35,22 +38,29 @@ import static org.junit.Assert.fail;
 @Config(sdk=28, application= TestApp.class)
 public class GizmoRepositoryTest {
 
+    private TestDataComponent mComponent;
     private AppDatabase mDb;
     private GizmoRepository mRepository;
     private Gizmo model1;
     private Gizmo model2;
     private Gizmo model3;
 
+    private List<WidgetEntity> widgetEntities;
+    private int count = 0;
+
     @Before
     public void setUp() throws Exception {
         Context appContext = ApplicationProvider.getApplicationContext();
-        TestDataComponent dataComponent = DaggerTestDataComponent.builder()
+        mComponent = DaggerTestDataComponent.builder()
                 .testDataModule(new TestDataModule(appContext))
                 .build();
 
-        mDb = dataComponent.appDatabase();
+        mDb = mComponent.appDatabase();
         mRepository = new GizmoRepository();
-        dataComponent.inject(mRepository);
+        mComponent.inject(mComponent.widgetMapper());
+        mComponent.inject(mComponent.gizmoMapper());
+        mComponent.inject(mComponent.widgetRepository());
+        mComponent.inject(mRepository);
 
         model1 = new Gizmo();
         model1.setUuid("775ae963-603d-460e-8ca4-f65fa39b4ed3");
@@ -66,6 +76,27 @@ public class GizmoRepositoryTest {
         model3.setUuid("eb17c902-c2dd-47bf-b8b8-02206fc537c3");
         model3.setName("Gizmo Three");
         model3.setDescription("Whooptee doo and don't die");
+
+        // Initialize the widgets
+        widgetEntities = new ArrayList<>();
+
+        WidgetEntity doodad = new WidgetEntity();
+        doodad.setUuid("7ba3dc62-7dfa-4f86-9ba3-6d48b0a82055");
+        doodad.setName("Widget One");
+        doodad.setDescription("One for the sun");
+        widgetEntities.add(doodad);
+
+        doodad = new WidgetEntity();
+        doodad.setUuid("36584ec4-0d31-4a88-b64f-40cebc5f2210");
+        doodad.setName("Widget Two");
+        doodad.setDescription("Two for the road");
+        widgetEntities.add(doodad);
+
+        doodad = new WidgetEntity();
+        doodad.setUuid("5f5d7587-4e31-43fb-aba1-86629b1f37b5");
+        doodad.setName("Widget Three");
+        doodad.setDescription("Three to get ready");
+        widgetEntities.add(doodad);
     }
 
     @Test
@@ -137,6 +168,31 @@ public class GizmoRepositoryTest {
         models = mRepository.getAll();
         assertNotNull("List<Gizmo> after getAll() null", models);
         assertEquals("List<Gizmo> after getAll() count incorrect", 0, models.size());
+
+        mRepository.insert(model1);     // insert
+        mRepository.insert(model2);     // gizmos
+        mRepository.insert(model3);     // for the last tests
+        insertWidget(model1.getUuid()); // insert
+        insertWidget(model2.getUuid()); // relational
+        insertWidget(model3.getUuid()); // widgets
+
+        // TEST attachWidgets(model)
+        model = mRepository.getByUuid(model1.getUuid());
+        assertNotNull("Gizmo after getByUuid() null", models);
+        model = mRepository.attachWidgets(model);
+        List<Widget> widgets = model.getWidgets();
+        assertNotNull("attachWidgets(model) null", widgets);
+        assertEquals("attachWidgets(model) size not 1", 1, widgets.size());
+
+        // TEST attachDoodads(List)
+        models = mRepository.getAll();
+        assertNotNull("List<Gizmo> after getAll() null", models);
+        models = mRepository.attachWidgets(models);
+        for (Gizmo m : models) {
+            widgets = m.getWidgets();
+            assertNotNull("attachWidgets(List) [UUID: " + m.getUuid() + "] widgets list null", widgets);
+            assertEquals("attachWidgets(List) size not 1", 1, widgets.size());
+        }
     }
 
     @After
@@ -152,5 +208,16 @@ public class GizmoRepositoryTest {
         assertEquals("description not equal", model1.getDescription(), model2.getDescription());
         assertNotNull("createdAt null value", model2.getCreatedAt());
         assertNotNull("updatedAt null value", model2.getUpdatedAt());
+    }
+
+    private void insertWidget(String gizmoUuid) {
+        if (gizmoUuid == null || (count + 1) > widgetEntities.size()) {
+            return;
+        }
+
+        WidgetEntity widget = widgetEntities.get(count);
+        widget.setGizmoUuid(gizmoUuid);
+        mComponent.widgetDao().insert(widget);
+        count++;
     }
 }

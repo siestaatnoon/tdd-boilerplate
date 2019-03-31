@@ -116,7 +116,7 @@ public class DoodadDaoTest {
         assertNotNull("List<DoodadEntity> after getByWidget(uuid) null", entities);
         assertEquals("List<DoodadEntity> after getByWidget(uuid) count incorrect", 4, entities.size());
 
-        // TEST getByWidgets(uuid)
+        // TEST getByWidgets(List)
         List<String> uuids = new ArrayList<>(1);
         uuids.add(WIDGET_UUID);
         entities = mDao.getByWidgets(uuids);

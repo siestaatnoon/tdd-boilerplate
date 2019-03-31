@@ -1,6 +1,9 @@
 package com.oscarrrweb.tddboilerplate.data.entity.sample;
 
+import java.util.List;
+
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.Index;
 
 import static com.oscarrrweb.tddboilerplate.data.entity.sample.GizmoEntity.TABLE_NAME;
@@ -19,6 +22,9 @@ public class GizmoEntity extends com.oscarrrweb.tddboilerplate.data.entity.base.
     private String name;
 
     private String description;
+
+    @Ignore
+    private List<WidgetEntity> widgets;
 
     @Override
     public String getTableName() {
@@ -39,5 +45,13 @@ public class GizmoEntity extends com.oscarrrweb.tddboilerplate.data.entity.base.
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<WidgetEntity> getWidgets() {
+        return widgets;
+    }
+
+    public void setWidgets(List<WidgetEntity> widgets) {
+        this.widgets = widgets;
     }
 }

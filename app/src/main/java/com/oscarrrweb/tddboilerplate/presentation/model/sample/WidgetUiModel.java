@@ -1,11 +1,8 @@
-package com.oscarrrweb.tddboilerplate.domain.model.sample;
-
-import com.oscarrrweb.tddboilerplate.domain.model.base.Model;
-import com.oscarrrweb.tddboilerplate.presentation.model.sample.DoodadUiModel;
+package com.oscarrrweb.tddboilerplate.presentation.model.sample;
 
 import java.util.List;
 
-public class Widget extends Model {
+public class WidgetUiModel {
 
     public String gizmoUuid;
 
@@ -13,9 +10,9 @@ public class Widget extends Model {
 
     public String description;
 
-    public Gizmo gizmo;
+    public GizmoUiModel gizmo;
 
-    public List<Doodad> doodads;
+    public List<DoodadUiModel> doodads;
 
 
     public String getGizmoUuid() {
@@ -42,19 +39,19 @@ public class Widget extends Model {
         this.description = description;
     }
 
-    public Gizmo getGizmo() {
+    public GizmoUiModel getGizmo() {
         return gizmo;
     }
 
-    public void setGizmo(Gizmo gizmo) {
+    public void setGizmo(GizmoUiModel gizmo) {
         this.gizmo = gizmo;
     }
 
-    public List<Doodad> getDoodads() {
+    public List<DoodadUiModel> getDoodads() {
         return doodads;
     }
 
-    public void setDoodads(List<Doodad> doodads) {
+    public void setDoodads(List<DoodadUiModel> doodads) {
         this.doodads = doodads;
     }
 }

@@ -1,16 +1,14 @@
-package com.oscarrrweb.tddboilerplate.domain.model.sample;
-
-import com.oscarrrweb.tddboilerplate.domain.model.base.Model;
+package com.oscarrrweb.tddboilerplate.presentation.model.sample;
 
 import java.util.List;
 
-public class Gizmo extends Model {
+public class GizmoUiModel {
 
     private String name;
 
     private String description;
 
-    private List<Widget> widgets;
+    private List<WidgetUiModel> widgets;
 
 
     public String getName() {
@@ -29,11 +27,11 @@ public class Gizmo extends Model {
         this.description = description;
     }
 
-    public List<Widget> getWidgets() {
+    public List<WidgetUiModel> getWidgets() {
         return widgets;
     }
 
-    public void setWidgets(List<Widget> widgets) {
+    public void setWidgets(List<WidgetUiModel> widgets) {
         this.widgets = widgets;
     }
 }

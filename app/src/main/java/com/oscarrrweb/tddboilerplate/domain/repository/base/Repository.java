@@ -11,6 +11,7 @@ import java.util.List;
  * type to a Java primitive and/or object type (e.g. String to {@link java.util.Date} and
  * vice versa).
  *
+ * @param <M> The POJO model type
  * @author Johnny Spence
  * @version 1.0.0
  */

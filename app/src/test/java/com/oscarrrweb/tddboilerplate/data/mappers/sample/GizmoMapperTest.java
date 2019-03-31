@@ -1,7 +1,11 @@
 package com.oscarrrweb.tddboilerplate.data.mappers.sample;
 
 import com.oscarrrweb.tddboilerplate.data.entity.sample.GizmoEntity;
+import com.oscarrrweb.tddboilerplate.data.entity.sample.WidgetEntity;
 import com.oscarrrweb.tddboilerplate.domain.model.sample.Gizmo;
+import com.oscarrrweb.tddboilerplate.domain.model.sample.Widget;
+import com.oscarrrweb.tddboilerplate.presentation.di.components.DaggerTestMapperComponent;
+import com.oscarrrweb.tddboilerplate.presentation.di.components.TestMapperComponent;
 
 import org.junit.After;
 import org.junit.Before;
@@ -27,20 +31,68 @@ public class GizmoMapperTest {
 
     @Before
     public void setUp() throws Exception {
-        mMapper = new GizmoMapper();
+        TestMapperComponent dataComponent = DaggerTestMapperComponent
+                .builder()
+                .build();
+        mMapper = dataComponent.gizmoMapper();
+        dataComponent.inject(dataComponent.widgetMapper());
+        dataComponent.inject(mMapper);
+
+        List<WidgetEntity> widgets = new ArrayList<>(2);
+        WidgetEntity widget;
+
+        widget = new WidgetEntity();
+        widget.setId(1);
+        widget.setUuid("f7c4b163-938e-4c16-95c1-4849ebd88a6b");
+        widget.setGizmoUuid(GIZMO_UUID_1);
+        widget.setName("Widget One");
+        widget.setDescription("Not much to say here");
+        widget.touch();
+        widgets.add(widget);
+
+        widget = new WidgetEntity();
+        widget.setId(2);
+        widget.setUuid("39b7b73e-bdb4-4297-82ae-70f725288871");
+        widget.setGizmoUuid(GIZMO_UUID_1);
+        widget.setName("Widget Two");
+        widget.setDescription("Even less to say here");
+        widget.touch();
+        widgets.add(widget);
 
         entity1 = new GizmoEntity();
         entity1.setId(1);
         entity1.setUuid(GIZMO_UUID_1);
         entity1.setName("Gizmo One");
         entity1.setDescription("Old MacDonald had a farm.");
+        entity1.setWidgets(widgets);
         entity1.touch();
+
+        widgets = new ArrayList<>(2);
+
+        widget = new WidgetEntity();
+        widget.setId(3);
+        widget.setUuid("176c8ad5-c00e-4c12-a3fe-9c4da382c625");
+        widget.setGizmoUuid(GIZMO_UUID_2);
+        widget.setName("Widget Three");
+        widget.setDescription("Lots going on");
+        widget.touch();
+        widgets.add(widget);
+
+        widget = new WidgetEntity();
+        widget.setId(4);
+        widget.setUuid("e8abaafc-491e-49d7-b4d0-eef2950a8cee");
+        widget.setGizmoUuid(GIZMO_UUID_2);
+        widget.setName("Widget Four");
+        widget.setDescription("A real party over here");
+        widget.touch();
+        widgets.add(widget);
 
         entity2 = new GizmoEntity();
         entity2.setId(2);
         entity2.setUuid(GIZMO_UUID_2);
         entity2.setName("Gizmo Two");
         entity2.setDescription("Then sold hamburgers or something.");
+        entity2.setWidgets(widgets);
         entity2.touch();
     }
 
@@ -100,5 +152,32 @@ public class GizmoMapperTest {
         assertNotNull("Entity getUpdatedAt null", entity.getUpdatedAt());
         assertNotNull("Model getUpdatedAt null", model.getUpdatedAt());
         assertEquals("updatedAt not equal", entity.getUpdatedAt().getTime(), model.getUpdatedAt().getTime());
+
+        assertEqualWidgets(entity.getWidgets(), model.getWidgets());
+    }
+
+    private void assertEqualWidgets(List<WidgetEntity> entities, List<Widget> models) {
+        assertNotNull("List<WidgetEntity> null", entities);
+        assertNotNull("List<Widget> null", models);
+        assertEquals("List<WidgetEntity> size not 2", 2, entities.size());
+        assertEquals("List<Widget> size not 2", 2, models.size());
+
+        for (int i=0; i < entities.size(); i++) {
+            WidgetEntity entity = entities.get(i);
+            Widget model = models.get(i);
+            assertEquals("Widget IDs not equal", entity.getId(), model.getId());
+            assertEquals("Widget UUIDs not equal", entity.getUuid(), model.getUuid());
+            assertEquals("Widget Widget UUIDs not equal", entity.getGizmoUuid(), model.getGizmoUuid());
+            assertEquals("Widget name not equal", entity.getName(), model.getName());
+            assertEquals("Widget description not equal", entity.getDescription(), model.getDescription());
+
+            assertNotNull("Widget entity getCreatedAt null", entity.getCreatedAt());
+            assertNotNull("Widget model getCreatedAt null", model.getCreatedAt());
+            assertEquals("Widget createdAt not equal", entity.getCreatedAt().getTime(), model.getCreatedAt().getTime());
+
+            assertNotNull("Widget entity getUpdatedAt null", entity.getUpdatedAt());
+            assertNotNull("Widget model getUpdatedAt null", model.getUpdatedAt());
+            assertEquals("Widget updatedAt not equal", entity.getUpdatedAt().getTime(), model.getUpdatedAt().getTime());
+        }
     }
 }

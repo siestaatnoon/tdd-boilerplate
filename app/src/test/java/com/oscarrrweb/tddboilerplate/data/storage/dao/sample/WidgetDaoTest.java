@@ -19,6 +19,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -102,6 +103,13 @@ public class WidgetDaoTest {
         List<WidgetEntity> entities = mDao.getByGizmo(GIZMO_UUID);
         assertNotNull("List<WidgetEntity> after getByGizmo(uuid) null", entities);
         assertEquals("List<WidgetEntity> after getByGizmo(uuid) count incorrect", 4, entities.size());
+
+        // TEST getByGizmos(List)
+        List<String> uuids = new ArrayList<>(1);
+        uuids.add(GIZMO_UUID);
+        entities = mDao.getByGizmos(uuids);
+        assertNotNull("List<WidgetEntity> after getByGizmo(List<String>) null", entities);
+        assertEquals("List<WidgetEntity> after getByGizmo(List<String>) count incorrect", 4, entities.size());
 
         // TEST update(entity)
         entity.setName("WidgetEntity One point One");

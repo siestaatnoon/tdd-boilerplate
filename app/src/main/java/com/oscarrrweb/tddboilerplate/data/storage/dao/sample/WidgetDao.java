@@ -1,13 +1,12 @@
 package com.oscarrrweb.tddboilerplate.data.storage.dao.sample;
 
-import androidx.room.Dao;
-import androidx.room.Query;
-import androidx.room.Transaction;
-
 import com.oscarrrweb.tddboilerplate.data.entity.sample.WidgetEntity;
 import com.oscarrrweb.tddboilerplate.data.storage.dao.base.EntityDao;
 
 import java.util.List;
+
+import androidx.room.Dao;
+import androidx.room.Query;
 
 @Dao
 abstract public class WidgetDao implements EntityDao<WidgetEntity> {
@@ -21,9 +20,11 @@ abstract public class WidgetDao implements EntityDao<WidgetEntity> {
     @Query("SELECT * FROM widgets WHERE uuid=:uuid LIMIT 1")
     abstract public WidgetEntity fromUuid(String uuid);
 
-    @Transaction
     @Query("SELECT * FROM widgets WHERE gizmo_uuid=:gizmoUuid ORDER BY created_at DESC")
     abstract public List<WidgetEntity> getByGizmo(String gizmoUuid);
+
+    @Query("SELECT * FROM widgets WHERE gizmo_uuid IN (:gizmoUuids) ORDER BY gizmo_uuid ASC, name ASC")
+    abstract public List<WidgetEntity> getByGizmos(List<String> gizmoUuids);
 
     @Query("SELECT * FROM widgets ORDER BY created_at DESC")
     abstract public List<WidgetEntity> getAll();
