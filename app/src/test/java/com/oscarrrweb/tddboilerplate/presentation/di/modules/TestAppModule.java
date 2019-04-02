@@ -11,7 +11,6 @@ import com.oscarrrweb.tddboilerplate.presentation.executor.TestUiThread;
 
 import javax.inject.Singleton;
 
-import androidx.test.core.app.ApplicationProvider;
 import dagger.Module;
 import dagger.Provides;
 
