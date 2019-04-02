@@ -15,7 +15,7 @@ import com.oscarrrweb.tddboilerplate.data.storage.database.AppDatabase;
 import com.oscarrrweb.tddboilerplate.domain.executor.ComputationThread;
 import com.oscarrrweb.tddboilerplate.domain.executor.ExecutorThread;
 import com.oscarrrweb.tddboilerplate.domain.executor.MainThread;
-import com.oscarrrweb.tddboilerplate.presentation.di.modules.ApplicationModule;
+import com.oscarrrweb.tddboilerplate.presentation.di.modules.AppModule;
 import com.oscarrrweb.tddboilerplate.presentation.di.modules.DataModule;
 import com.oscarrrweb.tddboilerplate.presentation.ui.activities.base.BaseAppCompatActivity;
 
@@ -25,8 +25,8 @@ import dagger.Component;
 import dagger.Lazy;
 
 @Singleton
-@Component(modules = {ApplicationModule.class, DataModule.class})
-public interface ApplicationComponent {
+@Component(modules = {AppModule.class, DataModule.class})
+public interface AppComponent {
 
     void inject(BaseAppCompatActivity activity);
 

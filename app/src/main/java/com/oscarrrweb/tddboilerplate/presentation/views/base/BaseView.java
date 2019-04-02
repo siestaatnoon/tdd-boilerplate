@@ -1,4 +1,4 @@
-package com.oscarrrweb.tddboilerplate.presentation.views;
+package com.oscarrrweb.tddboilerplate.presentation.views.base;
 
 import android.content.Context;
 

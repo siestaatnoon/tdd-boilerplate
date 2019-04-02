@@ -10,13 +10,14 @@ import com.oscarrrweb.tddboilerplate.data.storage.dao.sample.DoodadDao;
 import com.oscarrrweb.tddboilerplate.data.storage.dao.sample.GizmoDao;
 import com.oscarrrweb.tddboilerplate.data.storage.dao.sample.WidgetDao;
 import com.oscarrrweb.tddboilerplate.data.storage.database.AppDatabase;
-import com.oscarrrweb.tddboilerplate.presentation.di.Repository;
 import com.oscarrrweb.tddboilerplate.presentation.di.modules.DataModule;
+
+import javax.inject.Singleton;
 
 import dagger.Component;
 
-@Repository
-@Component(dependencies = ApplicationComponent.class, modules = DataModule.class)
+@Singleton
+@Component(modules = DataModule.class)
 public interface DataComponent {
 
     AppDatabase appDatabase();
@@ -30,11 +31,15 @@ public interface DataComponent {
     void inject(DoodadMapper mapper);
     void inject(DoodadRepository repository);
 
+    GizmoRepository gizmoRepository();
+    GizmoMapper gizmoMapper();
+    GizmoDao gizmoDao();
+
     WidgetRepository widgetRepository();
     WidgetMapper widgetMapper();
     WidgetDao widgetDao();
-    GizmoMapper gizmoMapper();
-    GizmoDao gizmoDao();
+
+    DoodadRepository doodadRepository();
     DoodadMapper doodadMapper();
     DoodadDao doodadDao();
 }

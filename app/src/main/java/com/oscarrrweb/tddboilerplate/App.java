@@ -2,16 +2,17 @@ package com.oscarrrweb.tddboilerplate;
 
 import android.app.Application;
 
-import com.oscarrrweb.tddboilerplate.presentation.di.components.ApplicationComponent;
-import com.oscarrrweb.tddboilerplate.presentation.di.components.DaggerApplicationComponent;
-import com.oscarrrweb.tddboilerplate.presentation.di.modules.ApplicationModule;
+import com.oscarrrweb.tddboilerplate.presentation.di.components.AppComponent;
+import com.oscarrrweb.tddboilerplate.presentation.di.components.DaggerAppComponent;
+import com.oscarrrweb.tddboilerplate.presentation.di.modules.AppModule;
+import com.oscarrrweb.tddboilerplate.presentation.di.modules.DataModule;
 import com.squareup.leakcanary.LeakCanary;
 
 import timber.log.Timber;
 
 public class App extends Application {
 
-    private ApplicationComponent applicationComponent;
+    private AppComponent applicationComponent;
 
     @Override
     public void onCreate() {
@@ -24,12 +25,13 @@ public class App extends Application {
             Timber.d("Timber DebugTree initialized");
         }
 
-        applicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this))
+        applicationComponent = DaggerAppComponent.builder()
+                .appModule(new AppModule(this))
+                .dataModule(new DataModule(this))
                 .build();
     }
 
-    public ApplicationComponent getApplicationComponent() {
+    public AppComponent getApplicationComponent() {
         return applicationComponent;
     }
 }

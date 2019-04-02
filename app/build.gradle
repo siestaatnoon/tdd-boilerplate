@@ -64,7 +64,10 @@ dependencies {
     // Dagger
     implementation "com.google.dagger:dagger:${daggerVersion}"
     implementation "com.google.dagger:dagger-android:${daggerVersion}"
-    implementation "com.google.dagger:dagger-android-support:${daggerVersion}" // if you use the support libraries
+    implementation "com.google.dagger:dagger-android-support:${daggerVersion}"
+    // if you use the support libraries
+    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
     annotationProcessor "com.google.dagger:dagger-android-processor:${daggerVersion}"
 

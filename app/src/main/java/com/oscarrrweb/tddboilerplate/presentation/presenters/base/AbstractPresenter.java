@@ -1,7 +1,7 @@
 package com.oscarrrweb.tddboilerplate.presentation.presenters.base;
 
 import com.oscarrrweb.tddboilerplate.domain.repository.base.Repository;
-import com.oscarrrweb.tddboilerplate.presentation.views.BaseView;
+import com.oscarrrweb.tddboilerplate.presentation.views.base.BaseView;
 
 public abstract class AbstractPresenter<M> implements Presenter {
 

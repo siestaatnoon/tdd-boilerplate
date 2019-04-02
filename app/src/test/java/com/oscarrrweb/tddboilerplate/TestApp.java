@@ -1,8 +1,9 @@
 package com.oscarrrweb.tddboilerplate;
 
-import com.oscarrrweb.tddboilerplate.presentation.di.components.DaggerTestApplicationComponent;
-import com.oscarrrweb.tddboilerplate.presentation.di.components.TestApplicationComponent;
-import com.oscarrrweb.tddboilerplate.presentation.di.modules.TestApplicationModule;
+import com.oscarrrweb.tddboilerplate.presentation.di.components.DaggerTestAppComponent;
+import com.oscarrrweb.tddboilerplate.presentation.di.components.TestAppComponent;
+import com.oscarrrweb.tddboilerplate.presentation.di.modules.TestAppModule;
+import com.oscarrrweb.tddboilerplate.presentation.di.modules.TestDataModule;
 
 import org.robolectric.TestLifecycleApplication;
 
@@ -10,17 +11,18 @@ import java.lang.reflect.Method;
 
 public class TestApp extends App implements TestLifecycleApplication {
 
-    private TestApplicationComponent applicationComponent;
+    private TestAppComponent applicationComponent;
 
     @Override
     public void onCreate() {
         //super.onCreate();
-        applicationComponent = DaggerTestApplicationComponent.builder()
-                .testApplicationModule(new TestApplicationModule(this))
+        applicationComponent = DaggerTestAppComponent.builder()
+                .testAppModule(new TestAppModule(this))
+                .testDataModule(new TestDataModule(this))
                 .build();
     }
 
-    public TestApplicationComponent getApplicationComponent() {
+    public TestAppComponent getApplicationComponent() {
         return applicationComponent;
     }
 

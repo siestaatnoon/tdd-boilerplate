@@ -15,11 +15,11 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class TestApplicationModule {
+public class TestAppModule {
 
     private final Context context;
 
-    public TestApplicationModule(Context context) {
+    public TestAppModule(Context context) {
         this.context = context;
     }
 

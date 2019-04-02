@@ -62,6 +62,7 @@ public class WidgetRepositoryTest {
 
         mDb = mComponent.appDatabase();
         mComponent.inject(mComponent.widgetMapper());
+        mComponent.inject(mComponent.gizmoMapper());
         mRepository = new WidgetRepository();
         mComponent.inject(mRepository);
 

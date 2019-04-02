@@ -4,7 +4,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.oscarrrweb.tddboilerplate.App;
-import com.oscarrrweb.tddboilerplate.presentation.di.components.ApplicationComponent;
+import com.oscarrrweb.tddboilerplate.presentation.di.components.AppComponent;
 import com.oscarrrweb.tddboilerplate.presentation.di.modules.ActivityModule;
 
 abstract public class BaseAppCompatActivity extends AppCompatActivity {
@@ -15,7 +15,7 @@ abstract public class BaseAppCompatActivity extends AppCompatActivity {
         this.getApplicationComponent().inject(this);
     }
 
-    protected ApplicationComponent getApplicationComponent() {
+    protected AppComponent getApplicationComponent() {
         return ((App) getApplication()).getApplicationComponent();
     }
 
