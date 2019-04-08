@@ -1,5 +1,7 @@
 package com.oscarrrweb.tddboilerplate.presentation.presenters;
 
+import android.content.Context;
+
 import com.oscarrrweb.tddboilerplate.data.repository.sample.GizmoRepository;
 import com.oscarrrweb.tddboilerplate.domain.executor.ExecutorThread;
 import com.oscarrrweb.tddboilerplate.domain.executor.MainThread;
@@ -22,11 +24,12 @@ public class MainPresenter extends AbstractPresenter<Gizmo> {
     @Inject SampleDisplayUseCase mUseCase;
     @Inject ExecutorThread mExecutorThread;
     @Inject MainThread mMainThread;
+    @Inject Context mContext;
 
     class ShowSampleDisplayObserver extends PresenterObserver<List<GizmoUiModel>> {
 
         private ShowSampleDisplayObserver() {
-            super(MainPresenter.this);
+            super(mContext, MainPresenter.this);
         }
 
         @Override

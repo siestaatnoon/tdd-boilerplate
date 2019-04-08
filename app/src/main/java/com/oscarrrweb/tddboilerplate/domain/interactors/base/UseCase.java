@@ -19,8 +19,9 @@ public interface UseCase<P, R> {
      *
      * @param parameter The generic type parameter passed to the UseCase to process
      * @return          <code><R></code> return type
+     * @throws          Exception if an error occurs in the implementing use case
      */
-    R run(P parameter);
+    R run(P parameter) throws Exception;
 
     /**
      * While the <code>run(P)</code> method defines the UseCase processing, this method is called
@@ -30,5 +31,5 @@ public interface UseCase<P, R> {
      * @param parameter The generic type parameter passed to the UseCase to process
      * @return          An RxJava Single object
      */
-    Single<R> execute(P parameter);
+    Single<R> execute(P parameter) throws Exception;
 }

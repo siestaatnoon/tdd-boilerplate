@@ -1,5 +1,8 @@
 package com.oscarrrweb.tddboilerplate.data.network.utils;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.text.TextUtils;
 
 import com.oscarrrweb.tddboilerplate.data.Constants;
@@ -14,6 +17,7 @@ import java.util.Formatter;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 public class NetworkUtils {
@@ -49,5 +53,17 @@ public class NetworkUtils {
         }
 
         return formatter.toString();
+    }
+
+    /**
+     * Checks if the device has an active internet connection.
+     *
+     * @return True device with internet connection, otherwise false.
+     */
+    public static boolean hasInternetConnection(@NonNull Context context) {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnectedOrConnecting();
     }
 }

@@ -1,5 +1,7 @@
 package com.oscarrrweb.tddboilerplate.data.repository.sample;
 
+import android.database.sqlite.SQLiteException;
+
 import com.oscarrrweb.tddboilerplate.data.entity.sample.DoodadEntity;
 import com.oscarrrweb.tddboilerplate.data.entity.sample.GizmoEntity;
 import com.oscarrrweb.tddboilerplate.data.entity.sample.WidgetEntity;
@@ -11,6 +13,8 @@ import com.oscarrrweb.tddboilerplate.data.storage.dao.sample.DoodadDao;
 import com.oscarrrweb.tddboilerplate.data.storage.dao.sample.GizmoDao;
 import com.oscarrrweb.tddboilerplate.data.storage.dao.sample.WidgetDao;
 import com.oscarrrweb.tddboilerplate.domain.model.sample.Widget;
+import com.oscarrrweb.tddboilerplate.domain.repository.exception.RepositoryDeleteException;
+import com.oscarrrweb.tddboilerplate.domain.repository.exception.RepositoryQueryException;
 import com.oscarrrweb.tddboilerplate.domain.repository.sample.WidgetRepo;
 
 import java.util.ArrayList;
@@ -32,48 +36,51 @@ public class WidgetRepository extends AbstractRepository<WidgetEntity, Widget, W
     public WidgetRepository() {}
 
     @Override
-    public int delete(String uuid) {
+    public int delete(String uuid) throws RepositoryDeleteException {
         WidgetEntity model = mWidgetDao.fromUuid(uuid);
-        int affectedRows = 0;
+        if (model == null) {
+            return 0;
+        }
 
-        if (model != null) {
+        try {
             // first delete doodads attached to widget
             List<DoodadEntity> list = mDoodadDao.getByWidget(model.getUuid());
             if (list != null) {
                 Object[] objects = list.toArray();
-                DoodadEntity[] journal = Arrays.copyOf(objects, objects.length, DoodadEntity[].class);
-                affectedRows = mDoodadDao.delete(journal);
+                DoodadEntity[] doodad = Arrays.copyOf(objects, objects.length, DoodadEntity[].class);
+                mDoodadDao.delete(doodad);
             }
 
-            // now delete the entity
-            affectedRows = mWidgetDao.delete(model);
+            return mWidgetDao.delete(model);
+        } catch (SQLiteException e) {
+            // This is most likely due to a foreign key existing
+            // in another table for the row to delete
+            throw new RepositoryDeleteException(e);
         }
-
-        return affectedRows;
     }
 
     @Override
-    public int delete(Widget model) {
+    public int delete(Widget model) throws RepositoryDeleteException {
         WidgetEntity entity = mWidgetMapper.fromDomainModel(model);
         if (entity != null) {
-            return delete(entity.getUuid());
+            return this.delete(entity.getUuid());
         }
 
         return 0;
     }
 
     @Override
-    public int delete(int id) {
+    public int delete(int id) throws RepositoryDeleteException {
         WidgetEntity entity = mWidgetDao.fromId(id);
         if (entity != null) {
-            return delete(entity.getUuid());
+            return this.delete(entity.getUuid());
         }
 
         return 0;
     }
 
     @Override
-    public Widget attachGizmo(Widget model) {
+    public Widget attachGizmo(Widget model) throws RepositoryQueryException {
         if (model == null) {
             return model;
         }
@@ -82,13 +89,19 @@ public class WidgetRepository extends AbstractRepository<WidgetEntity, Widget, W
         // model, we need to convert the domain model to an entity
         WidgetEntity entity = mWidgetMapper.fromDomainModel(model);
 
-        GizmoEntity gizmo = mGizmoDao.fromUuid(entity.getGizmoUuid());
-        model.setGizmo(mGizmoMapper.toDomainModel(gizmo));
+        try{
+            GizmoEntity gizmo = mGizmoDao.fromUuid(entity.getGizmoUuid());
+            model.setGizmo(mGizmoMapper.toDomainModel(gizmo));
+        } catch (SQLiteException e) {
+            // This is most likely due to a foreign key existing
+            // in another table for the row to delete
+            throw new RepositoryQueryException(e);
+        }
         return model;
     }
 
     @Override
-    public List<Widget> attachGizmo(List<Widget> models) {
+    public List<Widget> attachGizmo(List<Widget> models) throws RepositoryQueryException {
         if (models == null || models.size() == 0) {
             return models;
         }
@@ -105,7 +118,13 @@ public class WidgetRepository extends AbstractRepository<WidgetEntity, Widget, W
             }
         }
 
-        List<GizmoEntity> gizmos = mGizmoDao.fromUuids(uuids);
+        List<GizmoEntity> gizmos;
+        try{
+            gizmos = mGizmoDao.fromUuids(uuids);
+        } catch (SQLiteException e) {
+            throw new RepositoryQueryException(e);
+        }
+
         for (Widget item : models) {
             // since we do not know or need to know fields of the domain
             // model, we need to convert the domain model to an entity
@@ -124,7 +143,7 @@ public class WidgetRepository extends AbstractRepository<WidgetEntity, Widget, W
     }
 
     @Override
-    public Widget attachDoodads(Widget model) {
+    public Widget attachDoodads(Widget model) throws RepositoryQueryException {
         if (model == null) {
             return model;
         }
@@ -133,13 +152,19 @@ public class WidgetRepository extends AbstractRepository<WidgetEntity, Widget, W
         // model, we need to convert the domain model to an entity
         WidgetEntity entity = mWidgetMapper.fromDomainModel(model);
 
-        List<DoodadEntity> list = mDoodadDao.getByWidget(entity.getUuid());
+        List<DoodadEntity> list;
+        try{
+            list = mDoodadDao.getByWidget(entity.getUuid());
+        } catch (SQLiteException e) {
+            throw new RepositoryQueryException(e);
+        }
+
         model.setDoodads(mDoodadMapper.toDomainModel(list));
         return model;
     }
 
     @Override
-    public List<Widget> attachDoodads(List<Widget> models) {
+    public List<Widget> attachDoodads(List<Widget> models) throws RepositoryQueryException {
         if (models == null || models.size() == 0) {
             return models;
         }
@@ -156,7 +181,13 @@ public class WidgetRepository extends AbstractRepository<WidgetEntity, Widget, W
             }
         }
 
-        List<DoodadEntity> doodads = mDoodadDao.getByWidgets(uuids);
+        List<DoodadEntity> doodads;
+        try{
+            doodads = mDoodadDao.getByWidgets(uuids);
+        } catch (SQLiteException e) {
+            throw new RepositoryQueryException(e);
+        }
+
         for (Widget item : models) {
             // since we do not know or need to know fields of the domain
             // model, we need to convert the domain model to an entity

@@ -19,6 +19,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -162,6 +163,25 @@ public class DoodadRepositoryTest {
         models = mRepository.getAll();
         assertNotNull("List<Doodad> after getAll() null", models);
         assertEquals("List<Doodad> after getAll() count incorrect", 0, models.size());
+
+        // TEST delete(List<Doodad>)
+        id = mRepository.insert(model1);
+        model1.setId(id);
+        id = mRepository.insert(model2);
+        model2.setId(id);
+        id = mRepository.insert(model3);
+        model3.setId(id);
+        List<Doodad> list = new ArrayList<>(3);
+        list.add(model1);
+        list.add(model2);
+        list.add(model3);
+        count = mRepository.delete(list);
+        assertEquals("deleteCount[List<Doodad>] not 3", 3, count);
+
+        // TEST getAll() returns empty List after deletes
+        models = mRepository.getAll();
+        assertNotNull("List<Doodad> after delete(List<Doodad>) null", models);
+        assertEquals("List<Doodad> after delete(List<Doodad>) count incorrect", 0, models.size());
     }
 
     @After

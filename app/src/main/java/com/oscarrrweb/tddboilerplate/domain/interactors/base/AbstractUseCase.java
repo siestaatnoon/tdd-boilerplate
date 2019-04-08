@@ -1,5 +1,7 @@
 package com.oscarrrweb.tddboilerplate.domain.interactors.base;
 
+import com.oscarrrweb.tddboilerplate.domain.repository.exception.RepositoryException;
+
 import io.reactivex.Single;
 
 /**
@@ -24,8 +26,9 @@ abstract public class AbstractUseCase<P, R> implements UseCase<P, R> {
      *
      * @param parameter The generic type parameter passed to the UseCase to process
      * @return          <code><R></code> return type
+     * @throws          Exception if an error occurs in the subclass use case
      */
-    abstract public R run(final P parameter);
+    abstract public R run(final P parameter) throws Exception;
 
     /**
      * Provides the default implementation which executes the implemented <code>run(P)</code>
@@ -37,6 +40,10 @@ abstract public class AbstractUseCase<P, R> implements UseCase<P, R> {
      */
     @Override
     public Single<R> execute(final P parameter) {
-        return Single.just(AbstractUseCase.this.run(parameter));
+        try {
+            return Single.just(AbstractUseCase.this.run(parameter));
+        } catch (Exception e) {
+            return Single.error(e);
+        }
     }
 }

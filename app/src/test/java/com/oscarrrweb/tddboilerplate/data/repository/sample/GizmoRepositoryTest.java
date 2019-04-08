@@ -169,6 +169,25 @@ public class GizmoRepositoryTest {
         assertNotNull("List<Gizmo> after getAll() null", models);
         assertEquals("List<Gizmo> after getAll() count incorrect", 0, models.size());
 
+        // TEST delete(List<Doodad>)
+        id = mRepository.insert(model1);
+        model1.setId(id);
+        id = mRepository.insert(model2);
+        model2.setId(id);
+        id = mRepository.insert(model3);
+        model3.setId(id);
+        List<Gizmo> list = new ArrayList<>(3);
+        list.add(model1);
+        list.add(model2);
+        list.add(model3);
+        count = mRepository.delete(list);
+        assertEquals("deleteCount[List<Gizmo>] not 3", 3, count);
+
+        // TEST getAll() returns empty List after delete
+        models = mRepository.getAll();
+        assertNotNull("List<Gizmo> after delete(List<Gizmo>) null", models);
+        assertEquals("List<Gizmo> after delete(List<Gizmo>) count incorrect", 0, models.size());
+
         mRepository.insert(model1);     // insert
         mRepository.insert(model2);     // gizmos
         mRepository.insert(model3);     // for the last tests

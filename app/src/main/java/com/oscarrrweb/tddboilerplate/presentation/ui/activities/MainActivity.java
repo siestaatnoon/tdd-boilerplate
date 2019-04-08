@@ -108,8 +108,8 @@ public class MainActivity extends BaseAppCompatActivity implements MainView, Has
                 */
                 break;
             case R.id.action_settings:
-                //intent = new Intent(this, SettingsActivity.class);
-                //startActivity(intent);
+                intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
                 break;
             case R.id.action_close:
                 finish();

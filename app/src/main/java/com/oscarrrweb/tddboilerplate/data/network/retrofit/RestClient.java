@@ -10,12 +10,32 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
+/**
+ * API client to connect to server resources utilizing a {@link Retrofit} client.
+ *
+ * @author Johnny Spence
+ * @version 1.0.0
+ */
 public class RestClient {
 
+    /**
+     * Default seconds to timeout from server.
+     */
     private static final int TIMEOUT = 30; // seconds
+
+    /**
+     * {@link Retrofit} client.
+     */
     private static Retrofit sRetrofit;
+
+    /**
+     * Instance of this class used for singleton.
+     */
     private static RestClient sInstance;
 
+    /**
+     * Constructor.
+     */
     private RestClient() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -36,6 +56,11 @@ public class RestClient {
         sRetrofit = builder.build();
     }
 
+    /**
+     * Returns a singleton instance of this class.
+     *
+     * @return The RestClient instance
+     */
     public static RestClient getInstance() {
         if (sInstance == null) {
             sInstance = new RestClient();
@@ -44,6 +69,13 @@ public class RestClient {
         return sInstance;
     }
 
+    /**
+     * Returns the {@link Retrofit} service implementation for API calls.
+     *
+     * @param service   The Class of the  service interface mapping API endpoints to handler methods
+     * @param <T>       Class type of the service class
+     * @return          Implementation of the service class
+     */
     public <T> T getService(Class<T> service) {
         return sRetrofit.create(service);
     }

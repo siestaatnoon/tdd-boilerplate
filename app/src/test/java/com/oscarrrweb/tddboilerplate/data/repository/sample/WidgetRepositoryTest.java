@@ -221,6 +221,25 @@ public class WidgetRepositoryTest {
         models = mRepository.getAll();
         assertNotNull("List<Widget> after getAll() null", models);
         assertEquals("List<Widget> after getAll() count incorrect", 0, models.size());
+
+        // TEST delete(List<Doodad>)
+        id = mRepository.insert(model1);
+        model1.setId(id);
+        id = mRepository.insert(model2);
+        model2.setId(id);
+        id = mRepository.insert(model3);
+        model3.setId(id);
+        List<Widget> list = new ArrayList<>(3);
+        list.add(model1);
+        list.add(model2);
+        list.add(model3);
+        count = mRepository.delete(list);
+        assertEquals("deleteCount[List<Widget>] not 3", 3, count);
+
+        // TEST getAll() returns empty List after deletes
+        models = mRepository.getAll();
+        assertNotNull("List<Widget> after delete(List<Widget>) null", models);
+        assertEquals("List<Widget> after delete(List<Widget>) count incorrect", 0, models.size());
     }
 
     @After

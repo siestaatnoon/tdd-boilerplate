@@ -1,5 +1,7 @@
 package com.oscarrrweb.tddboilerplate.data.repository.sample;
 
+import android.database.sqlite.SQLiteException;
+
 import com.oscarrrweb.tddboilerplate.data.entity.sample.GizmoEntity;
 import com.oscarrrweb.tddboilerplate.data.entity.sample.WidgetEntity;
 import com.oscarrrweb.tddboilerplate.data.mappers.sample.GizmoMapper;
@@ -9,6 +11,7 @@ import com.oscarrrweb.tddboilerplate.data.storage.dao.sample.GizmoDao;
 import com.oscarrrweb.tddboilerplate.data.storage.dao.sample.WidgetDao;
 import com.oscarrrweb.tddboilerplate.domain.model.sample.Gizmo;
 import com.oscarrrweb.tddboilerplate.domain.model.sample.Widget;
+import com.oscarrrweb.tddboilerplate.domain.repository.exception.RepositoryQueryException;
 import com.oscarrrweb.tddboilerplate.domain.repository.sample.GizmoRepo;
 
 import java.util.ArrayList;
@@ -27,7 +30,7 @@ public class GizmoRepository extends AbstractRepository<GizmoEntity, Gizmo, Gizm
     public GizmoRepository() {}
 
     @Override
-    public Gizmo attachWidgets(Gizmo model) {
+    public Gizmo attachWidgets(Gizmo model) throws RepositoryQueryException {
         if (model == null) {
             return model;
         }
@@ -36,7 +39,13 @@ public class GizmoRepository extends AbstractRepository<GizmoEntity, Gizmo, Gizm
         // model, we need to convert the domain model to an entity
         GizmoEntity entity = mGizmoMapper.fromDomainModel(model);
 
-        List<WidgetEntity> list = mWidgetDao.getByGizmo(entity.getUuid());
+        List<WidgetEntity> list;
+        try{
+            list = mWidgetDao.getByGizmo(entity.getUuid());
+        } catch (SQLiteException e) {
+            throw new RepositoryQueryException(e);
+        }
+
         List<Widget> widgets = mWidgetMapper.toDomainModel(list);
         mWidgetRepository.attachDoodads(widgets);
         model.setWidgets(widgets);
@@ -44,7 +53,7 @@ public class GizmoRepository extends AbstractRepository<GizmoEntity, Gizmo, Gizm
     }
 
     @Override
-    public List<Gizmo> attachWidgets(List<Gizmo> models) {
+    public List<Gizmo> attachWidgets(List<Gizmo> models) throws RepositoryQueryException {
         if (models == null || models.size() == 0) {
             return models;
         }
@@ -61,7 +70,13 @@ public class GizmoRepository extends AbstractRepository<GizmoEntity, Gizmo, Gizm
             }
         }
 
-        List<WidgetEntity> items = mWidgetDao.getByGizmos(uuids);
+        List<WidgetEntity> items;
+        try{
+            items = mWidgetDao.getByGizmos(uuids);
+        } catch (SQLiteException e) {
+            throw new RepositoryQueryException(e);
+        }
+
         List<Widget> widgets = mWidgetMapper.toDomainModel(items);
         widgets = mWidgetRepository.attachDoodads(widgets);
 

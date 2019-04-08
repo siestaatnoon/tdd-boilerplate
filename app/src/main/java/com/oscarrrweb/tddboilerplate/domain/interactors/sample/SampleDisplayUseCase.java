@@ -16,7 +16,7 @@ public class SampleDisplayUseCase extends AbstractUseCase<Void, List<Gizmo>> {
     public SampleDisplayUseCase() {}
 
     @Override
-    public List<Gizmo> run(Void parameter) {
+    public List<Gizmo> run(Void parameter) throws Exception {
         List<Gizmo> gizmos = mGizmoRepository.getAll();
         return mGizmoRepository.attachWidgets(gizmos);
     }

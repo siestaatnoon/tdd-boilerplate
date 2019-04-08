@@ -4,6 +4,9 @@
     <string name="app_authority">@string/app_package</string>
     <string name="app_account_type">@string/app_package</string>
 
+    <!-- Activity Titles-->
+    <string name="title_settings">Settings</string>
+
     <!-- Main Menu -->
     <string name="menu_action_settings">Settings</string>
     <string name="menu_action_about">About</string>
@@ -11,7 +14,37 @@
 
     <!-- Shared Preferences -->
     <string name="pref_view_title_general">General</string>
+    <string name="pref_title_general">General</string>
+    <string name="pref_title_data_sync">Data &amp; Sync</string>
+    <string name="pref_label_off">Off</string>
+    <string name="pref_label_on">On</string>
+
+        <!--DO NOT TRANSLATE keys-->
     <string name="pref_username_key">general_username</string>
+    <string name="pref_sync_enabled_key">sync_enabled</string>
+    <string name="pref_sync_wifi_only_key">sync_wifi_only</string>
+    <string name="pref_sync_only_while_charging_key">sync_only_while_charging</string>
+
     <string name="pref_username_label">Your Public Name</string>
+    <string name="pref_sync_enabled_label">Enable Sync</string>
+    <string name="pref_sync_wifi_only_label">Sync only on WIFI connection</string>
+    <string name="pref_sync_wifi_only_summary_off">Sync on any connection</string>
+    <string name="pref_sync_wifi_only_summary_on">Sync on WIFI only</string>
+    <string name="pref_sync_only_while_charging_label">Sync only when phone is charging</string>
+    <string name="pref_sync_only_while_charging_summary_off">Sync using battery or when charging</string>
+    <string name="pref_sync_only_while_charging_summary_on">Sync only when charging</string>
+
+    <!-- Errors -->
+    <string name="error_authentication">Username and/or password invalid</string>
+    <string name="error_lockout">User temporarily disabled</string>
+    <string name="error_network_server">A server error has occurred</string>
+    <string name="error_network_timeout">The server connection has timed out</string>
+    <string name="error_network_connection">Unable to connect to internet</string>
+    <string name="error_respository_general">A database error has occurred</string>
+    <string name="error_respository_delete">%1$s could not be deleted</string>
+    <string name="error_respository_insert">%1$s could not be saved</string>
+    <string name="error_respository_query">%1$s could not be retrieved</string>
+    <string name="error_respository_update">"%1$s" could not be updated</string>
+    <string name="error_unknown">An unknown error has occurred</string>
 
 </resources>
