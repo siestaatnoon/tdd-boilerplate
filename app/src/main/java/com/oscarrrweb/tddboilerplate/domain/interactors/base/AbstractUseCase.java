@@ -2,6 +2,8 @@ package com.oscarrrweb.tddboilerplate.domain.interactors.base;
 
 import com.oscarrrweb.tddboilerplate.domain.repository.exception.RepositoryException;
 
+import java.util.concurrent.Callable;
+
 import io.reactivex.Single;
 
 /**
@@ -40,10 +42,11 @@ abstract public class AbstractUseCase<P, R> implements UseCase<P, R> {
      */
     @Override
     public Single<R> execute(final P parameter) {
-        try {
-            return Single.just(AbstractUseCase.this.run(parameter));
-        } catch (Exception e) {
-            return Single.error(e);
-        }
+        return Single.fromCallable(new Callable<R>() {
+            @Override
+            public R call() throws Exception {
+                return AbstractUseCase.this.run(parameter);
+            }
+        });
     }
 }

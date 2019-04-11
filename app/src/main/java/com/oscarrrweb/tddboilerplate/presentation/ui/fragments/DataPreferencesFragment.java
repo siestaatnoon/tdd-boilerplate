@@ -1,5 +1,7 @@
 package com.oscarrrweb.tddboilerplate.presentation.ui.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -18,8 +20,12 @@ public class DataPreferencesFragment extends PreferenceFragment implements
 
     private DataSettings mDataSyncSettings;
 
-    public DataPreferencesFragment() {
-        mDataSyncSettings = new DataSettingsManager(getActivity().getApplicationContext());
+    public DataPreferencesFragment() {}
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mDataSyncSettings = new DataSettingsManager(context);
     }
 
     @Override

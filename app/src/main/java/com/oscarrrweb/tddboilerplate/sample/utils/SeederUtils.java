@@ -1,17 +1,20 @@
-package com.oscarrrweb.sandbox.seeder.utils;
+package com.oscarrrweb.tddboilerplate.sample.utils;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.Log;
 
-import com.oscarrrweb.sandbox.Constants;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.oscarrrweb.tddboilerplate.data.Constants;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
-public class ResUtils {
+public class SeederUtils {
 
-    private static final String TAG = com.oscarrrweb.sandbox.seeder.utils.ResUtils.class.getSimpleName();
+    private static final String TAG = SeederUtils.class.getSimpleName();
 
     public static String getRawResourceString(Context context, int resId) {
         InputStream input;
@@ -40,5 +43,25 @@ public class ResUtils {
         }
 
         return resString;
+    }
+
+    public static String getJsonArrayStringFromMember(String jsonStr, String memberName) {
+        if (jsonStr == null || jsonStr.equals("") || memberName == null || memberName.equals("")) {
+            return null;
+        }
+
+        JsonParser parser = new JsonParser();
+        JsonElement element = parser.parse(jsonStr);
+        if (element.isJsonArray()) {
+            // method only returns data objects, not arrays of any kind
+            return null;
+        }
+
+        JsonObject jsonObject = element.getAsJsonObject();
+        if (jsonObject.has(memberName)) {
+            return jsonObject.getAsJsonArray(memberName).toString();
+        }
+
+        return null;
     }
 }

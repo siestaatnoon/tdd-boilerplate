@@ -1,5 +1,6 @@
 package com.oscarrrweb.tddboilerplate.presentation.ui.fragments;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -18,8 +19,12 @@ public class GeneralPreferencesFragment extends PreferenceFragment implements
 
     private GeneralSettings mGeneralSettings;
 
-    public GeneralPreferencesFragment() {
-        mGeneralSettings = new GeneralSettingsManager(getActivity().getApplicationContext());
+    public GeneralPreferencesFragment() {}
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mGeneralSettings = new GeneralSettingsManager(context);
     }
 
     @Override

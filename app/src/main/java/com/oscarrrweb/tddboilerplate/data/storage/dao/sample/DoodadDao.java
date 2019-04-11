@@ -20,13 +20,13 @@ abstract public class DoodadDao implements EntityDao<DoodadEntity> {
     @Query("SELECT * FROM doodads WHERE uuid=:uuid LIMIT 1")
     abstract public DoodadEntity fromUuid(String uuid);
 
-    @Query("SELECT * FROM doodads ORDER BY widget_uuid ASC, name ASC")
+    @Query("SELECT * FROM doodads ORDER BY widget_uuid ASC, id ASC")
     abstract public List<DoodadEntity> getAll();
 
-    @Query("SELECT * FROM doodads WHERE widget_uuid=:widgetUuid ORDER BY name ASC")
+    @Query("SELECT * FROM doodads WHERE widget_uuid=:widgetUuid ORDER BY id ASC")
     abstract public List<DoodadEntity> getByWidget(String widgetUuid);
 
-    @Query("SELECT * FROM doodads WHERE widget_uuid IN (:widgetUuids) ORDER BY widget_uuid ASC, name ASC")
+    @Query("SELECT * FROM doodads WHERE widget_uuid IN (:widgetUuids) ORDER BY widget_uuid ASC, id ASC")
     abstract public List<DoodadEntity> getByWidgets(List<String> widgetUuids);
 
     @Query("UPDATE doodads SET updated_at=:dateTime WHERE uuid=:uuid")

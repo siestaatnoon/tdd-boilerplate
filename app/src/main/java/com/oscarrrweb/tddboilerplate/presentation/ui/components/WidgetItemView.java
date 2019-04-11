@@ -16,23 +16,40 @@ import com.oscarrrweb.tddboilerplate.presentation.ui.utils.ViewUtils;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 
 public class WidgetItemView extends RelativeLayout implements View.OnClickListener {
 
-    @BindView(R.id.tv_widget_name)
-    TextView mNameView;
+    /**
+     * TODO: Convert to Butterknife
+     */
+    //@BindView(R.id.rl_widget)
+    public RelativeLayout widgetView;
 
-    @BindView(R.id.tv_widget_description)
-    TextView mDescriptionView;
+    /**
+     * TODO: Convert to Butterknife
+     */
+    //@BindView(R.id.tv_widget_name)
+    public TextView nameView;
 
-    @BindView(R.id.doodad_items)
-    LinearLayout mDoodadItems;
+    /**
+     * TODO: Convert to Butterknife
+     */
+    //@BindView(R.id.tv_widget_description)
+    public TextView descriptionView;
 
-    @BindView(R.id.btn_widget_menu)
-    ImageButton mButton;
+    /**
+     * TODO: Convert to Butterknife
+     */
+    //@BindView(R.id.doodad_items)
+    public LinearLayout doodadItems;
+
+    /**
+     * TODO: Convert to Butterknife
+     */
+    //@BindView(R.id.btn_widget_menu)
+    public ImageButton buttonContract;
 
     private Context mContext;
 
@@ -54,7 +71,7 @@ public class WidgetItemView extends RelativeLayout implements View.OnClickListen
         mContext = context;
     }
 
-    public void setup(WidgetUiModel model) {
+    public void bindData(WidgetUiModel model) {
         mModel = model;
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (inflater == null) {
@@ -62,11 +79,25 @@ public class WidgetItemView extends RelativeLayout implements View.OnClickListen
             return;
         }
 
-        View widgetView = inflater.inflate(R.layout.view_widget, this);
-        ButterKnife.bind(this, widgetView);
-        mNameView.setText(mModel.getName());
-        mDescriptionView.setText(mModel.getDescription());
-        mDoodadItems.setVisibility(View.INVISIBLE);
+        View widgetLayout = inflater.inflate(R.layout.view_widget, this);
+
+        // TODO: Uncomment for Butterknife
+        // ButterKnife.bind(this, widgetLayout);
+
+        widgetView = findViewById(R.id.rl_widget);                      // TODO: Remove for Butterknife
+        widgetView.setOnClickListener(this);
+
+        nameView = findViewById(R.id.tv_widget_name);                   // TODO: Remove for Butterknife
+        nameView.setText(mModel.getName());
+
+        descriptionView = findViewById(R.id.tv_widget_description);     // TODO: Remove for Butterknife
+        descriptionView.setText(mModel.getDescription());
+
+        doodadItems = findViewById(R.id.doodad_items);                  // TODO: Remove for Butterknife
+        doodadItems.setVisibility(View.GONE);
+
+        buttonContract = findViewById(R.id.btn_widget_menu);            // TODO: Remove for Butterknife
+        buttonContract.setOnClickListener(this);
 
         List<DoodadUiModel> doodads = mModel.getDoodads();
         if (doodads != null) {
@@ -76,7 +107,13 @@ public class WidgetItemView extends RelativeLayout implements View.OnClickListen
                 View view = inflater.inflate(R.layout.view_doodad, layout);
                 ((TextView)view.findViewById(R.id.tv_doodad_name)).setText(item.getName());
                 ((TextView)view.findViewById(R.id.tv_doodad_description)).setText(item.getDescription());
-                mDoodadItems.addView(view);
+
+                // every other tights item will have a different background so its easier on the eyes
+                if (i % 2 == 0) {
+                    view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorLightGrey));
+                }
+
+                doodadItems.addView(view);
             }
         }
     }
@@ -88,11 +125,12 @@ public class WidgetItemView extends RelativeLayout implements View.OnClickListen
             return;
         }
 
-        if (mDoodadItems.getVisibility() == View.VISIBLE) {
-            mButton.setVisibility(View.INVISIBLE);
+        if (doodadItems.getVisibility() == View.VISIBLE) {
+            buttonContract.setVisibility(View.GONE);
         } else {
-            mButton.setVisibility(View.VISIBLE);
+            buttonContract.setVisibility(View.VISIBLE);
         }
-        ViewUtils.toggleShow(mDoodadItems, 500);
+
+        ViewUtils.toggleShow(doodadItems, 500);
     }
 }

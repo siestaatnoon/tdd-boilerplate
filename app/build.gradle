@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.oscarrrweb.tddboilerplate"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -41,7 +41,7 @@ repositories {
 }
 
 def androidVersion = '1.0.0-beta01'
-def butterknifeVersion = "8.8.1"
+def butterknifeVersion = "10.0.0"
 def daggerVersion = "2.21"
 def gsonVersion = "2.8.5"
 def leakcanaryVersion = "1.6.3"
@@ -80,6 +80,11 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}"
     implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
 
+    // RevealFrameLayout
+    implementation('com.github.ozodrukh:CircularReveal:2.0.1@aar') {
+        transitive = true;
+    }
+
     // Google GSON
     implementation "com.google.code.gson:gson:${gsonVersion}"
 
@@ -88,8 +93,10 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:${roomVersion}"
 
     // Butterknife
-    implementation "com.jakewharton:butterknife:${butterknifeVersion}"
-    annotationProcessor "com.jakewharton:butterknife:${butterknifeVersion}"
+    // NOTE: Requires API 26 or higher, look for "TODO: Convert to Butterknife"
+    // to update
+    // implementation "com.jakewharton:butterknife:${butterknifeVersion}"
+    // annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
 
     // Timber logging
     implementation "com.jakewharton.timber:timber:${timberVersion}"

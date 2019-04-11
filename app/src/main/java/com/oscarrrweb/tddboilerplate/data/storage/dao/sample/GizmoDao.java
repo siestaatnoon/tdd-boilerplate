@@ -20,16 +20,16 @@ abstract public class GizmoDao implements EntityDao<GizmoEntity> {
     @Query("SELECT * FROM gizmos WHERE uuid=:uuid LIMIT 1")
     abstract public GizmoEntity fromUuid(String uuid);
 
-    @Query("SELECT * FROM gizmos WHERE uuid IN (:uuids) ORDER BY name ASC")
+    @Query("SELECT * FROM gizmos WHERE uuid IN (:uuids) ORDER BY id ASC")
     abstract public List<GizmoEntity> fromUuids(List<String> uuids);
 
-    @Query("SELECT * FROM gizmos ORDER BY name ASC")
+    @Query("SELECT * FROM gizmos ORDER BY id ASC")
     abstract public List<GizmoEntity> getAll();
 
     @Query("UPDATE gizmos SET updated_at=:dateTime WHERE uuid=:uuid")
     abstract public int setUpdatedAt(String uuid, String dateTime);
 
-    @Query("SELECT id, uuid, name FROM gizmos ORDER BY name ASC")
+    @Query("SELECT id, uuid, name FROM gizmos ORDER BY id ASC")
     abstract public List<ListItem> getForList();
 
     public static class ListItem {

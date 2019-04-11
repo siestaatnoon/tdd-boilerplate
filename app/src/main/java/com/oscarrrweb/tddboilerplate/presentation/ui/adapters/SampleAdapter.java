@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.oscarrrweb.tddboilerplate.R;
@@ -21,8 +22,6 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class SampleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         implements RecyclerViewClickListener {
@@ -30,54 +29,79 @@ public class SampleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private List<GizmoUiModel> mModelList;
     private Context mContext;
     private MainView mView;
+    List<ViewHolder> mViewHolders;
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.tv_gizmo_name)
-        TextView mNameView;
+        /**
+         * TODO: Convert to Butterknife
+         */
+        //@BindView(R.id.rl_gizmo)
+        final public RelativeLayout gizmoView;
 
-        @BindView(R.id.tv_gizmo_description)
-        TextView mDescriptionView;
+        /**
+         * TODO: Convert to Butterknife
+         */
+        //@BindView(R.id.tv_gizmo_name)
+        final public TextView nameView;
 
-        @BindView(R.id.widget_items)
-        LinearLayout mWidgetItems;
+        /**
+         * TODO: Convert to Butterknife
+         */
+        //@BindView(R.id.tv_gizmo_description)
+        final public TextView descriptionView;
 
-        @BindView(R.id.btn_gizmo_menu)
-        ImageButton mButton;
+        /**
+         * TODO: Convert to Butterknife
+         */
+        //@BindView(R.id.widget_items)
+        final public LinearLayout widgetItems;
+
+        /**
+         * TODO: Convert to Butterknife
+         */
+        //@BindView(R.id.btn_gizmo_menu)
+        final public ImageButton buttonContract;
 
         private RecyclerViewClickListener mListener;
 
-        public ViewHolder(View view, final RecyclerViewClickListener listener) {
+        public ViewHolder(final View view, final RecyclerViewClickListener listener) {
             super(view);
             mListener = listener;
-            ButterKnife.bind(this, view);
-            view.setOnClickListener(this);
+
+            // TODO: Uncomment for Butterknife
+            // ButterKnife.bind(this, view);
+
+            // TODO: Remove the following for Butterknife
+            gizmoView = view.findViewById(R.id.rl_gizmo);
+            nameView = view.findViewById(R.id.tv_gizmo_name);
+            descriptionView = view.findViewById(R.id.tv_gizmo_description);
+            widgetItems = view.findViewById(R.id.widget_items);
+            buttonContract = view.findViewById(R.id.btn_gizmo_menu);
+
+            gizmoView.setOnClickListener(this);
+            buttonContract.setOnClickListener(this);
         }
 
-        public void setup(GizmoUiModel gizmo) {
-            Context context = mNameView.getContext();
-            mNameView.setText(gizmo.getName());
-            mDescriptionView.setText(gizmo.getDescription());
-            mWidgetItems.setVisibility(View.INVISIBLE);
+        public void bindData(final GizmoUiModel gizmo) {
+            Context context = nameView.getContext();
+            nameView.setText(gizmo.getName());
+            descriptionView.setText(gizmo.getDescription());
+            widgetItems.setVisibility(View.GONE);
 
+            widgetItems.removeAllViews();
             List<WidgetUiModel> widgets = gizmo.getWidgets();
             if (widgets != null) {
                 for (WidgetUiModel item: widgets) {
                     WidgetItemView view = new WidgetItemView(context);
-                    view.setup(item);
-                    mWidgetItems.addView(view);
+                    view.bindData(item);
+                    widgetItems.addView(view);
                 }
             }
         }
 
         @Override
         public void onClick(View v) {
-            if (mWidgetItems.getVisibility() == View.VISIBLE) {
-                mButton.setVisibility(View.INVISIBLE);
-            } else {
-                mButton.setVisibility(View.VISIBLE);
-            }
-            ViewUtils.toggleShow(mWidgetItems, 500);
             mListener.onClickView(getAdapterPosition());
         }
     }
@@ -91,8 +115,8 @@ public class SampleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
+        //Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.card_gizmo, parent, false);
         return new ViewHolder(view, this);
     }
@@ -100,7 +124,11 @@ public class SampleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         GizmoUiModel item = mModelList.get(position);
-        ((ViewHolder) viewHolder).setup(item);
+        ((ViewHolder) viewHolder).bindData(item);
+        if (position < mViewHolders.size()) {
+            mViewHolders.remove(position);
+        }
+        mViewHolders.add(position, (ViewHolder) viewHolder);
     }
 
     @Override
@@ -110,12 +138,33 @@ public class SampleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onClickView(int position) {
-        notifyItemChanged(position);
+        ViewHolder viewHolder = mViewHolders.get(position);
+
+        if (viewHolder.widgetItems.getVisibility() == View.VISIBLE) {
+            viewHolder.buttonContract.setVisibility(View.GONE);
+        } else {
+            viewHolder.buttonContract.setVisibility(View.VISIBLE);
+        }
+
+        // closes up the child doodads of the widgets, nice and tidy
+        int count = viewHolder.widgetItems.getChildCount();
+        for (int i=0; i < count; i++) {
+            WidgetItemView view = (WidgetItemView) viewHolder.widgetItems.getChildAt(i);
+            if (view.doodadItems.getVisibility() == View.VISIBLE) {
+                view.onClick(view);
+            }
+        }
+
+        ViewUtils.toggleShow(viewHolder.widgetItems, 500);
+
+        // Boy does this wreak havoc
+        // notifyItemChanged(position);
     }
 
     public void addItems(@NonNull List<GizmoUiModel> modelList) {
         mModelList.clear();
         mModelList = modelList;
+        mViewHolders = new ArrayList<>(mModelList.size());
         notifyDataSetChanged();
     }
 }

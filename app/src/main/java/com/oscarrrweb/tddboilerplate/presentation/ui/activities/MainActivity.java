@@ -25,8 +25,6 @@ import javax.inject.Inject;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import timber.log.Timber;
 
 public class MainActivity extends BaseAppCompatActivity implements MainView, HasComponent<MainComponent> {
@@ -37,7 +35,10 @@ public class MainActivity extends BaseAppCompatActivity implements MainView, Has
     private MainComponent mMainComponent;
     private Context mContext;
 
-    @BindView(R.id.gizmo_list)
+    /**
+     * TODO: Convert to Butterknife
+     */
+    //@BindView(R.id.gizmo_list)
     RecyclerView mRecyclerView;
 
 
@@ -45,7 +46,9 @@ public class MainActivity extends BaseAppCompatActivity implements MainView, Has
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+
+        // TODO: Convert to Butterknife
+        // ButterKnife.bind(this);
 
         AppComponent appComponent = getApplicationComponent();
         appComponent.inject(appComponent.widgetMapper());
@@ -60,9 +63,11 @@ public class MainActivity extends BaseAppCompatActivity implements MainView, Has
 
         mMainComponent.inject(this);
         mMainComponent.inject(mPresenter);
+        mMainComponent.inject(mMainComponent.sampleDisplayUseCase());
         mContext = appComponent.context();
 
         // setup recycler view
+        mRecyclerView = findViewById(R.id.gizmo_list); // TODO: Remove for Butterknife
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView.setAdapter(mAdapter);
 

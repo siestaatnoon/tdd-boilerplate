@@ -20,13 +20,13 @@ abstract public class WidgetDao implements EntityDao<WidgetEntity> {
     @Query("SELECT * FROM widgets WHERE uuid=:uuid LIMIT 1")
     abstract public WidgetEntity fromUuid(String uuid);
 
-    @Query("SELECT * FROM widgets WHERE gizmo_uuid=:gizmoUuid ORDER BY created_at DESC")
+    @Query("SELECT * FROM widgets WHERE gizmo_uuid=:gizmoUuid ORDER BY id ASC")
     abstract public List<WidgetEntity> getByGizmo(String gizmoUuid);
 
-    @Query("SELECT * FROM widgets WHERE gizmo_uuid IN (:gizmoUuids) ORDER BY gizmo_uuid ASC, name ASC")
+    @Query("SELECT * FROM widgets WHERE gizmo_uuid IN (:gizmoUuids) ORDER BY gizmo_uuid ASC, id ASC")
     abstract public List<WidgetEntity> getByGizmos(List<String> gizmoUuids);
 
-    @Query("SELECT * FROM widgets ORDER BY created_at DESC")
+    @Query("SELECT * FROM widgets ORDER BY id ASC")
     abstract public List<WidgetEntity> getAll();
 
     @Query("UPDATE widgets SET updated_at=:dateTime WHERE uuid=:uuid")

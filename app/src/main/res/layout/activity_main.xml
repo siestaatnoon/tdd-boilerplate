@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".com.oscarrrweb.tddboilerplate.presentation.ui.activities.MainActivity">
+    tools:context="com.oscarrrweb.tddboilerplate.presentation.ui.activities.MainActivity">
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/gizmo_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="10dp"/>
 
 </io.codetail.widget.RevealFrameLayout>

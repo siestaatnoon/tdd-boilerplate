@@ -13,9 +13,25 @@ import java.util.Map;
 
 import timber.log.Timber;
 
+/**
+ * Implementation of the {@link ApiResponse} interface utilizing
+ * <a href="https://github.com/google/gson" target="_top">Gson</a> to parse a server
+ * network response into POJO objects and capturing errors into a format used in this
+ * application.
+ *
+ * @author Johnny Spence
+ * @version 1.0.0
+ */
 public final class RestResponse implements ApiResponse {
 
+    /**
+     * Constant for HTTP OK response, status code 200.
+     */
     public static final int HTTP_OK = 200;
+
+    /**
+     * Constant for HTTP unauthorized response, status code 400.
+     */
     public static final int HTTP_ERROR_UNAUTHORIZED = 401;
     public static final int HTTP_ERROR_LOCKOUT = 423;
     public static final int HTTP_ERROR_SERVER = 500;
