@@ -786,6 +786,8 @@ abstract public class Entity implements Serializable {
      * Returns the {@link FieldNamingPolicy} for this Entity. May be overridden in subclass
      * to rename JSON fields that may not correspond to Java naming conventions (e.g SomeField
      * -> some-field).
+     * <p>
+     * <b>NOTE: will not override any Entity fields annotated with @SerializedName.</b>
      *
      * @return A FieldNamingPolicy for naming JSON fields
      * @see FieldNamingPolicy
@@ -798,6 +800,8 @@ abstract public class Entity implements Serializable {
      * Returns the {@link FieldNamingStrategy} for this Entity. May be overridden in subclass
      * to rename JSON fields that may not correspond to Java naming conventions (e.g SomeField
      * -> some-field).
+     * <p>
+     * <b>NOTE: will not override any Entity fields annotated with @SerializedName.</b>
      *
      * @return A FieldNamingStrategy for naming JSON fields
      * @see FieldNamingStrategy

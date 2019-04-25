@@ -32,7 +32,7 @@ public class AppModule {
         return uiThread;
     }
 
-    @Provides @Singleton ExecutorThread provideExecutionThread(IOThread ioThread) {
+    @Provides @Singleton ExecutorThread provideExecutorThread(IOThread ioThread) {
         return ioThread;
     }
 

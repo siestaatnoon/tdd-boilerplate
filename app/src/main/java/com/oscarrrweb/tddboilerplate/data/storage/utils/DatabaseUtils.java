@@ -6,8 +6,20 @@ import androidx.annotation.NonNull;
 import com.oscarrrweb.tddboilerplate.data.Constants;
 import com.oscarrrweb.tddboilerplate.data.settings.GeneralSettingsManager;
 
+/**
+ * Utility class for the <code>storage</code> package.
+ *
+ * @author Johnny Spence
+ * @version 1.0.0
+ */
 public class DatabaseUtils {
 
+    /**
+     * Returns a unique name for the application database based on the user name.
+     *
+     * @param context   The Android application context
+     * @return          The unique database name
+     */
     public static String getCurrentUserDatabaseName(@NonNull Context context) {
         GeneralSettingsManager settingsManager = new GeneralSettingsManager(context);
         String username = settingsManager.getUsername();

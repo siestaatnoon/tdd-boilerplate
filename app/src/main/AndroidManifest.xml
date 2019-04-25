@@ -45,6 +45,15 @@
                 android:value=".presentation.ui.activities.MainActivity" />
         </activity>
 
+        <activity
+            android:name=".presentation.ui.activities.AboutActivity"
+            android:label="@string/title_about"
+            android:parentActivityName=".presentation.ui.activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".presentation.ui.activities.MainActivity" />
+        </activity>
+
     </application>
 
 </manifest>

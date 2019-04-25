@@ -16,7 +16,7 @@ import io.reactivex.Single;
 abstract public class AbstractUseCase<P, R> implements UseCase<P, R> {
 
     /**
-     * Constructor
+     * Constructor.
      */
     public AbstractUseCase() {}
 

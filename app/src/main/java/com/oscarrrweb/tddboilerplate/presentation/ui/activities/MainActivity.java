@@ -50,7 +50,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainView, Has
         // TODO: Convert to Butterknife
         // ButterKnife.bind(this);
 
-        AppComponent appComponent = getApplicationComponent();
+        AppComponent appComponent = getAppComponent();
         appComponent.inject(appComponent.widgetMapper());
         appComponent.inject(appComponent.gizmoMapper());
         appComponent.inject(appComponent.widgetRepository());
@@ -107,10 +107,8 @@ public class MainActivity extends BaseAppCompatActivity implements MainView, Has
 
         switch (id) {
             case R.id.action_about:
-                /*
-                final Intent aboutIntent = new Intent(MainActivity.this, AboutActivity.class);
-                startActivity(aboutIntent);
-                */
+                intent = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(intent);
                 break;
             case R.id.action_settings:
                 intent = new Intent(this, SettingsActivity.class);

@@ -2,6 +2,12 @@ package com.oscarrrweb.tddboilerplate.presentation.views.base;
 
 import android.content.Context;
 
+/**
+ * Contract implemented by Activities for interaction with the presenters of this package.
+ *
+ * @author Johnny Spence
+ * @version 1.0.0
+ */
 public interface BaseView {
     /**
      * Show a view with a progress bar indicating a loading process.

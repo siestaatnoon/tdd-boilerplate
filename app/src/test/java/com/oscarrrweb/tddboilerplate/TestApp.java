@@ -11,19 +11,19 @@ import java.lang.reflect.Method;
 
 public class TestApp extends App implements TestLifecycleApplication {
 
-    private TestAppComponent applicationComponent;
+    private TestAppComponent appComponent;
 
     @Override
     public void onCreate() {
         //super.onCreate();
-        applicationComponent = DaggerTestAppComponent.builder()
+        appComponent = DaggerTestAppComponent.builder()
                 .testAppModule(new TestAppModule(this))
                 .testDataModule(new TestDataModule(this))
                 .build();
     }
 
-    public TestAppComponent getApplicationComponent() {
-        return applicationComponent;
+    public TestAppComponent getAppComponent() {
+        return appComponent;
     }
 
     @Override

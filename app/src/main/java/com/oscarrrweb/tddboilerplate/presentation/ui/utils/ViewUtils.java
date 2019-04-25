@@ -4,13 +4,23 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
-import android.view.animation.TranslateAnimation;
 
-import timber.log.Timber;
-
+/**
+ * Utility class for the <code>presentation.ui</code> package.
+ *
+ * @author Johnny Spence
+ * @version 1.0.0
+ */
 public final class ViewUtils {
 
-    public static void toggleShow(final View view, int duration) {
+    /**
+     * Provides a slide-down animation for an Androir UI {@link View} if not visible or a slide-up
+     * animation if a view is visible.
+     *
+     * @param view      The View to animate
+     * @param duration  The time in ms for animation
+     */
+    public static void toggleSlide(final View view, int duration) {
         if (view == null) {
             return;
         }

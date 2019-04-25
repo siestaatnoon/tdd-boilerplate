@@ -20,8 +20,22 @@ import javax.crypto.spec.SecretKeySpec;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
-public class NetworkUtils {
+/**
+ * Utility class for the <code>network</code> package.
+ *
+ * @author Johnny Spence
+ * @version 1.0.0
+ */
+public final class NetworkUtils {
 
+    /**
+     * Returns a HMAC-SHA512 hash from a given auth token and API server request body. Used
+     * for server-side validation an API call.
+     *
+     * @param authToken     The auth token
+     * @param requestBody   The request body as a byte array
+     * @return              The HMAC-SHA512 hash
+     */
     public static String getRequestHash(String authToken, byte[] requestBody) {
         if (TextUtils.isEmpty(authToken)) throw new IllegalArgumentException("authToken cannot be empty");
         if (requestBody == null) {

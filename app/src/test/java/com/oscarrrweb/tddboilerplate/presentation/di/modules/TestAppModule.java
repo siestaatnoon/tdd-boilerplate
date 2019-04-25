@@ -27,18 +27,15 @@ public class TestAppModule {
         return context;
     }
 
-    @Provides @Singleton
-    MainThread provideMainThread() {
-        return new TestUiThread();
+    @Provides @Singleton MainThread provideMainThread(TestUiThread uiThread) {
+        return uiThread;
     }
 
-    @Provides @Singleton
-    ExecutorThread provideExecutionThread() {
-        return new TestIOThread();
+    @Provides @Singleton ExecutorThread provideExecutionThread(TestIOThread ioThread) {
+        return ioThread;
     }
 
-    @Provides @Singleton
-    ComputationThread provideComputationThread() {
-        return new TestProcessThread();
+    @Provides @Singleton ComputationThread provideComputationThread(TestProcessThread processThread) {
+        return processThread;
     }
 }

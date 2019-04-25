@@ -5,6 +5,7 @@ import android.content.Context;
 import com.oscarrrweb.tddboilerplate.data.mappers.sample.DoodadMapper;
 import com.oscarrrweb.tddboilerplate.data.mappers.sample.GizmoMapper;
 import com.oscarrrweb.tddboilerplate.data.mappers.sample.WidgetMapper;
+import com.oscarrrweb.tddboilerplate.data.network.retrofit.RestClient;
 import com.oscarrrweb.tddboilerplate.data.repository.sample.DoodadRepository;
 import com.oscarrrweb.tddboilerplate.data.repository.sample.GizmoRepository;
 import com.oscarrrweb.tddboilerplate.data.repository.sample.WidgetRepository;
@@ -21,7 +22,7 @@ import dagger.Provides;
 @Module
 public class DataModule {
 
-    private final AppDatabase database;
+    AppDatabase database;
 
     public DataModule(Context context) {
         database = AppDatabase.getInstance(context);
@@ -29,6 +30,10 @@ public class DataModule {
 
     @Provides @Singleton AppDatabase provideAppDatabase() {
         return database;
+    }
+
+    @Provides @Singleton RestClient provideRestClient() {
+        return RestClient.getInstance();
     }
 
     /* SAMPLE USAGE BELOW */

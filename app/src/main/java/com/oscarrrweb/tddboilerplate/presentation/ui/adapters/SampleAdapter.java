@@ -155,7 +155,7 @@ public class SampleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
         }
 
-        ViewUtils.toggleShow(viewHolder.widgetItems, 500);
+        ViewUtils.toggleSlide(viewHolder.widgetItems, 500);
 
         // Boy does this wreak havoc
         // notifyItemChanged(position);

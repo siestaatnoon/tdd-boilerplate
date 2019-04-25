@@ -3,6 +3,7 @@ package com.oscarrrweb.tddboilerplate.presentation.di.components;
 import com.oscarrrweb.tddboilerplate.data.mappers.sample.DoodadMapper;
 import com.oscarrrweb.tddboilerplate.data.mappers.sample.GizmoMapper;
 import com.oscarrrweb.tddboilerplate.data.mappers.sample.WidgetMapper;
+import com.oscarrrweb.tddboilerplate.data.network.retrofit.RestCaller;
 import com.oscarrrweb.tddboilerplate.data.repository.sample.DoodadRepository;
 import com.oscarrrweb.tddboilerplate.data.repository.sample.GizmoRepository;
 import com.oscarrrweb.tddboilerplate.data.repository.sample.WidgetRepository;

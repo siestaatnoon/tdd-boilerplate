@@ -10,10 +10,20 @@ import com.squareup.leakcanary.LeakCanary;
 
 import timber.log.Timber;
 
+/**
+ * The top level application configuration.
+ */
 public class App extends Application {
 
-    private AppComponent applicationComponent;
+    /**
+     * Dagger 2 component for DI.
+     */
+    private AppComponent appComponent;
 
+    /**
+     * Initializes dependency injection, Leak Canary for hunting down leaks in application
+     * and Timber for logging.
+     */
     @Override
     public void onCreate() {
         super.onCreate();
@@ -25,13 +35,19 @@ public class App extends Application {
             Timber.d("Timber DebugTree initialized");
         }
 
-        applicationComponent = DaggerAppComponent.builder()
+        appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .dataModule(new DataModule(this))
                 .build();
     }
 
-    public AppComponent getApplicationComponent() {
-        return applicationComponent;
+    /**
+     * Returns the Dagger component for dependency injection in activities or access to the
+     * application {@link android.content.Context}.
+     *
+     * @return The Dagger 2 component for DI
+     */
+    public AppComponent getAppComponent() {
+        return appComponent;
     }
 }

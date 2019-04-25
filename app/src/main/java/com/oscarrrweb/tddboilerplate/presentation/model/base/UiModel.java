@@ -2,6 +2,13 @@ package com.oscarrrweb.tddboilerplate.presentation.model.base;
 
 import java.util.Date;
 
+/**
+ * Base model <a href="https://docs.oracle.com/cd/E13171_01/alsb/docs25/userguide/pojo.html" target="_blank">POJO</a>
+ * with common fields for subclassed models. For use in <code>presentation</code> package.
+ *
+ * @author Johnny Spence
+ * @version 1.0.0
+ */
 abstract public class UiModel {
 
     /**

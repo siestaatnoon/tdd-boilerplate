@@ -35,13 +35,23 @@ import timber.log.Timber;
 
 /**
  * Implementation of the {@link ApiCaller} interface utilizing a
- * <a href="https://square.github.io/retrofit/" target="_top">Retrofit</a> client.
+ * <a href="https://square.github.io/retrofit/" target="_top">Retrofit</a> client and
+ * <a href="https://github.com/ReactiveX/RxJava" target="_top">RxJava</a> {@link Single}s
+ * to handle a server response by {@link io.reactivex.Observer}s.
  *
  * @author Johnny Spence
  * @version 1.0.0
  */
 public class RestCaller implements ApiCaller {
 
+    /**
+     * API client
+     */
+    @Inject RestClient mClient;
+
+    /**
+     * Android application context
+     */
     @Inject Context mContext;
 
     /**
@@ -106,8 +116,8 @@ public class RestCaller implements ApiCaller {
      * @param apiKey    The API key used for API call authentication
      */
     public RestCaller(String authToken, String apiKey) {
-        RestClient client = RestClient.getInstance();
-        mService = client.getService(RestService.class);
+        //RestClient client = RestClient.getInstance();
+        mService = mClient.getService(RestService.class);
         mApiKey = apiKey;
         mAuthToken = authToken;
         mHeaders = new HashMap<>();

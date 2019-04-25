@@ -131,6 +131,6 @@ public class WidgetItemView extends RelativeLayout implements View.OnClickListen
             buttonContract.setVisibility(View.VISIBLE);
         }
 
-        ViewUtils.toggleShow(doodadItems, 500);
+        ViewUtils.toggleSlide(doodadItems, 500);
     }
 }
