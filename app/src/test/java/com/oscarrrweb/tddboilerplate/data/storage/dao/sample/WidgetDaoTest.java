@@ -44,7 +44,7 @@ public class WidgetDaoTest {
     public void setUp() throws Exception {
         Context appContext = ApplicationProvider.getApplicationContext();
         TestDataComponent dataComponent = DaggerTestDataComponent.builder()
-                .testDataModule(new TestDataModule(appContext))
+                .testDataModule(new TestDataModule(appContext, true))
                 .build();
 
         mDb = dataComponent.appDatabase();

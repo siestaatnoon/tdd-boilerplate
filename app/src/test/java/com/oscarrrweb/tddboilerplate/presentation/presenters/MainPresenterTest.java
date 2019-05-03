@@ -83,7 +83,7 @@ public class MainPresenterTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         mainViewSpy = spy(new StubMainView());
         mainPresenter = new MainPresenter(mockRepository, mainViewSpy);
         context = ApplicationProvider.getApplicationContext();

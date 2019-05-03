@@ -57,7 +57,7 @@ public class WidgetRepositoryTest {
     public void setUp() throws Exception {
         Context appContext = ApplicationProvider.getApplicationContext();
         mComponent = DaggerTestDataComponent.builder()
-                .testDataModule(new TestDataModule(appContext))
+                .testDataModule(new TestDataModule(appContext, true))
                 .build();
 
         mDb = mComponent.appDatabase();

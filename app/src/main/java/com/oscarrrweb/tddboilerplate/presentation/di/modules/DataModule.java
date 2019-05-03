@@ -23,9 +23,33 @@ import dagger.Provides;
 public class DataModule {
 
     AppDatabase database;
+    String apiBaseUrl;
+    boolean refreshInstance;
 
     public DataModule(Context context) {
-        database = AppDatabase.getInstance(context);
+        this(context, null, false, false);
+    }
+
+    public DataModule(Context context, boolean isTest) {
+        this(context, null, isTest, false);
+    }
+
+    public DataModule(Context context, boolean isTest, boolean refreshInstance) {
+        this(context, null, false, false);
+    }
+
+    public DataModule(Context context, String apiBaseUrl) {
+        this(context, apiBaseUrl, false, false);
+    }
+
+    public DataModule(Context context, String apiBaseUrl, boolean isTest) {
+        this(context, apiBaseUrl, isTest, false);
+    }
+
+    public DataModule(Context context, String apiBaseUrl, boolean isTest, boolean refreshInstance) {
+        this.apiBaseUrl = apiBaseUrl;
+        this.refreshInstance = refreshInstance;
+        database = AppDatabase.getInstance(context, isTest, refreshInstance);
     }
 
     @Provides @Singleton AppDatabase provideAppDatabase() {
@@ -33,7 +57,7 @@ public class DataModule {
     }
 
     @Provides @Singleton RestClient provideRestClient() {
-        return RestClient.getInstance();
+        return RestClient.getInstance(apiBaseUrl, refreshInstance);
     }
 
     /* SAMPLE USAGE BELOW */

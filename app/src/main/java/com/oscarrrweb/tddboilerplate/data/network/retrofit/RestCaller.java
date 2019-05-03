@@ -3,6 +3,7 @@ package com.oscarrrweb.tddboilerplate.data.network.retrofit;
 import androidx.annotation.NonNull;
 
 import android.content.Context;
+import android.util.ArrayMap;
 import android.util.MalformedJsonException;
 
 import com.google.gson.JsonElement;
@@ -117,11 +118,24 @@ public class RestCaller implements ApiCaller {
      */
     public RestCaller(String authToken, String apiKey) {
         //RestClient client = RestClient.getInstance();
-        mService = mClient.getService(RestService.class);
+        // mService = mClient.getService(RestService.class);
         mApiKey = apiKey;
         mAuthToken = authToken;
         mHeaders = new HashMap<>();
         mHeaders.put("Content-Type", "application/json; charset=" + Constants.CHAR_ENCODING);
+    }
+
+    /**
+     * Initializes the Retrofit API service class.
+     *
+     * @throws IllegalStateException if RestClient not dependency injected in instance of this class
+     */
+    public void initializeService() {
+        if (mClient == null) {
+            throw new IllegalStateException("RestClient not dependency injected in instance");
+        }
+
+        mService = mClient.getService(RestService.class);
     }
 
     /**
@@ -133,6 +147,7 @@ public class RestCaller implements ApiCaller {
      */
     @Override
     public Single<ApiResponse> delete(@NonNull Entity entity, Map<String, String> headers) {
+        checkServiceState();
         return setObservableRequest(API_QUERY_DELETE, entity, headers);
     }
 
@@ -146,6 +161,7 @@ public class RestCaller implements ApiCaller {
      */
     @Override
     public Single<ApiResponse> get(@NonNull Entity entity, Map<String, String> headers) {
+        checkServiceState();
         return setObservableRequest(API_QUERY_ROW, entity, headers);
     }
 
@@ -159,7 +175,8 @@ public class RestCaller implements ApiCaller {
      */
     @Override
     public Single<ApiResponse> query(@NonNull Entity entity, Map<String, String> params, Map<String, String> headers) {
-        mQueryParams = params;
+        checkServiceState();
+        mQueryParams = params == null ? new ArrayMap<String, String>(0) : params;
         return setObservableRequest(API_QUERY_ROWS, entity, headers);
     }
 
@@ -172,6 +189,7 @@ public class RestCaller implements ApiCaller {
      */
     @Override
     public Single<ApiResponse> post(@NonNull Entity entity, Map<String, String> headers) {
+        checkServiceState();
         return setObservableRequest(API_QUERY_INSERT, entity, headers);
     }
 
@@ -184,7 +202,23 @@ public class RestCaller implements ApiCaller {
      */
     @Override
     public Single<ApiResponse> put(@NonNull Entity entity, Map<String, String> headers) {
+        checkServiceState();
         return setObservableRequest(API_QUERY_UPDATE, entity, headers);
+    }
+
+    /**
+     * Checks if the Retrofit API service has been initialized and returns true if so or
+     * throws an {@link IllegalStateException} if not.
+     *
+     * @return True if service initialized
+     * @throws IllegalStateException if service not initialized
+     */
+    protected boolean checkServiceState() {
+        if (mClient == null) {
+            throw new IllegalStateException("initializeService() must be called prior to API calls");
+        }
+
+        return true;
     }
 
     /**
@@ -229,6 +263,7 @@ public class RestCaller implements ApiCaller {
                     }
                 });
         }
+
         Single<Response<String>> apiCall = null;
         String tableName = entity.getTableName();
         String body = method.equals(API_QUERY_ROW) || method.equals(API_QUERY_ROWS) || method.equals(API_QUERY_DELETE)

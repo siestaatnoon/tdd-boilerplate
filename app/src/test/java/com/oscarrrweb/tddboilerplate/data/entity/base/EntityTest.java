@@ -1,11 +1,6 @@
 package com.oscarrrweb.tddboilerplate.data.entity.base;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
-import android.util.MalformedJsonException;
 
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
@@ -14,9 +9,10 @@ import com.google.gson.FieldNamingStrategy;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.annotations.SerializedName;
-import com.oscarrrweb.tddboilerplate.R;
+import com.oscarrrweb.tddboilerplate.data.entity.TestEntity;
+import com.oscarrrweb.tddboilerplate.utils.AssertUtils;
+import com.oscarrrweb.tddboilerplate.utils.FileUtils;
+import com.oscarrrweb.tddboilerplate.utils.JsonUtils;
 
 import org.junit.After;
 import org.junit.Before;
@@ -24,10 +20,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.List;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -37,7 +30,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 @RunWith(RobolectricTestRunner.class)
 public class EntityTest {
@@ -49,36 +41,6 @@ public class EntityTest {
 
     private TestEntity mEntity1;
     private TestEntity mEntity2;
-
-    private class TestEntity extends Entity {
-
-        @SerializedName("image_file")
-        private byte[] imageFile;
-
-        @SerializedName("is_test")
-        private boolean isTest;
-
-        @Override
-        public String getTableName() {
-            return "test";
-        }
-
-        public byte[] getImageFile() {
-            return imageFile;
-        }
-
-        public void setImageFile(byte[] imageFile) {
-            this.imageFile = imageFile;
-        }
-
-        public boolean isTest() {
-            return isTest;
-        }
-
-        public void setTest(boolean test) {
-            isTest = test;
-        }
-    }
 
     private class TestEntityWithExclusion extends TestEntity {
         @Override
@@ -145,17 +107,19 @@ public class EntityTest {
 
     @Before
     public void setUp() throws Exception {
+        Context context = ApplicationProvider.getApplicationContext();
+
         mEntity1 = new TestEntity();
         mEntity1.setId(TEST_ID_1);
         mEntity1.setUuid(TEST_UUID_1);
-        mEntity1.setImageFile(getSampleImageBytesFromAndroidRes());
+        mEntity1.setImageFile(FileUtils.getSampleImageBytesFromAndroidRes(context));
         mEntity1.setTest(true);
         mEntity1.touch();
 
         mEntity2 = new TestEntity();
         mEntity2.setId(TEST_ID_2);
         mEntity2.setUuid(TEST_UUID_2);
-        mEntity2.setImageFile(getSampleImageBytesFromTestResources());
+        mEntity2.setImageFile(FileUtils.getSampleImageBytesFromTestResources());
         mEntity2.setTest(false);
         mEntity2.touch();
     }
@@ -168,27 +132,27 @@ public class EntityTest {
         String jsonStr = mEntity1.toJson();
         TestEntity entity = (TestEntity) Entity.fromJson(jsonStr, TestEntity.class);
         assertNotNull("Entity.fromJson(String, Class<T>) returned null object", entity);
-        assertEntitiesEqual(mEntity1, entity);
+        AssertUtils.assertEntitiesEqual(mEntity1, entity);
     }
 
     @Test
     public void Entity_shouldConvertFromJsonElement() throws Exception {
         mEntity1.hasSerializedId(true);
         String jsonStr = mEntity1.toJson();
-        JsonElement jsonElement = getJsonElement(jsonStr);
+        JsonElement jsonElement = JsonUtils.toJsonElement(jsonStr);
         TestEntity entity = (TestEntity) Entity.fromJson(jsonElement, TestEntity.class);
         assertNotNull("Entity.fromJson(JsonElement, Class<T>) returned null object", entity);
-        assertEntitiesEqual(mEntity1, entity);
+        AssertUtils.assertEntitiesEqual(mEntity1, entity);
     }
 
     @Test
     public void Entity_shouldConvertFromJsonObject() throws Exception {
         mEntity1.hasSerializedId(true);
         String jsonStr = mEntity1.toJson();
-        JsonObject jsonObject = getJsonObject(jsonStr);
+        JsonObject jsonObject = JsonUtils.toJsonObject(jsonStr);
         TestEntity entity = (TestEntity) Entity.fromJson(jsonObject, TestEntity.class);
         assertNotNull("Entity.fromJson(JsonObject, Class<T>) returned null object", entity);
-        assertEntitiesEqual(mEntity1, entity);
+        AssertUtils.assertEntitiesEqual(mEntity1, entity);
     }
 
     @Test
@@ -197,15 +161,15 @@ public class EntityTest {
         mEntity2.hasSerializedId(true);
 
         JsonArray jsonArray = new JsonArray();
-        jsonArray.add(getJsonElement(mEntity1.toJson()));
-        jsonArray.add(getJsonElement(mEntity2.toJson()));
+        jsonArray.add(JsonUtils.toJsonElement(mEntity1.toJson()));
+        jsonArray.add(JsonUtils.toJsonElement(mEntity2.toJson()));
         String jsonStr = jsonArray.toString();
         List<Entity> entities = Entity.fromJsonArray(jsonStr, TestEntity.class);
 
         assertNotNull("Entity.fromJsonArray(String, Class<T>) returned null object", entities);
         assertEquals("entities.size not 2", 2, entities.size());
-        assertEntitiesEqual(mEntity1, (TestEntity) entities.get(0));
-        assertEntitiesEqual(mEntity2, (TestEntity) entities.get(1));
+        AssertUtils.assertEntitiesEqual(mEntity1, (TestEntity) entities.get(0));
+        AssertUtils.assertEntitiesEqual(mEntity2, (TestEntity) entities.get(1));
     }
 
     @Test
@@ -214,20 +178,20 @@ public class EntityTest {
         mEntity2.hasSerializedId(true);
 
         JsonArray jsonArray = new JsonArray();
-        jsonArray.add(getJsonElement(mEntity1.toJson()));
-        jsonArray.add(getJsonElement(mEntity2.toJson()));
+        jsonArray.add(JsonUtils.toJsonElement(mEntity1.toJson()));
+        jsonArray.add(JsonUtils.toJsonElement(mEntity2.toJson()));
         List<Entity> entities = Entity.fromJsonArray(jsonArray, TestEntity.class);
 
         assertNotNull("Entity.fromJsonArray(JsonArray, Class<T>) returned null object", entities);
         assertEquals("entities.size not 2", 2, entities.size());
-        assertEntitiesEqual(mEntity1, (TestEntity) entities.get(0));
-        assertEntitiesEqual(mEntity2, (TestEntity) entities.get(1));
+        AssertUtils.assertEntitiesEqual(mEntity1, (TestEntity) entities.get(0));
+        AssertUtils.assertEntitiesEqual(mEntity2, (TestEntity) entities.get(1));
     }
 
     @Test
     public void Entity_shouldConvertToJson() throws Exception {
         String jsonStr = mEntity1.toJson();
-        JsonObject jsonObject = getJsonObject(jsonStr);
+        JsonObject jsonObject = JsonUtils.toJsonObject(jsonStr);
         assertNotNull("toJson() results in null string", jsonObject);
 
         // make sure id not serialized, per default
@@ -237,10 +201,10 @@ public class EntityTest {
         assertEquals("uuid not correct value", TEST_UUID_1, jsonObject.get("uuid").getAsString());
 
         assertTrue("created_at not contained in JSON", jsonObject.has("created_at"));
-        assertValidDateString("created_at", jsonObject.get("created_at").getAsString());
+        AssertUtils.assertValidDateString("created_at", jsonObject.get("created_at").getAsString());
 
         assertTrue("updated_at not contained in JSON", jsonObject.has("updated_at"));
-        assertValidDateString("updated_at", jsonObject.get("updated_at").getAsString());
+        AssertUtils.assertValidDateString("updated_at", jsonObject.get("updated_at").getAsString());
 
         assertTrue("image_file not contained in JSON", jsonObject.has("image_file"));
         assertNotNull("image_file null", jsonObject.get("image_file").getAsString());
@@ -281,7 +245,7 @@ public class EntityTest {
         entity.setUpdatedAt(mEntity1.getUpdatedAt());
 
         String jsonStr = entity.toJson();
-        JsonObject jsonObject = getJsonObject(jsonStr);
+        JsonObject jsonObject = JsonUtils.toJsonObject(jsonStr);
         assertNotNull("jsonObject null", entity);
         assertFalse("id is present in JSON", jsonObject.has("id"));
         assertFalse("image_file is present in JSON", jsonObject.has("image_file"));
@@ -297,7 +261,7 @@ public class EntityTest {
         TestEntityWithPolicy entity = new TestEntityWithPolicy();
         entity.setTestString(testStr);
         String jsonStr = entity.toJson();
-        JsonObject jsonObject = getJsonObject(jsonStr);
+        JsonObject jsonObject = JsonUtils.toJsonObject(jsonStr);
 
         assertNotNull("jsonObject null", jsonObject);
         assertTrue("test-string not present in JSON", jsonObject.has("test-string"));
@@ -314,7 +278,7 @@ public class EntityTest {
         TestEntityWithStrategy entity = new TestEntityWithStrategy();
         entity.setTestString(testStr);
         String jsonStr = entity.toJson();
-        JsonObject jsonObject = getJsonObject(jsonStr);
+        JsonObject jsonObject = JsonUtils.toJsonObject(jsonStr);
 
         assertNotNull("jsonObject null", jsonObject);
         assertTrue("altered-test-string not present in JSON", jsonObject.has("altered-test-string"));
@@ -326,7 +290,7 @@ public class EntityTest {
         mEntity1.setSerializeNulls(true);
         mEntity1.setImageFile(null);
         String jsonStr = mEntity1.toJson();
-        JsonObject jsonObject = getJsonObject(jsonStr);
+        JsonObject jsonObject = JsonUtils.toJsonObject(jsonStr);
         assertNotNull("jsonObject(1) null value", jsonObject);
         assertTrue("image_file is not present in JSON", jsonObject.has("image_file"));
         assertTrue("image_file not null value", jsonObject.get("image_file").isJsonNull());
@@ -334,7 +298,7 @@ public class EntityTest {
         mEntity2.setSerializeNulls(false);
         mEntity2.setImageFile(null);
         jsonStr = mEntity2.toJson();
-        jsonObject = getJsonObject(jsonStr);
+        jsonObject = JsonUtils.toJsonObject(jsonStr);
         assertNotNull("jsonObject(2) null value", jsonObject);
         assertFalse("image_file is present in JSON", jsonObject.has("image_file"));
     }
@@ -343,104 +307,5 @@ public class EntityTest {
     public void tearDown() throws Exception {
         mEntity1 = null;
         mEntity2 = null;
-    }
-
-    private void assertEntitiesEqual(TestEntity entity1, TestEntity entity2) {
-        assertNotNull("entity1 null", entity1);
-        assertNotNull("entity2 null", entity2);
-        assertEquals("id not correct value", entity1.getId(), entity2.getId());
-        assertEquals("uuid not correct value", entity1.getUuid(), entity2.getUuid());
-
-        assertNotNull("createdAt null", entity2.getCreatedAt());
-        assertNotNull("updatedAt null", entity2.getUpdatedAt());
-
-        // need to account for string timestamps precision
-        // to only seconds upon converting from JSON
-        long time =  entity1.getCreatedAt().getTime();
-        long createdAt = time - (time % 1000);
-        time =  entity1.getUpdatedAt().getTime();
-        long updatedAt = time - (time % 1000);
-        assertEquals("createdAt not correct value", createdAt, entity2.getCreatedAt().getTime());
-        assertEquals("updatedAt not correct value", updatedAt, entity2.getUpdatedAt().getTime());
-
-        assertTrue("imageFile not correct value", Arrays.equals(entity1.getImageFile(), entity2.getImageFile()));
-        assertEquals("isTest not correct value", entity1.isTest(), entity2.isTest());
-    }
-
-    private void assertValidDateString(String objName, String str) {
-        if (objName == null) {
-            objName = "Date string";
-        }
-
-        assertNotNull(objName + " null", str);
-        int length = str.length();
-        if (length != 10 && length != 19) {
-            fail(objName + " not a valid date string, length: " + length);
-        }
-
-        // regex matching YYYY-MM-DD or YYYY-MM-DD HH:MM:SS
-        String dateTimeRegex = "^([2][01]|[1][6-9])\\d{2}-([0]\\d|[1][0-2])-([0-2]\\d|[3][0-1])(\\s([0-1]\\d|[2][0-3])(\\:[0-5]\\d){1,2})?$";
-        assertTrue(objName + " not a valid date string, value: " + str, str.matches(dateTimeRegex));
-    }
-
-    private JsonElement getJsonElement(String jsonStr) throws MalformedJsonException {
-        if (jsonStr == null) {
-            return null;
-        }
-
-        JsonParser parser = new JsonParser();
-        JsonElement element = parser.parse(jsonStr);
-        if (element.isJsonArray()) {
-            // method only returns data objects, not arrays of any kind
-            return null;
-        }
-
-        return element;
-    }
-
-    private JsonObject getJsonObject(String jsonStr) throws MalformedJsonException {
-        if (jsonStr == null) {
-            return null;
-        }
-
-        JsonParser parser = new JsonParser();
-        JsonElement element = parser.parse(jsonStr);
-        if (element.isJsonArray()) {
-            // method only returns data objects, not arrays of any kind
-            return null;
-        }
-
-        return element.getAsJsonObject();
-    }
-
-    private byte[] getSampleImageBytesFromAndroidRes() {
-        Context context = ApplicationProvider.getApplicationContext();
-        Drawable drawable = context.getResources().getDrawable(R.drawable.ic_more_vert_black_24dp, context.getTheme());
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        return stream.toByteArray();
-    }
-
-    private byte[] getSampleImageBytesFromTestResources() {
-        ClassLoader loader = this.getClass().getClassLoader();
-        if (loader == null) {
-            return null;
-        }
-
-        InputStream inputStream;
-        try {
-            inputStream = loader.getResourceAsStream("sample-image.png"); // loads from src/test/resources
-        } catch (Exception e) {
-            return null;
-        }
-
-        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-        return outputStream.toByteArray();
     }
 }
