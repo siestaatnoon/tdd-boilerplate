@@ -163,21 +163,21 @@ public class MainActivityTest extends ActivityTest<MainActivity> {
     @Test
     public void MainActivity_testShowError() {
         mainActivity.showError(SAMPLE_MESSAGE);
-        assertEquals(ShadowToast.getTextOfLatestToast(), SAMPLE_MESSAGE);
+        assertEquals(SAMPLE_MESSAGE, ShadowToast.getTextOfLatestToast());
     }
 
     @Test
     public void MainActivity_testGetContext() {
-        assertEquals(mainActivity.context(), appComponent.context());
+        assertEquals(appComponent.context(), mainActivity.context());
     }
 
     @Test
     public void MainActivity_testShowMessage() {
         mainActivity.showMessage(SAMPLE_MESSAGE);
-        assertEquals(ShadowToast.getTextOfLatestToast(), SAMPLE_MESSAGE);
+        assertEquals(SAMPLE_MESSAGE, ShadowToast.getTextOfLatestToast());
 
         // Test empty message does not show Toast
         mainActivity.showMessage("");
-        assertEquals(ShadowToast.shownToastCount(), 1);
+        assertEquals(1, ShadowToast.shownToastCount());
     }
 }

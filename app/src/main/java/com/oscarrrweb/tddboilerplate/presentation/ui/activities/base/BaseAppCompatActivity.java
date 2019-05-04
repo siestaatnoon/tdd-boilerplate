@@ -11,6 +11,9 @@ import com.oscarrrweb.tddboilerplate.presentation.di.modules.ActivityModule;
  * Activity abstraction that extends {@link AppCompatActivity} and performs the dependency
  * injection for it. Also methods to retrieve the App DI component (for {@link android.content.Context}
  * and DI module.
+ *
+ * @author Johnny Spence
+ * @version 1.0.0
  */
 abstract public class BaseAppCompatActivity extends AppCompatActivity {
 

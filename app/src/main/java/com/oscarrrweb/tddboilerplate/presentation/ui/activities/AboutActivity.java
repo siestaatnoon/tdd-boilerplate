@@ -18,23 +18,24 @@ public class AboutActivity extends BaseAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        /*
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        */
-
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // let the user choose his email client
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                        "mailto", "john@desertelements.com", null));
+                Intent emailIntent = new Intent(
+                        Intent.ACTION_SENDTO,
+                        Uri.fromParts(
+                            "mailto",
+                                "john@desertelements.com",
+                                null
+                        )
+                );
                 startActivity(Intent.createChooser(emailIntent, "Send email..."));
             }
         });
