@@ -11,7 +11,8 @@ android {
         vectorDrawables.useSupportLibrary = true
         testApplicationId "com.oscarrrweb.tddboilerplate.test"
         testInstrumentationRunner getInstrumentation()
-        //uncomment this to clear app data before each test when running with orchestrator
+
+        // Uncomment this to clear app data before each test when running with orchestrator
         // testInstrumentationRunnerArguments clearPackageData: 'true'
 
         javaCompileOptions {
@@ -60,18 +61,24 @@ repositories {
     }
 }
 
-def androidVersion = '1.0.0'
+def androidVersion = "1.0.0"
+def androidUnitTestVersion = "1.1.0"
+def androidInstrTestVersion = "1.1.1"
 def butterknifeVersion = "10.0.0"
+def constraintLayoutVersion = "1.1.2"
 def cucmberVersion = "4.3.0"
 def daggerVersion = "2.21"
 def espressoVersion = "3.1.1"
 def gsonVersion = "2.8.5"
+def junitVersion = "4.12"
 def leakcanaryVersion = "1.6.3"
 def mockitoVersion = "2.8.9"
+def okHttpVersion = "3.12.1"
 def retrofitVersion = "2.5.0"
 def robolectricVersion = "4.1"
-def roomVersion = '2.0.0-beta01'
+def roomVersion = "2.0.0-beta01"
 def rxJavaVersion = "2.1.1"
+def rxIdlerVersion = "0.9.1"
 def timberVersion = "4.5.1"
 
 def getInstrumentation() {
@@ -96,7 +103,7 @@ dependencies {
     implementation "androidx.preference:preference:${androidVersion}"
     implementation "androidx.cardview:cardview:${androidVersion}"
     implementation "androidx.recyclerview:recyclerview:${androidVersion}"
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
+    implementation "androidx.constraintlayout:constraintlayout:${constraintLayoutVersion}"
 
     // Dagger
     implementation "com.google.dagger:dagger:${daggerVersion}"
@@ -115,7 +122,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
     implementation "com.squareup.retrofit2:converter-scalars:${retrofitVersion}"
     implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}"
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
+    implementation "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}"
 
     // Google GSON
     implementation "com.google.code.gson:gson:${gsonVersion}"
@@ -124,8 +131,8 @@ dependencies {
     implementation "androidx.room:room-runtime:${roomVersion}"
     annotationProcessor "androidx.room:room-compiler:${roomVersion}"
 
-    // Butterknife
-    // NOTE: Requires API 26 or higher, look for "TODO: Convert to Butterknife"
+    // Uncomment to use Butterknife
+    // NOTE: Requires API 26 or higher, look for TODO: Convert to Butterknife
     // to update
     // implementation "com.jakewharton:butterknife:${butterknifeVersion}"
     // annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
@@ -134,37 +141,40 @@ dependencies {
     implementation "com.jakewharton.timber:timber:${timberVersion}"
 
     // Unit Test dependencies
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'androidx.test:core:1.1.0'
-    testImplementation 'androidx.test:runner:1.1.1'
-    testImplementation 'androidx.test.ext:junit:1.1.0'
+    testImplementation "junit:junit:${junitVersion}"
+    testImplementation "androidx.test:core:${androidUnitTestVersion}"
+    testImplementation "androidx.test:runner:${androidUnitTestVersion}"
+    testImplementation "androidx.test.ext:junit:${androidUnitTestVersion}"
     testImplementation "org.mockito:mockito-core:${mockitoVersion}"
     testImplementation "org.robolectric:robolectric:${robolectricVersion}"
     testImplementation "androidx.room:room-testing:${roomVersion}"
-    testImplementation 'com.squareup.okhttp3:mockwebserver:3.12.1'
+    testImplementation "com.squareup.okhttp3:mockwebserver:${okHttpVersion}"
     testAnnotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
-    // testImplementation "org.robolectric:shadows-supportv4:${robolectricVersion}" //CURRENTLY NOT SUPPORTED WITH AndroidX
+
+    // Uncomment to use Robolectric Shadows support
+    // CURRENTLY NOT SUPPORTED WITH AndroidX
+    // testImplementation "org.robolectric:shadows-supportv4:${robolectricVersion}"
 
     // Android Instrumented Test dependencies
     androidTestImplementation "androidx.annotation:annotation:${androidVersion}"
-    androidTestImplementation 'androidx.test:rules:1.1.1'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation "androidx.test:rules:${androidInstrTestVersion}"
+    androidTestImplementation "androidx.test:runner:${androidInstrTestVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${espressoVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:${espressoVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-intents:${espressoVersion}"
 
     // Wrapper for RxJava Schedulers in Espresso tests
-    androidTestImplementation 'com.squareup.rx.idler:rx2-idler:0.9.1'
+    androidTestImplementation "com.squareup.rx.idler:rx2-idler:${rxIdlerVersion}"
 
     // Cucumber (for use with Espresso)
     androidTestImplementation "io.cucumber:cucumber-android:${cucmberVersion}"
     androidTestImplementation "io.cucumber:cucumber-picocontainer:${cucmberVersion}"
 
     // Uncomment this to run instrumentation tests with Mockito
-    //androidTestImplementation 'org.mockito:mockito-android:2.8.9'
+    // androidTestImplementation "org.mockito:mockito-android:${mockitoVersion}"
 
     // Uncomment this to run instrumentation tests with orchestrator
-    // androidTestUtil 'androidx.test:orchestrator:1.1.1'
+    // androidTestUtil "androidx.test:orchestrator:${androidInstrTestVersion}"
 
     // Uncomment this to run instrumentation tests with Dagger 2
     // androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
