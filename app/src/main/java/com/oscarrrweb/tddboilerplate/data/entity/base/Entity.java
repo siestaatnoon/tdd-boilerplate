@@ -1,8 +1,5 @@
 package com.oscarrrweb.tddboilerplate.data.entity.base;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
 import android.util.Base64;
 
 import com.google.gson.ExclusionStrategy;
@@ -24,6 +21,7 @@ import com.google.gson.JsonSerializer;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.annotations.SerializedName;
 import com.oscarrrweb.tddboilerplate.data.utils.DateUtils;
+import com.oscarrrweb.tddboilerplate.data.utils.UuidUtils;
 
 import java.io.Serializable;
 import java.lang.reflect.Type;
@@ -31,8 +29,10 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 import timber.log.Timber;
 
 /**
@@ -337,7 +337,7 @@ abstract public class Entity implements Serializable {
      */
     public void setUuid() {
         if (uuid == null) {
-            uuid = UUID.randomUUID().toString();
+            uuid = UuidUtils.uuid();
         }
     }
 
