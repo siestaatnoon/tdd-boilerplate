@@ -1,0 +1,147 @@
+apply plugin: 'com.android.application'
+
+android {
+    defaultPublishConfig "debug"
+
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+    compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
+
+    defaultConfig {
+        applicationId "com.cccdlabs.sample"
+        testApplicationId "com.cccdlabs.sample.test"
+        testInstrumentationRunner getInstrumentation()
+        minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
+        targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
+        versionCode globalConfiguration.getAt("androidVersionCode")
+        versionName globalConfiguration.getAt("androidVersionName")
+
+        vectorDrawables.useSupportLibrary = true
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            testCoverageEnabled true
+            buildConfigField 'String', 'TEST_TAGS', '"' + getTestTags() + '"'
+            buildConfigField 'String', 'TEST_SCENARIO', '"' + getTestScenario() + '"'
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        test {
+            resources.srcDirs += ['src/test/resources']
+        }
+
+        androidTest {
+            assets.srcDirs = ['src/androidTest/assets']
+        }
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+        }
+    }
+}
+
+def getInstrumentation() {
+    project.hasProperty('junit') ?
+            rootProject.extensions.getByName("ext").getAt("androidTestInstrumentationRunner") :
+            'com.cccdlabs.sample.test.CucumberTestRunner'
+}
+
+def getTestTags() {
+    project.getProperties().get('tags') ?: ''
+}
+
+def getTestScenario() {
+    project.getProperties().get('scenario') ?: ''
+}
+
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    def dependencies = rootProject.ext.sampleDependencies
+    def unitTestDependencies = rootProject.ext.sampleUnitTestDependencies
+    def androidTestDependencies = rootProject.ext.sampleAndroidTestDependencies
+    def devDependencies = rootProject.ext.sampleDevDependencies
+
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(path: ':app')
+
+    implementation dependencies.androidxLegacy
+    implementation dependencies.androidxMaterial
+    implementation dependencies.androidxAppCompat
+    implementation dependencies.androidxPreference
+    implementation dependencies.androidxCardView
+    implementation dependencies.androidxRecyclerView
+    implementation dependencies.androidxConstraintLayout
+    implementation dependencies.dagger
+    implementation dependencies.daggerAndroid
+    implementation dependencies.daggerAndroidSupport
+    annotationProcessor dependencies.daggerCompiler
+    annotationProcessor dependencies.daggerAnnotation
+    implementation dependencies.rxAndroid
+    implementation dependencies.rxJava
+    implementation dependencies.retrofit
+    implementation dependencies.retrofitScalars
+    implementation dependencies.retrofitRxJavaAdapter
+    implementation dependencies.okhttp3Interceptor
+    implementation dependencies.gson
+    implementation dependencies.room
+    annotationProcessor dependencies.roomCompiler
+
+    // Uncomment to use Butterknife
+    // NOTE: Requires API 26 or higher, to update look for TODO: Convert to Butterknife
+    // implementation dependencies.butterknife
+    // annotationProcessor dependencies.butterknifeCompiler
+
+    // Unit Test dependencies
+    testImplementation unitTestDependencies.junit
+    testImplementation unitTestDependencies.androidxTestCore
+    testImplementation unitTestDependencies.androidxTestRunner
+    testImplementation unitTestDependencies.androidxTestJunit
+    testImplementation unitTestDependencies.mockito
+    testImplementation unitTestDependencies.robolectric
+    // testImplementation unitTestDependencies.robolectricShadows // CURRENTLY NOT SUPPORTED WITH AndroidX
+    testImplementation unitTestDependencies.roomTesting
+    testImplementation unitTestDependencies.okhttp3MockWebServer
+    testAnnotationProcessor unitTestDependencies.daggerCompiler
+
+    // Android Instrumented Test dependencies
+    androidTestImplementation androidTestDependencies.androidxAnnotation
+    androidTestImplementation androidTestDependencies.androidxTestRules
+    androidTestImplementation androidTestDependencies.androidxTestRunner
+    androidTestImplementation androidTestDependencies.espressoCore
+    androidTestImplementation androidTestDependencies.espressoContrib
+    androidTestImplementation androidTestDependencies.espressoIntents
+    androidTestImplementation androidTestDependencies.cucumber
+    androidTestImplementation androidTestDependencies.cucumberPicoContainer
+    androidTestImplementation androidTestDependencies.rxJavaIdler
+
+    // Uncomment this to run instrumentation tests with orchestrator
+    // androidTestUtil androidTestDependencies.androidxOrchestrator
+
+    // Uncomment this to run instrumentation tests with Mockito
+    // androidTestImplementation androidTestDependencies.mockito
+
+    // Uncomment this to run instrumentation tests with Dagger 2
+    // androidTestAnnotationProcessor androidTestDependencies.daggerCompiler
+
+    // Development dependencies
+    implementation devDependencies.timber
+    debugImplementation devDependencies.leakCanary
+    debugImplementation devDependencies.leakCanaryFragment
+    releaseImplementation devDependencies.leakCanaryNoop
+}

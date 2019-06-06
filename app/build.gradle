@@ -1,16 +1,31 @@
-apply plugin: 'com.android.application'
+//
+// Commented to make sample module the application module;
+// to revert to application, uncomment and remove the
+// apply plugin: 'com.android.library' line underneath AND
+// uncomment the applicationId in defaultConfig { ... }
+//
+// apply plugin: 'com.android.application'
+
+apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    defaultPublishConfig "debug"
+
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+    compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
+
     defaultConfig {
-        applicationId "com.oscarrrweb.tddboilerplate"
-        minSdkVersion 24
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+
+        // Uncomment below to revert to application module
+        // applicationId globalConfiguration.getAt("androidApplicationId")
+
+        minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
+        targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
+        versionCode globalConfiguration.getAt("androidVersionCode")
+        versionName globalConfiguration.getAt("androidVersionName")
+        testApplicationId globalConfiguration.getAt("androidTestApplicationId")
+        testInstrumentationRunner globalConfiguration.getAt("androidTestInstrumentationRunner")
         vectorDrawables.useSupportLibrary = true
-        testApplicationId "com.oscarrrweb.tddboilerplate.test"
-        testInstrumentationRunner getInstrumentation()
 
         // Uncomment this to clear app data before each test when running with orchestrator
         // testInstrumentationRunnerArguments clearPackageData: 'true'
@@ -25,10 +40,7 @@ android {
     buildTypes {
         debug {
             testCoverageEnabled true
-            buildConfigField 'String', 'TEST_TAGS', '"' + getTestTags() + '"'
-            buildConfigField 'String', 'TEST_SCENARIO', '"' + getTestScenario() + '"'
         }
-
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -61,126 +73,70 @@ repositories {
     }
 }
 
-def androidVersion = "1.0.0"
-def androidUnitTestVersion = "1.1.0"
-def androidInstrTestVersion = "1.1.1"
-def butterknifeVersion = "10.0.0"
-def constraintLayoutVersion = "1.1.2"
-def cucmberVersion = "4.3.0"
-def daggerVersion = "2.21"
-def espressoVersion = "3.1.1"
-def gsonVersion = "2.8.5"
-def junitVersion = "4.12"
-def leakcanaryVersion = "1.6.3"
-def mockitoVersion = "2.8.9"
-def okHttpVersion = "3.12.1"
-def retrofitVersion = "2.5.0"
-def robolectricVersion = "4.1"
-def roomVersion = "2.0.0-beta01"
-def rxJavaVersion = "2.1.1"
-def rxIdlerVersion = "0.9.1"
-def timberVersion = "4.5.1"
-
-def getInstrumentation() {
-    project.hasProperty('junit') ?
-            'androidx.test.runner.AndroidJUnitRunner' :
-            'com.oscarrrweb.tddboilerplate.test.CucumberTestRunner'
-            //'cucumber.api.android.CucumberAndroidJUnitRunner'
-}
-
-def getTestTags() {
-    project.getProperties().get('tags') ?: ''
-}
-def getTestScenario() {
-    project.getProperties().get('scenario') ?: ''
-}
-
 dependencies {
+    def dependencies = rootProject.ext.appDependencies
+    def unitTestDependencies = rootProject.ext.appUnitTestDependencies
+    def androidTestDependencies = rootProject.ext.appAndroidTestDependencies
+    def devDependencies = rootProject.ext.appDevDependencies
+
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "androidx.legacy:legacy-support-v4:${androidVersion}"
-    implementation "com.google.android.material:material:${androidVersion}"
-    implementation "androidx.appcompat:appcompat:${androidVersion}"
-    implementation "androidx.preference:preference:${androidVersion}"
-    implementation "androidx.cardview:cardview:${androidVersion}"
-    implementation "androidx.recyclerview:recyclerview:${androidVersion}"
-    implementation "androidx.constraintlayout:constraintlayout:${constraintLayoutVersion}"
-
-    // Dagger
-    implementation "com.google.dagger:dagger:${daggerVersion}"
-    implementation "com.google.dagger:dagger-android:${daggerVersion}"
-    implementation "com.google.dagger:dagger-android-support:${daggerVersion}"
-
-    // if you use the support libraries
-    annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
-    annotationProcessor "com.google.dagger:dagger-android-processor:${daggerVersion}"
-
-    // RxJava
-    implementation "io.reactivex.rxjava2:rxandroid:${rxJavaVersion}"
-    implementation "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
-
-    // Retrofit
-    implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
-    implementation "com.squareup.retrofit2:converter-scalars:${retrofitVersion}"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}"
-    implementation "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}"
-
-    // Google GSON
-    implementation "com.google.code.gson:gson:${gsonVersion}"
-
-    // Room database
-    implementation "androidx.room:room-runtime:${roomVersion}"
-    annotationProcessor "androidx.room:room-compiler:${roomVersion}"
-
-    // Uncomment to use Butterknife
-    // NOTE: Requires API 26 or higher, look for TODO: Convert to Butterknife
-    // to update
-    // implementation "com.jakewharton:butterknife:${butterknifeVersion}"
-    // annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
-
-    // Timber logging
-    implementation "com.jakewharton.timber:timber:${timberVersion}"
+    implementation dependencies.androidxLegacy
+    implementation dependencies.androidxMaterial
+    implementation dependencies.androidxAppCompat
+    implementation dependencies.androidxPreference
+    implementation dependencies.androidxCardView
+    implementation dependencies.androidxRecyclerView
+    implementation dependencies.androidxConstraintLayout
+    implementation dependencies.dagger
+    implementation dependencies.daggerAndroid
+    implementation dependencies.daggerAndroidSupport
+    annotationProcessor dependencies.daggerCompiler
+    annotationProcessor dependencies.daggerAnnotation
+    implementation dependencies.rxAndroid
+    implementation dependencies.rxJava
+    implementation dependencies.retrofit
+    implementation dependencies.retrofitScalars
+    implementation dependencies.retrofitRxJavaAdapter
+    implementation dependencies.okhttp3Interceptor
+    implementation dependencies.gson
+    implementation dependencies.room
+    annotationProcessor dependencies.roomCompiler
 
     // Unit Test dependencies
-    testImplementation "junit:junit:${junitVersion}"
-    testImplementation "androidx.test:core:${androidUnitTestVersion}"
-    testImplementation "androidx.test:runner:${androidUnitTestVersion}"
-    testImplementation "androidx.test.ext:junit:${androidUnitTestVersion}"
-    testImplementation "org.mockito:mockito-core:${mockitoVersion}"
-    testImplementation "org.robolectric:robolectric:${robolectricVersion}"
-    testImplementation "androidx.room:room-testing:${roomVersion}"
-    testImplementation "com.squareup.okhttp3:mockwebserver:${okHttpVersion}"
-    testAnnotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
-
-    // Uncomment to use Robolectric Shadows support
-    // CURRENTLY NOT SUPPORTED WITH AndroidX
-    // testImplementation "org.robolectric:shadows-supportv4:${robolectricVersion}"
+    testImplementation unitTestDependencies.junit
+    testImplementation unitTestDependencies.androidxTestCore
+    testImplementation unitTestDependencies.androidxTestRunner
+    testImplementation unitTestDependencies.androidxTestJunit
+    testImplementation unitTestDependencies.mockito
+    testImplementation unitTestDependencies.robolectric
+    // testImplementation unitTestDependencies.robolectricShadows // CURRENTLY NOT SUPPORTED WITH AndroidX
+    testImplementation unitTestDependencies.roomTesting
+    testImplementation unitTestDependencies.okhttp3MockWebServer
+    testAnnotationProcessor unitTestDependencies.daggerCompiler
 
     // Android Instrumented Test dependencies
-    androidTestImplementation "androidx.annotation:annotation:${androidVersion}"
-    androidTestImplementation "androidx.test:rules:${androidInstrTestVersion}"
-    androidTestImplementation "androidx.test:runner:${androidInstrTestVersion}"
-    androidTestImplementation "androidx.test.espresso:espresso-core:${espressoVersion}"
-    androidTestImplementation "androidx.test.espresso:espresso-contrib:${espressoVersion}"
-    androidTestImplementation "androidx.test.espresso:espresso-intents:${espressoVersion}"
-
-    // Wrapper for RxJava Schedulers in Espresso tests
-    androidTestImplementation "com.squareup.rx.idler:rx2-idler:${rxIdlerVersion}"
-
-    // Cucumber (for use with Espresso)
-    androidTestImplementation "io.cucumber:cucumber-android:${cucmberVersion}"
-    androidTestImplementation "io.cucumber:cucumber-picocontainer:${cucmberVersion}"
-
-    // Uncomment this to run instrumentation tests with Mockito
-    // androidTestImplementation "org.mockito:mockito-android:${mockitoVersion}"
+    androidTestImplementation androidTestDependencies.androidxAnnotation
+    androidTestImplementation androidTestDependencies.androidxTestRules
+    androidTestImplementation androidTestDependencies.androidxTestRunner
+    androidTestImplementation androidTestDependencies.espressoCore
+    androidTestImplementation androidTestDependencies.espressoContrib
+    androidTestImplementation androidTestDependencies.espressoIntents
+    androidTestImplementation androidTestDependencies.cucumber
+    androidTestImplementation androidTestDependencies.cucumberPicoContainer
+    androidTestImplementation androidTestDependencies.rxJavaIdler
 
     // Uncomment this to run instrumentation tests with orchestrator
-    // androidTestUtil "androidx.test:orchestrator:${androidInstrTestVersion}"
+    // androidTestUtil androidTestDependencies.androidxOrchestrator
+
+    // Uncomment this to run instrumentation tests with Mockito
+    // androidTestImplementation androidTestDependencies.mockito
 
     // Uncomment this to run instrumentation tests with Dagger 2
-    // androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
+    // androidTestAnnotationProcessor androidTestDependencies.daggerCompiler
 
-    // Leak Canary
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:${leakcanaryVersion}"
-    debugImplementation "com.squareup.leakcanary:leakcanary-support-fragment:${leakcanaryVersion}"
-    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanaryVersion}"
+    // Development dependencies
+    implementation devDependencies.timber
+    debugImplementation devDependencies.leakCanary
+    debugImplementation devDependencies.leakCanaryFragment
+    releaseImplementation devDependencies.leakCanaryNoop
 }

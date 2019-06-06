@@ -1,0 +1,163 @@
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+ext {
+
+    //Android
+    androidApplicationId = "com.cccdlabs.tddboilerplate"
+    androidTestApplicationId = "com.cccdlabs.tddboilerplate.test"
+    androidTargetSdkVersion = 28
+    androidCompileSdkVersion = 28
+    androidMinSdkVersion = 24
+    androidVersionCode = 1
+    androidVersionName = "1.0"
+    androidTestInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+  
+    // Libraries
+    androidVersion = "1.0.0"
+    butterknifeVersion = "10.0.0"
+    constraintLayoutVersion = "1.1.2"
+    daggerVersion = "2.21"
+    gsonVersion = "2.8.5"
+    okHttpVersion = "3.12.1"
+    retrofitVersion = "2.5.0"
+    roomVersion = "2.0.0-beta01"
+    rxJavaVersion = "2.1.1"
+    rxIdlerVersion = "0.9.1"
+    
+    // Testing
+    androidUnitTestVersion = "1.1.0"
+    androidInstrTestVersion = "1.1.1"
+    cucmberVersion = "4.3.0"
+    espressoVersion = "3.1.1"
+    junitVersion = "4.12"
+    mockitoVersion = "2.8.9"
+    robolectricVersion = "4.1"
+    
+    // Development
+    leakcanaryVersion = "1.6.3"
+    timberVersion = "4.5.1"
+    
+    appDependencies = [
+        androidxLegacy :		    "androidx.legacy:legacy-support-v4:${androidVersion}",
+        androidxMaterial :		    "com.google.android.material:material:${androidVersion}",
+        androidxAppCompat :		    "androidx.appcompat:appcompat:${androidVersion}",
+        androidxPreference :	    "androidx.preference:preference:${androidVersion}",
+        androidxCardView :		    "androidx.cardview:cardview:${androidVersion}",
+        androidxRecyclerView :		"androidx.recyclerview:recyclerview:${androidVersion}",
+        androidxConstraintLayout :	"androidx.constraintlayout:constraintlayout:${constraintLayoutVersion}",
+        dagger :			        "com.google.dagger:dagger:${daggerVersion}",
+        daggerAndroid :			    "com.google.dagger:dagger-android:${daggerVersion}",
+        daggerAndroidSupport :		"com.google.dagger:dagger-android-support:${daggerVersion}",
+        daggerCompiler :		    "com.google.dagger:dagger-compiler:${daggerVersion}",
+	    daggerAnnotation :		    "com.google.dagger:dagger-android-processor:${daggerVersion}",
+	    rxAndroid :			        "io.reactivex.rxjava2:rxandroid:${rxJavaVersion}",
+	    rxJava :			        "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
+	    retrofit :			        "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+	    retrofitScalars :		    "com.squareup.retrofit2:converter-scalars:${retrofitVersion}",
+	    retrofitRxJavaAdapter :		"com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
+	    okhttp3Interceptor :		"com.squareup.okhttp3:logging-interceptor:${okHttpVersion}",
+	    gson :				        "com.google.code.gson:gson:${gsonVersion}",
+	    room :				        "androidx.room:room-runtime:${roomVersion}",
+        roomCompiler :			    "androidx.room:room-compiler:${roomVersion}"
+    ]
+    
+    appUnitTestDependencies = [
+        junit :				        "junit:junit:${junitVersion}",
+	    androidxTestCore :		    "androidx.test:core:${androidUnitTestVersion}",
+	    androidxTestRunner :		"androidx.test:runner:${androidUnitTestVersion}",
+	    androidxTestJunit :		    "androidx.test.ext:junit:${androidUnitTestVersion}",
+	    mockito :			        "org.mockito:mockito-core:${mockitoVersion}",
+	    robolectric :			    "org.robolectric:robolectric:${robolectricVersion}",
+        robolectricShadows :       "org.robolectric:shadows-supportv4:${robolectricVersion}",
+	    roomTesting :			    "androidx.room:room-testing:${roomVersion}",
+	    okhttp3MockWebServer :		"com.squareup.okhttp3:mockwebserver:${okHttpVersion}",
+        daggerCompiler :		    "com.google.dagger:dagger-compiler:${daggerVersion}"
+    ]
+    
+    appAndroidTestDependencies = [
+        androidxAnnotation :		"androidx.annotation:annotation:${androidVersion}",
+        androidxTestRules :		    "androidx.test:rules:${androidInstrTestVersion}",
+        androidxTestRunner :		"androidx.test:runner:${androidInstrTestVersion}",
+        androidxOrchestrator :     "androidx.test:orchestrator:${androidInstrTestVersion}",
+        espressoCore :			    "androidx.test.espresso:espresso-core:${espressoVersion}",
+        espressoContrib :		    "androidx.test.espresso:espresso-contrib:${espressoVersion}",
+        espressoIntents :		    "androidx.test.espresso:espresso-intents:${espressoVersion}",
+        cucumber :			        "io.cucumber:cucumber-android:${cucmberVersion}",
+        cucumberPicoContainer :		"io.cucumber:cucumber-picocontainer:${cucmberVersion}",
+        rxJavaIdler :			    "com.squareup.rx.idler:rx2-idler:${rxIdlerVersion}", // Wrapper for RxJava Schedulers in Espresso tests
+        mockito :                  "org.mockito:mockito-android:${mockitoVersion}",
+        daggerCompiler :           "com.google.dagger:dagger-compiler:${daggerVersion}"
+    ]
+    
+    appDevDependencies = [
+        timber :			        "com.jakewharton.timber:timber:${timberVersion}",
+        leakCanary :			    "com.squareup.leakcanary:leakcanary-android:${leakcanaryVersion}",
+        leakCanaryFragment :		"com.squareup.leakcanary:leakcanary-support-fragment:${leakcanaryVersion}",
+        leakCanaryNoop :		    "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanaryVersion}"
+    ]
+
+    sampleDependencies = [
+        androidxLegacy :		    "androidx.legacy:legacy-support-v4:${androidVersion}",
+        androidxMaterial :		    "com.google.android.material:material:${androidVersion}",
+        androidxAppCompat :		    "androidx.appcompat:appcompat:${androidVersion}",
+        androidxPreference :	    "androidx.preference:preference:${androidVersion}",
+        androidxCardView :		    "androidx.cardview:cardview:${androidVersion}",
+        androidxRecyclerView :		"androidx.recyclerview:recyclerview:${androidVersion}",
+        androidxConstraintLayout :	"androidx.constraintlayout:constraintlayout:${constraintLayoutVersion}",
+        butterknife :              "com.jakewharton:butterknife:${butterknifeVersion}",
+        butterknifeCompiler :      "com.jakewharton:butterknife-compiler:${butterknifeVersion}",
+        dagger :			        "com.google.dagger:dagger:${daggerVersion}",
+        daggerAndroid :			    "com.google.dagger:dagger-android:${daggerVersion}",
+        daggerAndroidSupport :		"com.google.dagger:dagger-android-support:${daggerVersion}",
+        daggerCompiler :		    "com.google.dagger:dagger-compiler:${daggerVersion}",
+	    daggerAnnotation :		    "com.google.dagger:dagger-android-processor:${daggerVersion}",
+	    rxAndroid :			        "io.reactivex.rxjava2:rxandroid:${rxJavaVersion}",
+	    rxJava :			        "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
+	    retrofit :			        "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+	    retrofitScalars :		    "com.squareup.retrofit2:converter-scalars:${retrofitVersion}",
+	    retrofitRxJavaAdapter :		"com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
+	    okhttp3Interceptor :		"com.squareup.okhttp3:logging-interceptor:${okHttpVersion}",
+	    gson :				        "com.google.code.gson:gson:${gsonVersion}",
+	    room :				        "androidx.room:room-runtime:${roomVersion}",
+        roomCompiler :			    "androidx.room:room-compiler:${roomVersion}"
+    ]
+
+    sampleUnitTestDependencies = [
+        junit :				        "junit:junit:${junitVersion}",
+	    androidxTestCore :		    "androidx.test:core:${androidUnitTestVersion}",
+	    androidxTestRunner :		"androidx.test:runner:${androidUnitTestVersion}",
+	    androidxTestJunit :		    "androidx.test.ext:junit:${androidUnitTestVersion}",
+	    mockito :			        "org.mockito:mockito-core:${mockitoVersion}",
+	    robolectric :			    "org.robolectric:robolectric:${robolectricVersion}",
+        robolectricShadows :       "org.robolectric:shadows-supportv4:${robolectricVersion}",
+	    roomTesting :			    "androidx.room:room-testing:${roomVersion}",
+	    okhttp3MockWebServer :		"com.squareup.okhttp3:mockwebserver:${okHttpVersion}",
+        daggerCompiler :		    "com.google.dagger:dagger-compiler:${daggerVersion}"
+    ]
+
+    sampleAndroidTestDependencies = [
+        androidxAnnotation :		"androidx.annotation:annotation:${androidVersion}",
+        androidxTestRules :		    "androidx.test:rules:${androidInstrTestVersion}",
+        androidxTestRunner :		"androidx.test:runner:${androidInstrTestVersion}",
+        androidxOrchestrator :     "androidx.test:orchestrator:${androidInstrTestVersion}",
+        espressoCore :			    "androidx.test.espresso:espresso-core:${espressoVersion}",
+        espressoContrib :		    "androidx.test.espresso:espresso-contrib:${espressoVersion}",
+        espressoIntents :		    "androidx.test.espresso:espresso-intents:${espressoVersion}",
+        cucumber :			        "io.cucumber:cucumber-android:${cucmberVersion}",
+        cucumberPicoContainer :		"io.cucumber:cucumber-picocontainer:${cucmberVersion}",
+        rxJavaIdler :			    "com.squareup.rx.idler:rx2-idler:${rxIdlerVersion}", // Wrapper for RxJava Schedulers in Espresso tests
+        mockito :                  "org.mockito:mockito-android:${mockitoVersion}",
+        daggerCompiler :           "com.google.dagger:dagger-compiler:${daggerVersion}"
+    ]
+
+    sampleDevDependencies = [
+        timber :			        "com.jakewharton.timber:timber:${timberVersion}",
+        leakCanary :			    "com.squareup.leakcanary:leakcanary-android:${leakcanaryVersion}",
+        leakCanaryFragment :		"com.squareup.leakcanary:leakcanary-support-fragment:${leakcanaryVersion}",
+        leakCanaryNoop :		    "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanaryVersion}"
+    ]
+}
