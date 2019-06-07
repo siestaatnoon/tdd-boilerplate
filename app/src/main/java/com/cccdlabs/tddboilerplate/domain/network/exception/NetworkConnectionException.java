@@ -1,4 +1,4 @@
-package com.cccdlabs.tddboilerplate.data.network.exception;
+package com.cccdlabs.tddboilerplate.domain.network.exception;
 
 /**
  * Exception for when no internet connection exists for network tasks.

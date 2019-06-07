@@ -1,4 +1,4 @@
-package com.cccdlabs.tddboilerplate.data.network.base;
+package com.cccdlabs.tddboilerplate.domain.network.base;
 
 import androidx.annotation.NonNull;
 

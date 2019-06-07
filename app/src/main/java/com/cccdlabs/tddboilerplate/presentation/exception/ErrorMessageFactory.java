@@ -2,8 +2,8 @@ package com.cccdlabs.tddboilerplate.presentation.exception;
 
 import android.content.Context;
 
-import com.cccdlabs.tddboilerplate.data.network.base.ApiError;
-import com.cccdlabs.tddboilerplate.data.network.exception.NetworkConnectionException;
+import com.cccdlabs.tddboilerplate.domain.network.base.ApiError;
+import com.cccdlabs.tddboilerplate.domain.network.exception.NetworkConnectionException;
 import com.cccdlabs.tddboilerplate.domain.repository.exception.RepositoryDeleteException;
 import com.cccdlabs.tddboilerplate.domain.repository.exception.RepositoryInsertException;
 import com.cccdlabs.tddboilerplate.domain.repository.exception.RepositoryQueryException;

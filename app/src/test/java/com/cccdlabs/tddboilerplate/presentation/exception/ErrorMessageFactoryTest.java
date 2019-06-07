@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.cccdlabs.tddboilerplate.domain.repository.exception.RepositoryUpdateException;
 import com.cccdlabs.tddboilerplate.R;
-import com.cccdlabs.tddboilerplate.data.network.exception.NetworkConnectionException;
+import com.cccdlabs.tddboilerplate.domain.network.exception.NetworkConnectionException;
 import com.cccdlabs.tddboilerplate.data.network.retrofit.RestException;
 import com.cccdlabs.tddboilerplate.data.network.retrofit.RestResponse;
 import com.cccdlabs.tddboilerplate.domain.repository.exception.RepositoryDeleteException;

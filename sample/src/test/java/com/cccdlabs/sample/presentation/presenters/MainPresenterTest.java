@@ -13,7 +13,7 @@ import com.cccdlabs.sample.presentation.di.modules.TestPresenterModule;
 import com.cccdlabs.sample.presentation.mappers.GizmoUiModelMapper;
 import com.cccdlabs.sample.presentation.model.GizmoUiModel;
 import com.cccdlabs.sample.presentation.views.MainView;
-import com.cccdlabs.tddboilerplate.data.network.exception.NetworkConnectionException;
+import com.cccdlabs.tddboilerplate.domain.network.exception.NetworkConnectionException;
 
 import org.junit.After;
 import org.junit.Before;

@@ -1,4 +1,4 @@
-package com.cccdlabs.tddboilerplate.data.network.base;
+package com.cccdlabs.tddboilerplate.domain.network.base;
 
 /**
  * Abstraction for determining Exception types that occur in the networking API.

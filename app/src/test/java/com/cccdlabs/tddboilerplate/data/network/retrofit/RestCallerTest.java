@@ -2,7 +2,7 @@ package com.cccdlabs.tddboilerplate.data.network.retrofit;
 
 import android.content.Context;
 
-import com.cccdlabs.tddboilerplate.data.network.base.ApiResponse;
+import com.cccdlabs.tddboilerplate.domain.network.base.ApiResponse;
 import com.cccdlabs.tddboilerplate.presentation.di.components.TestAppComponent;
 import com.cccdlabs.tddboilerplate.presentation.di.modules.TestAppModule;
 import com.cccdlabs.tddboilerplate.presentation.di.modules.TestDataModule;

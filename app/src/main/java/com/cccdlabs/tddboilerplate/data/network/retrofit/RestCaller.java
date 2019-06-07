@@ -6,14 +6,14 @@ import android.content.Context;
 import android.util.ArrayMap;
 import android.util.MalformedJsonException;
 
-import com.cccdlabs.tddboilerplate.data.network.exception.NetworkConnectionException;
+import com.cccdlabs.tddboilerplate.domain.network.exception.NetworkConnectionException;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.cccdlabs.tddboilerplate.data.Constants;
 import com.cccdlabs.tddboilerplate.data.entity.base.Entity;
-import com.cccdlabs.tddboilerplate.data.network.base.ApiCaller;
-import com.cccdlabs.tddboilerplate.data.network.base.ApiResponse;
+import com.cccdlabs.tddboilerplate.domain.network.base.ApiCaller;
+import com.cccdlabs.tddboilerplate.domain.network.base.ApiResponse;
 import com.cccdlabs.tddboilerplate.data.network.utils.NetworkUtils;
 
 import java.io.IOException;

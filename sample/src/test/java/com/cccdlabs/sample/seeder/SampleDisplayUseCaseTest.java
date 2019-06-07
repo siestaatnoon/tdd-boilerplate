@@ -5,7 +5,7 @@ import com.cccdlabs.sample.domain.interactors.SampleDisplayUseCase;
 import com.cccdlabs.sample.domain.model.Gizmo;
 import com.cccdlabs.sample.presentation.di.components.DaggerTestUseCaseComponent;
 import com.cccdlabs.sample.presentation.di.components.TestUseCaseComponent;
-import com.cccdlabs.tddboilerplate.data.network.exception.NetworkConnectionException;
+import com.cccdlabs.tddboilerplate.domain.network.exception.NetworkConnectionException;
 
 import org.junit.After;
 import org.junit.Before;

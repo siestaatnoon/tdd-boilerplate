@@ -1,4 +1,4 @@
-package com.cccdlabs.tddboilerplate.data.network.base;
+package com.cccdlabs.tddboilerplate.domain.network.base;
 
 import com.google.gson.JsonObject;
 import com.cccdlabs.tddboilerplate.data.entity.base.Entity;

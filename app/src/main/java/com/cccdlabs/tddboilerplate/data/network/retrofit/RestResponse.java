@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.cccdlabs.tddboilerplate.data.entity.base.Entity;
-import com.cccdlabs.tddboilerplate.data.network.base.ApiResponse;
+import com.cccdlabs.tddboilerplate.domain.network.base.ApiResponse;
 
 import java.lang.reflect.Type;
 import java.util.List;
