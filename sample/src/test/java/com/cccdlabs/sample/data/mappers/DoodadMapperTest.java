@@ -86,6 +86,8 @@ public class DoodadMapperTest {
     @After
     public void tearDown() throws Exception {
         mMapper = null;
+        entity1 = null;
+        entity2 = null;
     }
 
     private void assertEqualValues(DoodadEntity entity, Doodad model) {

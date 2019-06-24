@@ -26,15 +26,11 @@ import javax.inject.Inject;
 public class WidgetRepository extends AbstractRepository<WidgetEntity, Widget, WidgetMapper, WidgetDao> implements WidgetRepo {
 
     @Inject WidgetMapper mWidgetMapper;
-    @Inject
-    DoodadMapper mDoodadMapper;
-    @Inject
-    GizmoMapper mGizmoMapper;
+    @Inject DoodadMapper mDoodadMapper;
+    @Inject GizmoMapper mGizmoMapper;
     @Inject WidgetDao mWidgetDao;
-    @Inject
-    GizmoDao mGizmoDao;
-    @Inject
-    DoodadDao mDoodadDao;
+    @Inject GizmoDao mGizmoDao;
+    @Inject DoodadDao mDoodadDao;
 
     @Inject
     public WidgetRepository() {}

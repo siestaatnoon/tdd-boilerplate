@@ -8,10 +8,10 @@ import com.cccdlabs.sample.TestApp;
 import com.cccdlabs.sample.data.entity.DoodadEntity;
 import com.cccdlabs.sample.data.entity.GizmoEntity;
 import com.cccdlabs.sample.data.entity.WidgetEntity;
+import com.cccdlabs.sample.data.storage.database.AppDatabase;
 import com.cccdlabs.sample.presentation.di.components.DaggerTestDataComponent;
 import com.cccdlabs.sample.presentation.di.components.TestDataComponent;
 import com.cccdlabs.sample.presentation.di.modules.TestDataModule;
-import com.cccdlabs.sample.data.storage.database.AppDatabase;
 import com.cccdlabs.tddboilerplate.data.utils.DateUtils;
 
 import org.junit.After;
@@ -21,12 +21,13 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk=28, application=TestApp.class)
@@ -99,58 +100,91 @@ public class DoodadDaoTest {
     }
 
     @Test
-    public void WidgetDao_shouldPerformAllFuntions() throws Exception {
-        // TEST insert(entity)
+    public void shouldInsertAndGetFromId() throws Exception {
         long id = mDao.insert(entity1);
+        assertTrue("ID is zero", id > 0);
 
-        // TEST insert(Entity[]...)
-        mDao.insert(new DoodadEntity[]{entity2, entity3, entity4});
-
-        // TEST fromId(id)
-        DoodadEntity entity = mDao.fromId((int)id);
+        DoodadEntity entity = mDao.fromId((int) id);
         assertNotNull("Entity after fromId(id)", entity);
         assertEntitiesEqual(entity1, entity);
+    }
 
-        // TEST getByWidgets(uuid)
-        List<DoodadEntity> entities = mDao.getByWidget(WIDGET_UUID);
-        assertNotNull("List<DoodadEntity> after getByWidget(uuid) null", entities);
-        assertEquals("List<DoodadEntity> after getByWidget(uuid) count incorrect", 4, entities.size());
+    @Test
+    public void shouldInsertAndGetFromUuid() throws Exception {
+        long id = mDao.insert(entity1);
+        assertTrue("ID is zero", id > 0);
 
-        // TEST getByWidgets(List)
-        List<String> uuids = new ArrayList<>(1);
-        uuids.add(WIDGET_UUID);
-        entities = mDao.getByWidgets(uuids);
-        assertNotNull("List<DoodadEntity> after getByWidgets(List<String>) null", entities);
-        assertEquals("List<DoodadEntity> after getByWidgets(List<String>) count incorrect", 4, entities.size());
+        DoodadEntity entity = mDao.fromUuid(entity1.getUuid());
+        assertNotNull("Entity after fromUuid(uuid)", entity);
+        assertEntitiesEqual(entity1, entity);
+    }
 
-        // TEST update(entity)
+    @Test
+    public void shouldUpdate() throws Exception {
+        long id = mDao.insert(entity1);
+        assertTrue("ID is zero", id > 0);
+
+        DoodadEntity entity = mDao.fromUuid(entity1.getUuid());
+        assertNotNull("Entity after fromUuid(uuid)", entity);
+
         entity.setName("DoodadEntity One point One");
         entity.setDescription("No more piggies");
         entity.touch(); // update timestamps
         int count = mDao.update(entity);
+
         assertEquals("updateCount not 1", 1, count);
 
-        // TEST fromUuid(uuid)
-        DoodadEntity updated = mDao.fromUuid(entity.getUuid());
-        assertNotNull("Entity after fromUuid(uuid)", updated);
-        assertEntitiesEqual(entity, updated);
+        DoodadEntity entity2 = mDao.fromUuid(entity1.getUuid());
+        assertEntitiesEqual(entity, entity2);
+    }
 
-        // TEST setUpdatedAt(uuid, updatedAt)
-        long newTime = updated.getUpdatedAt().getTime() + 2000;
-        Date updatedAt = new Date(newTime);
-        mDao.setUpdatedAt(updated.getUuid(), DateUtils.dateToSqlString(updatedAt));
-        updated = mDao.fromUuid(updated.getUuid());
-        assertNotNull("Entity after setUpdatedAt(uuid, updatedAt) null", updated);
-        assertEquals("updatedAt timestamp incorrect", newTime, updated.getUpdatedAt().getTime());
+    @Test
+    public void shouldInsertMultipleAndGetAll() throws Exception {
+        DoodadEntity[] entities = new DoodadEntity[]{entity1, entity2, entity3, entity4};
+        long[] ids = mDao.insert(entities);
+        assertTrue("IDs count is zero", ids.length > 0);
+        for (int i=0; i < ids.length; i++) {
+            assertTrue("ID[" + i + "] is zero", ids[i] > 0);
+        }
 
-        // TEST getAll()
-        entities = mDao.getAll();
+        List<DoodadEntity> entityList = mDao.getAll();
+        assertNotNull("List<DoodadEntity> after getAll() null", entityList);
+        assertEquals("List<DoodadEntity> after getAll() count incorrect", 4, entityList.size());
+
+        // entities can be returned in any order so we'll use a loop,
+        // check each matching UUID and compare to the corresponding entity
+        String uuid;
+        for (DoodadEntity entity : entityList) {
+            uuid = entity.getUuid();
+            if (uuid.equals(entity1.getUuid())) {
+                assertEntitiesEqual(entity1, entity);
+            } else if (uuid.equals(entity2.getUuid())) {
+                assertEntitiesEqual(entity2, entity);
+            } else if (uuid.equals(entity3.getUuid())) {
+                assertEntitiesEqual(entity3, entity);
+            } else if (uuid.equals(entity4.getUuid())) {
+                assertEntitiesEqual(entity4, entity);
+            } else {
+                fail("Invalid UUID [" + uuid + "]");
+            }
+        }
+    }
+
+    @Test
+    public void shouldDeleteByEntityAndUuidAndArray() throws Exception {
+        long[] ids = mDao.insert(new DoodadEntity[]{entity1, entity2, entity3, entity4});
+        assertTrue("IDs count is zero", ids.length > 0);
+        for (int i=0; i < ids.length; i++) {
+            assertTrue("ID[" + i + "] is zero", ids[i] > 0);
+        }
+
+        List<DoodadEntity> entities = mDao.getAll();
         assertNotNull("List<DoodadEntity> after getAll() null", entities);
         assertEquals("List<DoodadEntity> after getAll() count incorrect", 4, entities.size());
 
         // TEST delete(entity)
-        entity = entities.get(0);
-        count = mDao.delete(entity);
+        DoodadEntity entity = entities.get(0);
+        int count = mDao.delete(entity);
         assertEquals("deleteCount[entity] not 1", 1, count);
 
         // TEST delete(uuid)
@@ -171,6 +205,24 @@ public class DoodadDaoTest {
         assertEquals("List<DoodadEntity> after getAll() count incorrect", 0, entities.size());
     }
 
+    @Test
+    public void shouldSetUpdatedAt() throws Exception {
+        long id = mDao.insert(entity1);
+        assertTrue("ID is zero", id > 0);
+
+        DoodadEntity entity = mDao.fromUuid(entity1.getUuid());
+        assertNotNull("Entity after fromUuid(uuid)", entity);
+        assertEntitiesEqual(entity1, entity);
+
+        // TEST setUpdatedAt(uuid, updatedAt)
+        long newTime = entity.getUpdatedAt().getTime() + 2000;
+        Date updatedAt = new Date(newTime);
+        mDao.setUpdatedAt(entity.getUuid(), DateUtils.dateToSqlString(updatedAt));
+        entity = mDao.fromUuid(entity.getUuid());
+        assertNotNull("Entity after setUpdatedAt(uuid, updatedAt) null", entity);
+        assertEquals("updatedAt timestamp incorrect", newTime, entity.getUpdatedAt().getTime());
+    }
+
     @After
     public void tearDown() throws Exception {
         mDb.close();
@@ -178,7 +230,7 @@ public class DoodadDaoTest {
 
     private void assertEntitiesEqual(DoodadEntity entity1, DoodadEntity entity2) {
         assertNotNull("Entity 1 null", entity1);
-        assertNotNull("Entity 2 null", entity1);
+        assertNotNull("Entity 2 null", entity2);
         assertEquals("UUIDs not equal", entity1.getUuid(), entity2.getUuid());
         assertEquals("Widget UUIDs not equal", entity1.getWidgetUuid(), entity2.getWidgetUuid());
         assertEquals("name not equal", entity1.getName(), entity2.getName());

@@ -15,7 +15,7 @@ import timber.log.Timber;
  *
  * @param <T> The returned data object
  */
-abstract public class PresenterObserver<T> extends DisposableSingleObserver<T> {
+abstract public class PresenterSingleObserver<T> extends DisposableSingleObserver<T> {
 
     /**
      * The {@link Presenter} utilizing this observable.
@@ -33,7 +33,7 @@ abstract public class PresenterObserver<T> extends DisposableSingleObserver<T> {
      * @param context       The Android context
      * @param presenter     The Presenter utilizing this observable
      */
-    public PresenterObserver(Context context, Presenter presenter) {
+    public PresenterSingleObserver(Context context, Presenter presenter) {
         this.context = context;
         this.presenter = presenter;
     }

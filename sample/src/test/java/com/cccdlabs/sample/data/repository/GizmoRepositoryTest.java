@@ -28,10 +28,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 /**
- * Unit test for GizmoRepository class. While trying various configurations including
- * {@link @BeforeClass} and {@link @AfterClass}, it was decided that, for best performance,
- * a single test would be best although not very elegant. Initializing database connections
- * can get pretty expensive.
+ * Unit test for GizmoRepository class.
  *
  */
 @RunWith(RobolectricTestRunner.class)
@@ -100,7 +97,7 @@ public class GizmoRepositoryTest {
     }
 
     @Test
-    public void GizmoRepository_shouldPerformAllFuntions() throws Exception {
+    public void shouldInsertAndGetByIdAndUuid() throws Exception {
         // TEST insert(model)
         int id = mRepository.insert(model1);
 
@@ -119,9 +116,11 @@ public class GizmoRepositoryTest {
         Gizmo updated = mRepository.getByUuid(model.getUuid());
         assertNotNull("Model after getByUuid(uuid)", updated);
         assertModelsEqual(model, updated);
+    }
 
-        // TEST getAll()
-        model1 = model;
+    @Test
+    public void shouldInsertAndGetAll() throws Exception {
+        mRepository.insert(model1);
         mRepository.insert(model2);
         mRepository.insert(model3);
 
@@ -144,22 +143,33 @@ public class GizmoRepositoryTest {
                 fail("Invalid UUID [" + uuid + "]");
             }
         }
+    }
+
+    @Test
+    public void shouldDeleteByModelAndIdAndUuid() throws Exception {
+        // TEST getAll()
+        mRepository.insert(model1);
+        mRepository.insert(model2);
+        mRepository.insert(model3);
+
+        List<Gizmo> models = mRepository.getAll();
+        assertNotNull("List<Gizmo> after getAll() null", models);
 
         // TEST delete(model)
-        model = models.get(0);
-        count = mRepository.delete(model);
+        Gizmo model = models.get(0);
+        int count = mRepository.delete(model);
         assertEquals("deleteCount[model] not 1", 1, count);
 
         // TEST delete(id)
         model = models.get(1);
-        id = model.getId();
+        int id = model.getId();
         assertNotNull("Model for DELETE by ID null", model);
         count = mRepository.delete(id);
         assertEquals("deleteCount[ID] not 1", 1, count);
 
         // TEST delete(uuid)
         model = models.get(2);
-        uuid = model.getUuid();
+        String uuid = model.getUuid();
         assertNotNull("Model for DELETE by UUID null", model);
         count = mRepository.delete(uuid);
         assertEquals("deleteCount[UUID] not 1", 1, count);
@@ -168,9 +178,11 @@ public class GizmoRepositoryTest {
         models = mRepository.getAll();
         assertNotNull("List<Gizmo> after getAll() null", models);
         assertEquals("List<Gizmo> after getAll() count incorrect", 0, models.size());
+    }
 
-        // TEST delete(List<Doodad>)
-        id = mRepository.insert(model1);
+    @Test
+    public void shouldDeleteByModelList() throws Exception {
+        int id = mRepository.insert(model1);
         model1.setId(id);
         id = mRepository.insert(model2);
         model2.setId(id);
@@ -180,31 +192,34 @@ public class GizmoRepositoryTest {
         list.add(model1);
         list.add(model2);
         list.add(model3);
-        count = mRepository.delete(list);
+        int count = mRepository.delete(list);
         assertEquals("deleteCount[List<Gizmo>] not 3", 3, count);
 
-        // TEST getAll() returns empty List after delete
-        models = mRepository.getAll();
+        // TEST getAll() returns empty List after deletes
+        List<Gizmo> models = mRepository.getAll();
         assertNotNull("List<Gizmo> after delete(List<Gizmo>) null", models);
         assertEquals("List<Gizmo> after delete(List<Gizmo>) count incorrect", 0, models.size());
+    }
 
-        mRepository.insert(model1);     // insert
-        mRepository.insert(model2);     // gizmos
-        mRepository.insert(model3);     // for the last tests
+    @Test
+    public void shouldAttachWidgets() throws Exception {
+        mRepository.insert(model1);
+        mRepository.insert(model2);
+        mRepository.insert(model3);
         insertWidget(model1.getUuid()); // insert
         insertWidget(model2.getUuid()); // relational
         insertWidget(model3.getUuid()); // widgets
 
         // TEST attachWidgets(model)
-        model = mRepository.getByUuid(model1.getUuid());
-        assertNotNull("Gizmo after getByUuid() null", models);
+        Gizmo model = mRepository.getByUuid(model1.getUuid());
+        assertNotNull("Gizmo after getByUuid() null", model);
         model = mRepository.attachWidgets(model);
         List<Widget> widgets = model.getWidgets();
         assertNotNull("attachWidgets(model) null", widgets);
         assertEquals("attachWidgets(model) size not 1", 1, widgets.size());
 
-        // TEST attachDoodads(List)
-        models = mRepository.getAll();
+        // TEST attachWidgets(List)
+        List<Gizmo> models = mRepository.getAll();
         assertNotNull("List<Gizmo> after getAll() null", models);
         models = mRepository.attachWidgets(models);
         for (Gizmo m : models) {

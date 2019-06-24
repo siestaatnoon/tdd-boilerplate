@@ -6,10 +6,10 @@ import androidx.test.core.app.ApplicationProvider;
 
 import com.cccdlabs.sample.TestApp;
 import com.cccdlabs.sample.data.entity.GizmoEntity;
+import com.cccdlabs.sample.data.storage.database.AppDatabase;
 import com.cccdlabs.sample.presentation.di.components.DaggerTestDataComponent;
 import com.cccdlabs.sample.presentation.di.components.TestDataComponent;
 import com.cccdlabs.sample.presentation.di.modules.TestDataModule;
-import com.cccdlabs.sample.data.storage.database.AppDatabase;
 import com.cccdlabs.tddboilerplate.data.utils.DateUtils;
 
 import org.junit.After;
@@ -25,6 +25,8 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk=28, application=TestApp.class)
@@ -73,59 +75,115 @@ public class GizmoDaoTest {
     }
 
     @Test
-    public void WidgetDao_shouldPerformAllFuntions() throws Exception {
-        // TEST insert(entity)
+    public void shouldInsertAndGetFromId() throws Exception {
         long id = mDao.insert(entity1);
+        assertTrue("ID is zero", id > 0);
 
-        // TEST insert(Entity[]...)
-        mDao.insert(new GizmoEntity[]{entity2, entity3, entity4});
-
-        // TEST fromId(id)
-        GizmoEntity entity = mDao.fromId((int)id);
+        GizmoEntity entity = mDao.fromId((int) id);
         assertNotNull("Entity after fromId(id)", entity);
         assertEntitiesEqual(entity1, entity);
+    }
 
-        // TEST update(entity)
+    @Test
+    public void shouldInsertAndGetFromUuid() throws Exception {
+        long id = mDao.insert(entity1);
+        assertTrue("ID is zero", id > 0);
+
+        GizmoEntity entity = mDao.fromUuid(entity1.getUuid());
+        assertNotNull("Entity after fromUuid(uuid)", entity);
+        assertEntitiesEqual(entity1, entity);
+    }
+
+    @Test
+    public void shouldGetFromUuids() throws Exception {
+        mDao.insert(new GizmoEntity[]{entity1, entity2});
+
+        List<String> uuids = new ArrayList<>(2);
+        uuids.add(entity1.getUuid());
+        uuids.add(entity2.getUuid());
+        List<GizmoEntity> entityList = mDao.fromUuids(uuids);
+
+        assertNotNull("Entity after fromUuids(List)", entityList);
+        assertEquals("List<GizmoEntity> after fromUuids(List) count incorrect", 2, entityList.size());
+        assertEntitiesEqual(entity1, entityList.get(0));
+        assertEntitiesEqual(entity2, entityList.get(1));
+    }
+
+    @Test
+    public void shouldGetForList() throws Exception {
+        mDao.insert(new GizmoEntity[]{entity1, entity2, entity3, entity4});
+        List<GizmoDao.ListItem> listItems = mDao.getForList();
+
+        assertNotNull("List<GizmoDao.ListItem> after getForList() null", listItems);
+        assertEquals("List<GizmoDao.ListItem> after getForList() count incorrect", 4, listItems.size());
+    }
+
+    @Test
+    public void shouldUpdate() throws Exception {
+        long id = mDao.insert(entity1);
+        assertTrue("ID is zero", id > 0);
+
+        GizmoEntity entity = mDao.fromUuid(entity1.getUuid());
+        assertNotNull("Entity after fromUuid(uuid)", entity);
+
         entity.setName("GizmoEntity One point One");
         entity.setDescription("No more piggies");
         entity.touch(); // update timestamps
         int count = mDao.update(entity);
+
         assertEquals("updateCount not 1", 1, count);
 
-        // TEST fromUuid(uuid)
-        GizmoEntity updated = mDao.fromUuid(entity.getUuid());
-        assertNotNull("Entity after fromUuid(uuid)", updated);
-        assertEntitiesEqual(entity, updated);
+        GizmoEntity entity2 = mDao.fromUuid(entity1.getUuid());
+        assertEntitiesEqual(entity, entity2);
+    }
 
-        // TEST fromUuids(uuid)
-        List<String> uuids = new ArrayList<>(1);
-        uuids.add(entity.getUuid());
-        List<GizmoEntity> entityList = mDao.fromUuids(uuids);
-        assertNotNull("Entity after fromUuids(List)", entityList);
-        assertEquals("List<GizmoEntity> after fromUuids(List) count incorrect", 1, entityList.size());
-        assertEntitiesEqual(entity, entityList.get(0));
+    @Test
+    public void shouldInsertMultipleAndGetAll() throws Exception {
+        GizmoEntity[] entities = new GizmoEntity[]{entity1, entity2, entity3, entity4};
+        long[] ids = mDao.insert(entities);
+        assertTrue("IDs count is zero", ids.length > 0);
+        for (int i=0; i < ids.length; i++) {
+            assertTrue("ID[" + i + "] is zero", ids[i] > 0);
+        }
 
-        // TEST setUpdatedAt(uuid, updatedAt)
-        long newTime = updated.getUpdatedAt().getTime() + 2000;
-        Date updatedAt = new Date(newTime);
-        mDao.setUpdatedAt(updated.getUuid(), DateUtils.dateToSqlString(updatedAt));
-        updated = mDao.fromUuid(updated.getUuid());
-        assertNotNull("Entity after setUpdatedAt(uuid, updatedAt) null", updated);
-        assertEquals("updatedAt timestamp incorrect", newTime, updated.getUpdatedAt().getTime());
+        List<GizmoEntity> entityList = mDao.getAll();
+        assertNotNull("List<GizmoEntity> after getAll() null", entityList);
+        assertEquals("List<GizmoEntity> after getAll() count incorrect", 4, entityList.size());
 
-        // TEST getForList()
-        List<GizmoDao.ListItem> listItems = mDao.getForList();
-        assertNotNull("List<GizmoDao.ListItem> after getForList() null", listItems);
-        assertEquals("List<GizmoDao.ListItem> after getForList() count incorrect", 4, listItems.size());
+        // entities can be returned in any order so we'll use a loop,
+        // check each matching UUID and compare to the corresponding entity
+        String uuid;
+        for (GizmoEntity entity : entityList) {
+            uuid = entity.getUuid();
+            if (uuid.equals(entity1.getUuid())) {
+                assertEntitiesEqual(entity1, entity);
+            } else if (uuid.equals(entity2.getUuid())) {
+                assertEntitiesEqual(entity2, entity);
+            } else if (uuid.equals(entity3.getUuid())) {
+                assertEntitiesEqual(entity3, entity);
+            } else if (uuid.equals(entity4.getUuid())) {
+                assertEntitiesEqual(entity4, entity);
+            } else {
+                fail("Invalid UUID [" + uuid + "]");
+            }
+        }
+    }
 
-        // TEST getAll()
+    @Test
+    public void shouldDeleteByEntityAndUuidAndArray() throws Exception {
+        long[] ids = mDao.insert(new GizmoEntity[]{entity1, entity2, entity3, entity4});
+        assertTrue("IDs count is zero", ids.length > 0);
+        for (int i=0; i < ids.length; i++) {
+            assertTrue("ID[" + i + "] is zero", ids[i] > 0);
+        }
+
         List<GizmoEntity> entities = mDao.getAll();
         assertNotNull("List<GizmoEntity> after getAll() null", entities);
         assertEquals("List<GizmoEntity> after getAll() count incorrect", 4, entities.size());
 
         // TEST delete(entity)
-        entity = entities.get(0);
-        count = mDao.delete(entity);
+        GizmoEntity entity = entities.get(0);
+        int count = mDao.delete(entity);
         assertEquals("deleteCount[entity] not 1", 1, count);
 
         // TEST delete(uuid)
@@ -146,6 +204,24 @@ public class GizmoDaoTest {
         assertEquals("List<GizmoEntity> after getAll() count incorrect", 0, entities.size());
     }
 
+    @Test
+    public void shouldSetUpdatedAt() throws Exception {
+        long id = mDao.insert(entity1);
+        assertTrue("ID is zero", id > 0);
+
+        GizmoEntity entity = mDao.fromUuid(entity1.getUuid());
+        assertNotNull("Entity after fromUuid(uuid)", entity);
+        assertEntitiesEqual(entity1, entity);
+
+        // TEST setUpdatedAt(uuid, updatedAt)
+        long newTime = entity.getUpdatedAt().getTime() + 2000;
+        Date updatedAt = new Date(newTime);
+        mDao.setUpdatedAt(entity.getUuid(), DateUtils.dateToSqlString(updatedAt));
+        entity = mDao.fromUuid(entity.getUuid());
+        assertNotNull("Entity after setUpdatedAt(uuid, updatedAt) null", entity);
+        assertEquals("updatedAt timestamp incorrect", newTime, entity.getUpdatedAt().getTime());
+    }
+
     @After
     public void tearDown() throws Exception {
         mDb.close();
@@ -153,7 +229,7 @@ public class GizmoDaoTest {
 
     private void assertEntitiesEqual(GizmoEntity entity1, GizmoEntity entity2) {
         assertNotNull("Entity 1 null", entity1);
-        assertNotNull("Entity 2 null", entity1);
+        assertNotNull("Entity 2 null", entity2);
         assertEquals("UUIDs not equal", entity1.getUuid(), entity2.getUuid());
         assertEquals("name not equal", entity1.getName(), entity2.getName());
         assertEquals("description not equal", entity1.getDescription(), entity2.getDescription());

@@ -1,4 +1,4 @@
-package com.cccdlabs.sample.seeder;
+package com.cccdlabs.sample.domain.interactors;
 
 import com.cccdlabs.sample.data.repository.GizmoRepository;
 import com.cccdlabs.sample.domain.interactors.SampleDisplayUseCase;

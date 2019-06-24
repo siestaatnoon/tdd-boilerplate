@@ -11,7 +11,7 @@ import com.cccdlabs.sample.presentation.views.MainView;
 import com.cccdlabs.tddboilerplate.domain.executor.ExecutorThread;
 import com.cccdlabs.tddboilerplate.domain.executor.MainThread;
 import com.cccdlabs.tddboilerplate.presentation.presenters.base.AbstractPresenter;
-import com.cccdlabs.tddboilerplate.presentation.presenters.observers.PresenterObserver;
+import com.cccdlabs.tddboilerplate.presentation.presenters.observers.PresenterSingleObserver;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class MainPresenter extends AbstractPresenter<Gizmo> {
     @Inject MainThread mMainThread;
     @Inject Context mContext;
 
-    class ShowSampleDisplayObserver extends PresenterObserver<List<GizmoUiModel>> {
+    class ShowSampleDisplayObserver extends PresenterSingleObserver<List<GizmoUiModel>> {
 
         private ShowSampleDisplayObserver() {
             super(mContext, MainPresenter.this);
