@@ -3,23 +3,21 @@ package com.cccdlabs.sample.presentation.ui.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cccdlabs.sample.R;
+import com.cccdlabs.sample.presentation.di.components.DaggerMainComponent;
+import com.cccdlabs.sample.presentation.di.components.DaggerSampleAppComponent;
 import com.cccdlabs.sample.presentation.di.components.MainComponent;
 import com.cccdlabs.sample.presentation.di.components.SampleAppComponent;
 import com.cccdlabs.sample.presentation.di.modules.DataModule;
 import com.cccdlabs.sample.presentation.model.GizmoUiModel;
-import com.cccdlabs.sample.presentation.ui.adapters.SampleAdapter;
-import com.cccdlabs.sample.R;
-import com.cccdlabs.sample.presentation.di.components.DaggerMainComponent;
-import com.cccdlabs.sample.presentation.di.components.DaggerSampleAppComponent;
 import com.cccdlabs.sample.presentation.presenters.MainPresenter;
+import com.cccdlabs.sample.presentation.ui.adapters.SampleAdapter;
 import com.cccdlabs.sample.presentation.views.MainView;
 import com.cccdlabs.tddboilerplate.App;
 import com.cccdlabs.tddboilerplate.presentation.di.HasComponent;
@@ -180,11 +178,5 @@ public class MainActivity extends BaseAppCompatActivity implements MainView, Has
     @Override
     public MainComponent getComponent() {
         return mMainComponent;
-    }
-
-    protected void showMessage(String message) {
-        if ( ! TextUtils.isEmpty(message)) {
-            Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
-        }
     }
 }

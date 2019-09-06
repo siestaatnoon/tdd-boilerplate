@@ -1,6 +1,9 @@
 package com.cccdlabs.tddboilerplate.presentation.ui.activities.base;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cccdlabs.tddboilerplate.App;
@@ -29,5 +32,11 @@ abstract public class BaseAppCompatActivity extends AppCompatActivity {
 
     protected ActivityModule getActivityModule() {
         return new ActivityModule(this);
+    }
+
+    protected void showMessage(String message) {
+        if ( ! TextUtils.isEmpty(message)) {
+            Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+        }
     }
 }
