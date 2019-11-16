@@ -6,7 +6,7 @@
 
     <!-- About -->
     <string name="about_made_by">Made by Johnny Spence</string>
-    <string name="about_website">www.desertelements.com</string>
+    <string name="about_website">www.cccdlabs.com</string>
 
     <!-- Activity Titles-->
     <string name="title_about">About</string>
@@ -16,6 +16,11 @@
     <string name="menu_action_settings">Settings</string>
     <string name="menu_action_about">About</string>
     <string name="menu_action_close">Close</string>
+
+    <!-- Bottom Menu -->
+    <string name="menu_add">Add</string>
+    <string name="menu_talk">Say Hi</string>
+    <string name="menu_search">Search</string>
 
     <!-- Shared Preferences -->
     <string name="pref_view_title_general">General</string>
@@ -51,5 +56,16 @@
     <string name="error_respository_query">%1$s could not be retrieved</string>
     <string name="error_respository_update">"%1$s" could not be updated</string>
     <string name="error_unknown">An unknown error has occurred</string>
+
+    <!-- Common Terms -->
+    <string name="close">Close</string>
+    <string name="delete">Delete</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="edit">Edit</string>
+    <string name="error">Error</string>
+    <string name="no">No</string>
+    <string name="ok">OK</string>
+    <string name="save">Save</string>
+    <string name="yes">Yes</string>
 
 </resources>

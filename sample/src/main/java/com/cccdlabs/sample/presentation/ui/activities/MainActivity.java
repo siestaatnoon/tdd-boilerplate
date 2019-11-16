@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +26,7 @@ import com.cccdlabs.tddboilerplate.App;
 import com.cccdlabs.tddboilerplate.presentation.di.HasComponent;
 import com.cccdlabs.tddboilerplate.presentation.di.modules.AppModule;
 import com.cccdlabs.tddboilerplate.presentation.ui.activities.base.BaseAppCompatActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
@@ -44,6 +48,25 @@ public class MainActivity extends BaseAppCompatActivity implements MainView, Has
      */
     //@BindView(R.id.gizmo_list)
     RecyclerView mRecyclerView;
+
+    private class BottomNavigationListener implements BottomNavigationView.OnNavigationItemSelectedListener {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            int id = item.getItemId();
+            final Intent intent;
+
+            switch (id) {
+                case R.id.action_add:
+                    return false;
+                case R.id.action_say_hi:
+                    return false;
+                case R.id.action_search:
+                    return false;
+            }
+
+            return false;
+        }
+    }
 
 
     @Override
@@ -92,6 +115,15 @@ public class MainActivity extends BaseAppCompatActivity implements MainView, Has
          * change the child layout size in the RecyclerView
          */
         mRecyclerView.setHasFixedSize(true);
+
+        // Setup bottom navigation, set all items enabled, unchecked
+        BottomNavigationListener bottomNavigationListener = new BottomNavigationListener();
+        BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
+        bottomNavigation.setOnNavigationItemSelectedListener(bottomNavigationListener);
+        Menu menu = bottomNavigation.getMenu();
+        for (int i=0; i < menu.size(); i++) {
+            menu.getItem(i).setEnabled(true).setChecked(false);
+        }
     }
 
     @Override
@@ -145,29 +177,9 @@ public class MainActivity extends BaseAppCompatActivity implements MainView, Has
     }
 
     @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void showRetry() {
-
-    }
-
-    @Override
-    public void hideRetry() {
-
-    }
-
-    @Override
     public void showError(String message) {
         Timber.e(message);
-        showMessage(message);
+        showSnackbar(findViewById(R.id.activity_main), message);
     }
 
     @Override
@@ -178,5 +190,27 @@ public class MainActivity extends BaseAppCompatActivity implements MainView, Has
     @Override
     public MainComponent getComponent() {
         return mMainComponent;
+    }
+
+    @Override
+    public void showLoading() {
+        ProgressBar progressBar = findViewById(R.id.progressbar);
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+        ProgressBar progressBar = findViewById(R.id.progressbar);
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showRetry() {
+
+    }
+
+    @Override
+    public void hideRetry() {
+
     }
 }

@@ -18,8 +18,9 @@ ext {
   
     // Libraries
     androidVersion = "1.0.0"
+    androidMaterialVersion = "1.1.0-alpha09";
     butterknifeVersion = "10.0.0"
-    constraintLayoutVersion = "1.1.2"
+    constraintLayoutVersion = "1.1.3"
     daggerVersion = "2.21"
     gsonVersion = "2.8.5"
     okHttpVersion = "3.12.1"
@@ -43,7 +44,7 @@ ext {
     
     appDependencies = [
         androidxLegacy :		    "androidx.legacy:legacy-support-v4:${androidVersion}",
-        androidxMaterial :		    "com.google.android.material:material:${androidVersion}",
+        androidxMaterial :		    "com.google.android.material:material:${androidMaterialVersion}",
         androidxAppCompat :		    "androidx.appcompat:appcompat:${androidVersion}",
         androidxPreference :	    "androidx.preference:preference:${androidVersion}",
         androidxCardView :		    "androidx.cardview:cardview:${androidVersion}",
@@ -72,7 +73,7 @@ ext {
 	    androidxTestJunit :		    "androidx.test.ext:junit:${androidUnitTestVersion}",
 	    mockito :			        "org.mockito:mockito-core:${mockitoVersion}",
 	    robolectric :			    "org.robolectric:robolectric:${robolectricVersion}",
-        robolectricShadows :       "org.robolectric:shadows-supportv4:${robolectricVersion}",
+        robolectricShadows :        "org.robolectric:shadows-supportv4:${robolectricVersion}",
 	    roomTesting :			    "androidx.room:room-testing:${roomVersion}",
 	    okhttp3MockWebServer :		"com.squareup.okhttp3:mockwebserver:${okHttpVersion}",
         daggerCompiler :		    "com.google.dagger:dagger-compiler:${daggerVersion}"
@@ -82,15 +83,15 @@ ext {
         androidxAnnotation :		"androidx.annotation:annotation:${androidVersion}",
         androidxTestRules :		    "androidx.test:rules:${androidInstrTestVersion}",
         androidxTestRunner :		"androidx.test:runner:${androidInstrTestVersion}",
-        androidxOrchestrator :     "androidx.test:orchestrator:${androidInstrTestVersion}",
+        androidxOrchestrator :      "androidx.test:orchestrator:${androidInstrTestVersion}",
         espressoCore :			    "androidx.test.espresso:espresso-core:${espressoVersion}",
         espressoContrib :		    "androidx.test.espresso:espresso-contrib:${espressoVersion}",
         espressoIntents :		    "androidx.test.espresso:espresso-intents:${espressoVersion}",
         cucumber :			        "io.cucumber:cucumber-android:${cucmberVersion}",
         cucumberPicoContainer :		"io.cucumber:cucumber-picocontainer:${cucmberVersion}",
         rxJavaIdler :			    "com.squareup.rx.idler:rx2-idler:${rxIdlerVersion}", // Wrapper for RxJava Schedulers in Espresso tests
-        mockito :                  "org.mockito:mockito-android:${mockitoVersion}",
-        daggerCompiler :           "com.google.dagger:dagger-compiler:${daggerVersion}"
+        mockito :                   "org.mockito:mockito-android:${mockitoVersion}",
+        daggerCompiler :            "com.google.dagger:dagger-compiler:${daggerVersion}"
     ]
     
     appDevDependencies = [
@@ -102,14 +103,14 @@ ext {
 
     sampleDependencies = [
         androidxLegacy :		    "androidx.legacy:legacy-support-v4:${androidVersion}",
-        androidxMaterial :		    "com.google.android.material:material:${androidVersion}",
+        androidxMaterial :		    "com.google.android.material:material:${androidMaterialVersion}",
         androidxAppCompat :		    "androidx.appcompat:appcompat:${androidVersion}",
         androidxPreference :	    "androidx.preference:preference:${androidVersion}",
         androidxCardView :		    "androidx.cardview:cardview:${androidVersion}",
         androidxRecyclerView :		"androidx.recyclerview:recyclerview:${androidVersion}",
         androidxConstraintLayout :	"androidx.constraintlayout:constraintlayout:${constraintLayoutVersion}",
-        butterknife :              "com.jakewharton:butterknife:${butterknifeVersion}",
-        butterknifeCompiler :      "com.jakewharton:butterknife-compiler:${butterknifeVersion}",
+        butterknife :               "com.jakewharton:butterknife:${butterknifeVersion}",
+        butterknifeCompiler :       "com.jakewharton:butterknife-compiler:${butterknifeVersion}",
         dagger :			        "com.google.dagger:dagger:${daggerVersion}",
         daggerAndroid :			    "com.google.dagger:dagger-android:${daggerVersion}",
         daggerAndroidSupport :		"com.google.dagger:dagger-android-support:${daggerVersion}",
@@ -133,7 +134,7 @@ ext {
 	    androidxTestJunit :		    "androidx.test.ext:junit:${androidUnitTestVersion}",
 	    mockito :			        "org.mockito:mockito-core:${mockitoVersion}",
 	    robolectric :			    "org.robolectric:robolectric:${robolectricVersion}",
-        robolectricShadows :       "org.robolectric:shadows-supportv4:${robolectricVersion}",
+        robolectricShadows :        "org.robolectric:shadows-supportv4:${robolectricVersion}",
 	    roomTesting :			    "androidx.room:room-testing:${roomVersion}",
 	    okhttp3MockWebServer :		"com.squareup.okhttp3:mockwebserver:${okHttpVersion}",
         daggerCompiler :		    "com.google.dagger:dagger-compiler:${daggerVersion}"
@@ -143,15 +144,15 @@ ext {
         androidxAnnotation :		"androidx.annotation:annotation:${androidVersion}",
         androidxTestRules :		    "androidx.test:rules:${androidInstrTestVersion}",
         androidxTestRunner :		"androidx.test:runner:${androidInstrTestVersion}",
-        androidxOrchestrator :     "androidx.test:orchestrator:${androidInstrTestVersion}",
+        androidxOrchestrator :      "androidx.test:orchestrator:${androidInstrTestVersion}",
         espressoCore :			    "androidx.test.espresso:espresso-core:${espressoVersion}",
         espressoContrib :		    "androidx.test.espresso:espresso-contrib:${espressoVersion}",
         espressoIntents :		    "androidx.test.espresso:espresso-intents:${espressoVersion}",
         cucumber :			        "io.cucumber:cucumber-android:${cucmberVersion}",
         cucumberPicoContainer :		"io.cucumber:cucumber-picocontainer:${cucmberVersion}",
         rxJavaIdler :			    "com.squareup.rx.idler:rx2-idler:${rxIdlerVersion}", // Wrapper for RxJava Schedulers in Espresso tests
-        mockito :                  "org.mockito:mockito-android:${mockitoVersion}",
-        daggerCompiler :           "com.google.dagger:dagger-compiler:${daggerVersion}"
+        mockito :                   "org.mockito:mockito-android:${mockitoVersion}",
+        daggerCompiler :            "com.google.dagger:dagger-compiler:${daggerVersion}"
     ]
 
     sampleDevDependencies = [

@@ -10,5 +10,10 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="CircularProgress" parent="Theme.MaterialComponents">
+        <item name="colorAccent">@color/progressbar_color</item>
+        <item name="android:background">@color/progressbar_bg_color</item>
+    </style>
     
 </resources>

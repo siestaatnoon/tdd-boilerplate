@@ -173,11 +173,11 @@ public class MainActivityTest extends ActivityTest<MainActivity> {
 
     @Test
     public void MainActivity_testShowMessage() {
-        mainActivity.showMessage(SAMPLE_MESSAGE);
+        mainActivity.showToast(SAMPLE_MESSAGE);
         assertEquals(SAMPLE_MESSAGE, ShadowToast.getTextOfLatestToast());
 
         // Test empty message does not show Toast
-        mainActivity.showMessage("");
+        mainActivity.showToast("");
         assertEquals(1, ShadowToast.shownToastCount());
     }
 }
